@@ -27,6 +27,9 @@
 *.out
 *.app
 
+# Ignore binary directories.
+bin
+
 # Sublime Files
 *.sublime-project
 *.sublime-workspace
