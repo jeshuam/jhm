@@ -4,6 +4,8 @@
 #include <SFML/System.hpp>
 #include <Thor/Input/ActionMap.hpp>
 
+#include "log.h"
+
 namespace engine {
 namespace component {
 
@@ -20,9 +22,17 @@ public:
 
   // Update the given component. This will be called once per loop.
   virtual void Update(const thor::ActionMap<std::string>& map) = 0;
+
+  // Get the name of the concrete component.
+  static const std::string& name_() {
+    static const std::string name = "COMPONENT";
+    return name;
+  }
+
+  virtual const std::string& name() = 0;
   
   // Bind the given entity to this component.
-  void Bind(Entity* parent) {
+  virtual void Bind(Entity* parent) {
     this->parent_ = parent;
   }
 

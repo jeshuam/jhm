@@ -7,6 +7,7 @@
 
 #include "engine/component/component.h"
 #include "engine/utility/resource_loader.h"
+#include "log.h"
 
 namespace engine {
 namespace component {
@@ -27,6 +28,15 @@ public:
 
   // Draw this sprite onto the screen at its current location.
   virtual void Draw(sf::RenderWindow& window) const;
+
+  static const std::string& name_() {
+    static const std::string name = "DRAWABLE";
+    return name;
+  }
+
+  virtual const std::string& name() {
+    return name_();
+  }
 
   // Get access to the internal sprite.
   sf::Sprite& Sprite();

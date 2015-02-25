@@ -4,7 +4,8 @@ compiler = 'clang++'
 
 cc_flags = [
   '-Wall', '-Werror',
-  '-std=c++11'
+  '-std=c++11',
+  '-I' + os.path.abspath('../dependencies/spdlog/include'),
 ]
 
 link_flags = []

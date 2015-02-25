@@ -6,6 +6,8 @@
 
 #include "engine/component/component.h"
 #include "engine/component/movable.h"
+#include "engine/component/directional.h"
+#include "log.h"
 
 namespace engine {
 namespace component {
@@ -20,8 +22,22 @@ public:
   // The player just responds to keypresses.
   virtual void Update(const thor::ActionMap<std::string>& map);
 
+  virtual void Bind(Entity* entity);
+
+  static const std::string& name_() {
+    static const std::string name = "PLAYER";
+    return name;
+  }
+
+  virtual const std::string& name() {
+    return name_();
+  }
+
 protected:
   double running_multiplier_;
+
+  Directional* walking_directional_;
+  Directional* running_directional_;
 };
 
 }}  // namepsace engine::component

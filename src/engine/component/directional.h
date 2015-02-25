@@ -7,11 +7,10 @@
 #include <SFML/Graphics.hpp>
 #include <Thor/Animations.hpp>
 
-#include "logging/easylogging++.h"
-
 #include "engine/component/component.h"
 #include "engine/component/drawable.h"
 #include "engine/component/entity.h"
+#include "log.h"
 
 namespace engine {
 namespace component {
@@ -31,12 +30,21 @@ public:
   virtual ~Directional();
 
   // Method for adding directions to the directional object.
-  Directional& AddDirection(
+  Directional* AddDirection(
     Direction direction, sf::Time length,
-    const std::vector<std::pair<sf::Vector2i, double>>& frames);
+    const std::vector<std::pair<sf::IntRect, double>>& frames);
 
   // Update the directional object.
   virtual void Update(const thor::ActionMap<std::string>& map);
+
+  static const std::string& name_() {
+    static const std::string name = "DIRECTIONAL";
+    return name;
+  }
+
+  virtual const std::string& name() {
+    return name_();
+  }
 
   // Methods for moving in a particular direction.
   void MoveUp();

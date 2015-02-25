@@ -1,11 +1,11 @@
-#include "logging/easylogging++.h"
-
 #include "jhm.h"
+#include "log.h"
 
-INITIALIZE_EASYLOGGINGPP
+std::shared_ptr<spdlog::logger> LOG;
 
 int main(int argc, char** argv) {
-  START_EASYLOGGINGPP(argc, argv);
+  spdlog::set_level(spdlog::level::trace);
+  LOG = spdlog::stdout_logger_mt("log");
 
   // Run the game.
   JHM game;

@@ -23,18 +23,23 @@ Entity::Entity(std::initializer_list<Component*> components) {
 
 Entity::~Entity() {
   entities_.erase(this);
+
+  for (auto& type_component : components_) {
+    delete type_component.second;
+  }
 }
 
 void Entity::AddComponent(Component* component) {
-  components_.insert(std::shared_ptr<Component>(component));
+  //components_.insert(component);
+  components_[component->name()] = component;
 
   // Bind this component to the entity.
   component->Bind(this);
 }
 
 void Entity::Update(const thor::ActionMap<std::string>& map) {
-  for (auto& component : components_) {
-    component->Update(map);
+  for (auto& type_component : components_) {
+    type_component.second->Update(map);
   }
 }
 

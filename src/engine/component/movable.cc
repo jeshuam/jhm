@@ -12,14 +12,17 @@ Movable::~Movable() {
 }
 
 void Movable::Update(const thor::ActionMap<std::string>& map) {
+  LOG->trace("Movable::Update");
+
   // Only run this every x ms.
   if (clock_.getElapsedTime().asMilliseconds() < 20) {
+    LOG->trace("Done (early) Movable::Update");
     return;
   }
 
   // The object _must_ be drawable.
   if (not parent_->HasComponent<Drawable>()) {
-    LOG(FATAL) << "Movable entity does not have required Drawable component.";
+    LOG->emerg("Movable entity does not have required Drawable component.");
   }
 
   // Update the velocity.
@@ -29,6 +32,7 @@ void Movable::Update(const thor::ActionMap<std::string>& map) {
       d.Sprite().getPosition().y - (velocity_.y * speed_ * speed_multiplier_));
 
   // If the object is directional (optional), change the direction.
+  parent_->HasComponent<Directional>();
   if (parent_->HasComponent<Directional>()) {
     Directional& directional = parent_->GetComponent<Directional>();
     if (velocity_.x < 0) {
@@ -43,6 +47,7 @@ void Movable::Update(const thor::ActionMap<std::string>& map) {
   }
 
   clock_.restart();
+  LOG->trace("Done Movable::Update");
 }
 
 }}  // namepsace engine::component

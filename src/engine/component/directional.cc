@@ -14,11 +14,13 @@ Directional::~Directional() {
 }
 
 void Directional::Update(const thor::ActionMap<std::string>& map) {
+  LOG->trace("Directional::Update");
+
   // Directional components must be movable.
   if (not parent_->HasComponent<Movable>()) {
-    LOG(FATAL) << "Directional entity does not have required Movable"
-               << " component.";
+    LOG->emerg("Directional entity does not have required Movable component.");
   }  
+
 
   Movable& movable = parent_->GetComponent<Movable>();
   if (movable.Velocity().x == 0 and movable.Velocity().y == 0) {
@@ -42,6 +44,8 @@ void Directional::Update(const thor::ActionMap<std::string>& map) {
       animator_.animate(parent_->GetComponent<Drawable>().Sprite());
     }
   }
+
+  LOG->trace("Done Directional::Update");
 }
 
 void Directional::MoveUp() {
@@ -60,31 +64,19 @@ void Directional::MoveRight() {
   ChangeDirection(RIGHT);
 }
 
-Directional& Directional::AddDirection(
+Directional* Directional::AddDirection(
     Direction direction, sf::Time length,
-    const std::vector<std::pair<sf::Vector2i, double>>& frames) {
-  // Get the sprite's rectangle.
-  if (not parent_->HasComponent<Drawable>()) {
-    LOG(FATAL) << "Directional entity does not have required Drawable "
-               << "component.";
-  }
-
-  sf::Sprite& sprite = parent_->GetComponent<Drawable>().Sprite();
-  thor::FrameAnimation animation;
-
+    const std::vector<std::pair<sf::IntRect, double>>& frames) {
   // Copy the sprite's texture rectangle and pass a modified version in with
   // each frame.
-  sf::IntRect rect = sprite.getTextureRect();
-  for (const std::pair<sf::Vector2i, double>& frame : frames) {
-    rect.left = frame.first.x;
-    rect.top = frame.first.y;
-
-    animation.addFrame(frame.second, rect);
+  thor::FrameAnimation animation;
+  for (const std::pair<sf::IntRect, double>& frame : frames) {
+    animation.addFrame(frame.second, frame.first);
   }
 
   // Save the animation.
   animator_.addAnimation(direction, animation, length);
-  return *this;
+  return this;
 }
 
 void Directional::ChangeDirection(Direction direction) {

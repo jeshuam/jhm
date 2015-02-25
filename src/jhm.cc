@@ -31,6 +31,8 @@ void JHM::Run() {
 }
 
 void JHM::Setup() {
+  LOG->trace("JHM::Setup");
+
   // Clear the screen.
   window_.clear();
 
@@ -38,34 +40,13 @@ void JHM::Setup() {
   action_map_["quit"] = thor::Action(sf::Event::Closed);
 
   // Create the main character.
-  Entity* main_character = new Entity({
-    new Drawable("../assets/character.png", {0, 0}, {32, 48}, 2),
+  new Entity({
+    new Drawable("../assets/main-character.png", {7, 26}, {19, 29}, 2),
     new Movable(2.5),
-    new Player(action_map_, 2),
-    new Directional()
+    new Player(action_map_, 2)
   });
 
-  main_character->GetComponent<Directional>()
-      .AddDirection(Directional::UP, sf::seconds(1.0),
-                    {{{ 0, 144}, 2},
-                     {{32, 144}, 2},
-                     {{64, 144}, 2},
-                     {{96, 144}, 2}})
-      .AddDirection(Directional::DOWN, sf::seconds(1.0),
-                    {{{ 0,   0}, 2},
-                     {{32,   0}, 2},
-                     {{64,   0}, 2},
-                     {{96,   0}, 2}})
-      .AddDirection(Directional::LEFT, sf::seconds(1.0),
-                    {{{ 0,  48}, 2},
-                     {{32,  48}, 2},
-                     {{64,  48}, 2},
-                     {{96,  48}, 2}})
-      .AddDirection(Directional::RIGHT, sf::seconds(1.0),
-                    {{{ 0,  96}, 2},
-                     {{32,  96}, 2},
-                     {{64,  96}, 2},
-                     {{96,  96}, 2}});
+  LOG->trace("done JHM::Setup");
 }
 
 void JHM::ProcessEvents() {
@@ -73,6 +54,8 @@ void JHM::ProcessEvents() {
 }
 
 void JHM::Loop() {
+  LOG->trace("JHM::Loop");
+
   for (Entity* entity : Entity::GetAllEntities()) {
     entity->Update(action_map_);
   }
@@ -81,9 +64,13 @@ void JHM::Loop() {
   if (action_map_.isActive("quit")) {
     running_ = false;
   }
+
+  LOG->trace("Done JHM::Loop");
 }
 
 void JHM::Render() {
+  LOG->trace("JHM::Render");
+
   window_.clear();
 
   // Render all rendable objects.
@@ -93,6 +80,8 @@ void JHM::Render() {
 
   // Display the window.
   window_.display();
+
+  LOG->trace("Done JHM::Render");
 }
 
 void JHM::Stop() {

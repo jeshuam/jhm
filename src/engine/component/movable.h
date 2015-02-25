@@ -3,12 +3,11 @@
 
 #include <SFML/System.hpp>
 
-#include "logging/easylogging++.h"
-
 #include "engine/component/component.h"
 #include "engine/component/directional.h"
 #include "engine/component/drawable.h"
 #include "engine/component/entity.h"
+#include "log.h"
 
 namespace engine {
 namespace component {
@@ -31,6 +30,15 @@ public:
   // Set the speed multiplier.
   void SpeedMultiplier(double speed_multiplier) {
     speed_multiplier_ = speed_multiplier;
+  }
+
+  static const std::string& name_() {
+    static const std::string name = "MOVABLE";
+    return name;
+  }
+
+  virtual const std::string& name() {
+    return name_();
   }
 
 protected:

@@ -30,11 +30,14 @@ Drawable::~Drawable() {
 }
 
 void Drawable::Update(const thor::ActionMap<std::string>& map) {
-
+  LOG->trace("Drawable::Update");
+  LOG->trace("Done Drawable::Update");
 }
 
 void Drawable::Draw(sf::RenderWindow& window) const {
+  LOG->trace("Drawable::Draw");
   window.draw(sprite_);
+  LOG->trace("Done Drawable::Draw");
 }
 
 sf::Sprite& Drawable::Sprite() {

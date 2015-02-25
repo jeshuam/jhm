@@ -1,10 +1,14 @@
 #ifndef _ENGINE_ENTITY_ENTITY_H_
 #define _ENGINE_ENTITY_ENTITY_H_
 
-#include <memory>
+#include <typeindex>
+#include <typeinfo>
+#include <unordered_map>
 #include <unordered_set>
 
 #include <Thor/Input/ActionMap.hpp>
+
+#include "log.h"
 
 namespace engine {
 namespace component {
@@ -29,55 +33,35 @@ public:
   // Remove a component from this entity.
   template <typename T>
   void RemoveComponent() {
-    try {
-      components_.erase(components_.find(GetComponent<T>()));
-    } catch (std::logic_error) {
-      // Do nothing; this component was never present.
-    }
+    components_.erase(T::name_());
   }
 
   // Check to see whether this entity has the requested component type. If it
   // does, return true, otherwise return false.
   template <typename T>
   bool HasComponent() {
-    try {
-      GetComponent<T>();
-      return true;
-    } catch (std::logic_error) {
-      return false;
-    }
+    return components_.find(T::name_()) != components_.end();
   }
 
   // Get a reference to a given component type. Throws a logic error if this
   // entity doesn't contain the requested component.
   template <typename T>
   T& GetComponent() {
-    for (const std::shared_ptr<Component>& component : components_) {
-      T* component_specific = dynamic_cast<T*>(component.get());
-      if (component_specific) {
-        return *component_specific;
-      }
+    try {
+      return *dynamic_cast<T*>(components_.at(T::name_()));
+    } catch (std::out_of_range) {
+      throw std::logic_error("Request for component where none exists.");  
     }
-
-    // Oh noes! This shouldn't happen; you shouldn't ask for components that
-    // don't exist. You should only call this to get a quick reference to the
-    // component, nothing more.
-    throw std::logic_error("Request for component where none exists.");
   }
 
   template <typename T>
   const T& GetComponent() const {
-    for (const std::shared_ptr<Component>& component : components_) {
-      T* component_specific = dynamic_cast<T*>(component.get());
-      if (component_specific) {
-        return *component_specific;
-      }
-    }
+    return const_cast<Entity*>(this)->GetComponent<T>();
+  }
 
-    // Oh noes! This shouldn't happen; you shouldn't ask for components that
-    // don't exist. You should only call this to get a quick reference to the
-    // component, nothing more.
-    throw std::logic_error("Request for component where none exists.");
+  template <typename T>
+  void ReplaceComponent(Component* new_component) {
+    components_[T::name_()] = new_component;
   }
 
   // Get all entities that contain a specific component.
@@ -85,13 +69,11 @@ public:
   static std::unordered_set<Entity*> GetEntitiesWithComponent() {
     std::unordered_set<Entity*> entities;
     for (Entity* entity : entities_) {
-      try {
-        entity->GetComponent<T>();
+      if (entity->HasComponent<T>()) {
         entities.insert(entity);
-      } catch (std::logic_error) {
-        // Do nothing; this entity doesn't contain the required component.
       }
     }
+
 
     return entities;
   }
@@ -102,8 +84,9 @@ public:
   }
 
 private:
-  // Each entity will store with it a set of components.
-  std::unordered_set<std::shared_ptr<Component>> components_;
+  // Each entity will store with it a set of components. These pointers will be
+  // freed when the entity is destroyed.
+  std::unordered_map<std::string, Component*> components_;
 
   // Each entity will be registered into a large set to allow the main loop to
   // gain access to the entities themselves.
