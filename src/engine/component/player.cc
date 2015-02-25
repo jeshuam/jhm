@@ -3,12 +3,13 @@
 namespace engine {
 namespace component {
 
-Player::Player(thor::ActionMap<std::string>& map) {
+Player::Player(thor::ActionMap<std::string>& map, double running_multiplier)
+    : running_multiplier_(running_multiplier) {
   map["moving_up"] = thor::Action(sf::Keyboard::Up, thor::Action::Hold);
   map["moving_down"] = thor::Action(sf::Keyboard::Down, thor::Action::Hold);
   map["moving_right"] = thor::Action(sf::Keyboard::Right, thor::Action::Hold);
   map["moving_left"] = thor::Action(sf::Keyboard::Left, thor::Action::Hold);
-  map["running"] = thor::Action(sf::Keyboard::S, thor::Action::Hold);
+  map["running"] = thor::Action(sf::Keyboard::Space, thor::Action::Hold);
 }
 
 Player::~Player() {
@@ -53,7 +54,7 @@ void Player::Update(const thor::ActionMap<std::string>& map) {
 
   // If the player is running...
   if (map.isActive("running")) {
-    movable.SpeedMultiplier(10);
+    movable.SpeedMultiplier(running_multiplier_);
   } else {
     movable.SpeedMultiplier(1);
   }
