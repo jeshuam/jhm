@@ -1,11 +1,12 @@
 #ifndef _ENGINE_COMPONENTS_DRAWABLE_H_
 #define _ENGINE_COMPONENTS_DRAWABLE_H_
 
+#include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
 
 #include "engine/component/component.h"
-#include "engine/utility/texture_loader.h"
+#include "engine/utility/resource_loader.h"
 
 namespace engine {
 namespace component {
@@ -28,6 +29,7 @@ public:
 
 protected:
   sf::Sprite sprite_;
+  std::shared_ptr<sf::Texture> texture_;
 };
 
 }}  // namepsace engine::component

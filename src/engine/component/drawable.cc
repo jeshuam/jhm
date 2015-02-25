@@ -11,15 +11,16 @@ Drawable::Drawable(const std::string& sprite_filename)
 Drawable::Drawable(const std::string& sprite_filename, sf::Vector2u offset,
                    sf::Vector2u size) {
   // Get a reference to the texture.
-  const sf::Texture& texture = utility::texture_loader::Load(sprite_filename);
+  texture_ = utility::resource_loader::cache.acquire(
+      thor::Resources::fromFile<sf::Texture>(sprite_filename));
 
   // If width or height is -1, then set it to the max.
   if (size.x <= 0 or size.y <= 0) {
-    size = texture.getSize();
+    size = texture_->getSize();
   }
 
   // Construct the sprite.
-  sprite_.setTexture(texture);
+  sprite_.setTexture(*texture_);
   sprite_.setTextureRect(sf::IntRect(offset.x, offset.y, size.x, size.y));
 }
 

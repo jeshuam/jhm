@@ -5,6 +5,7 @@
 #include <vector>
 
 #include <SFML/Graphics.hpp>
+#include <Thor/Animations.hpp>
 
 #include "logging/easylogging++.h"
 
@@ -23,13 +24,17 @@ namespace component {
 class Directional : public Component {
 public:
   enum Direction {
-    UP=0, DOWN=1, LEFT=2, RIGHT=3
+    UP, DOWN, LEFT, RIGHT
   };
 
   Directional();
   Directional(std::vector<sf::Vector2i> up, std::vector<sf::Vector2i> down,
               std::vector<sf::Vector2i> left, std::vector<sf::Vector2i> right);
   virtual ~Directional();
+
+  // Method for adding directions to the directional object.
+  Directional& AddDirection(Direction direction, 
+                            const std::vector<sf::Vector2i>& frames);
 
   // Update the directional object.
   virtual void Update();
@@ -41,22 +46,13 @@ public:
   void MoveRight();
 
 protected:
-  // Array of directions --> animation frames.
-  std::array<std::vector<sf::Vector2i>, 4> directions_;
-
-  // Current frame through the animation.
+  // Thor animation manager.
+  thor::Animator<sf::Sprite, Direction> animator_;
   Direction current_direction_;
-  int current_frame_;
+  sf::Clock clock_;
 
   // Change the direction this object is facing.
   void ChangeDirection(Direction direction);
-
-  // Get the next frame for the given direction.
-  const sf::Vector2i& GetFrame(int frame_id);
-  const sf::Vector2i& GetNextFrame();
-
-  // Update the current frame.
-  void UpdateFrame(const sf::Vector2i& frame);
 };
 
 }}  // namepsace engine::component

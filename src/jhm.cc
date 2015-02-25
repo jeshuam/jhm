@@ -23,7 +23,7 @@ void JHM::Run() {
   while (running_) {
     ProcessEvents();
 
-    if (last_loop_run_clock_.getElapsedTime().asMilliseconds() > 100) {
+    if (last_loop_run_clock_.getElapsedTime().asMilliseconds() > 32) {
       Loop();
       Render();
 
@@ -43,17 +43,22 @@ void JHM::Setup() {
   window_.clear();
 
   // Create the main character.
-  new Entity({
+  Entity* main_character = new Entity({
     new Drawable("../assets/character.png", {0, 0}, {32, 48}),
     new Movable(10),
     new Player(),
-    new Directional(
-      {{0, 144}, {32, 144}, {64, 144}, {96, 144}},
-      {{0,   0}, {32,   0}, {64,   0}, {96,   0}},
-      {{0,  48}, {32,  48}, {64,  48}, {96,  48}},
-      {{0,  96}, {32,  96}, {64,  96}, {96,  96}}
-    ),
+    new Directional()
   });
+
+  main_character->GetComponent<Directional>()
+      .AddDirection(Directional::UP,
+                    {{0, 144}, {32, 144}, {64, 144}, {96, 144}})
+      .AddDirection(Directional::DOWN,
+                    {{0,   0}, {32,   0}, {64,   0}, {96,   0}})
+      .AddDirection(Directional::LEFT,
+                    {{0,  48}, {32,  48}, {64,  48}, {96,  48}})
+      .AddDirection(Directional::RIGHT,
+                    {{0,  96}, {32,  96}, {64,  96}, {96,  96}});
 }
 
 void JHM::ProcessEvents() {
@@ -97,5 +102,5 @@ void JHM::Render() {
 }
 
 void JHM::Stop() {
-
+  window_.close();
 }
