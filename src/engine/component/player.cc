@@ -3,79 +3,59 @@
 namespace engine {
 namespace component {
 
-Player::Player() {
-
+Player::Player(thor::ActionMap<std::string>& map) {
+  map["moving_up"] = thor::Action(sf::Keyboard::Up, thor::Action::Hold);
+  map["moving_down"] = thor::Action(sf::Keyboard::Down, thor::Action::Hold);
+  map["moving_right"] = thor::Action(sf::Keyboard::Right, thor::Action::Hold);
+  map["moving_left"] = thor::Action(sf::Keyboard::Left, thor::Action::Hold);
+  map["running"] = thor::Action(sf::Keyboard::S, thor::Action::Hold);
 }
 
 Player::~Player() {
 
 }
 
-void Player::KeyPressed(const sf::Event& event) {
+void Player::Update(const thor::ActionMap<std::string>& map) {
   // Get a reference to the Movable component.
   if (not parent_->HasComponent<Movable>()) {
     LOG(FATAL) << "Player entity does not have required Movable component.";
   }
 
   // Get a reference to the velocity vector.
-  sf::Vector2i& velocity = parent_->GetComponent<Movable>().Velocity();
+  Movable& movable = parent_->GetComponent<Movable>();
+  sf::Vector2i& velocity = movable.Velocity();
 
-  // When they press down a key...
-  if (event.type == sf::Event::KeyPressed) {
-    switch (event.key.code) {
-      // When the right key is pressed, increase the x velocity by 1.
-      case sf::Keyboard::Right:
-        velocity.x = std::min(velocity.x + 1, 1);
-        break;
-
-      // When the left key is pressed, decrease the x velocity by 1.
-      case sf::Keyboard::Left:
-        velocity.x = std::max(velocity.x - 1, -1);
-        break;
-
-      // When the up key is pressed, increase the y velocity by 1.
-      case sf::Keyboard::Up:
-        velocity.y = std::min(velocity.y + 1, 1);
-        break;
-
-      // When the down key is pressed, decrease the y velocity by 1.
-      case sf::Keyboard::Down:
-        velocity.y = std::max(velocity.y - 1, -1);
-        break;
-
-      // Don't do anything else with remaining keys.
-      default:
-        break;
-    }
+  // Determine the Y velocity.
+  if (map.isActive("moving_up") and not map.isActive("moving_down")) {
+    velocity.y = 1;
   }
 
-  // When they release a key...
-  else if (event.type == sf::Event::KeyReleased) {
-    switch (event.key.code) {
-      // When the right key is released, decrease the x velocity by 1.
-      case sf::Keyboard::Right:
-        velocity.x = std::max(velocity.x - 1, -1);
-        break;
+  else if (map.isActive("moving_down") and not map.isActive("moving_up")) {
+    velocity.y = -1;
+  }
 
-      // When the left key is released, increase the x velocity by 1.
-      case sf::Keyboard::Left:
-        velocity.x = std::min(velocity.x + 1, 1);
-        break;
+  else {
+    velocity.y = 0;
+  }
 
-      // When the up key is released, decrease the y velocity by 1.
-      case sf::Keyboard::Up:
-        velocity.y = std::max(velocity.y - 1, -1);
-        break;
+  // Determine the X velocity.
+  if (map.isActive("moving_right") and not map.isActive("moving_left")) {
+    velocity.x = 1;
+  }
 
-      // When the down key is released, increase the y velocity by 1.
-      case sf::Keyboard::Down:
-        velocity.y = std::min(velocity.y + 1, 1);
-        break;
+  else if (map.isActive("moving_left") and not map.isActive("moving_right")) {
+    velocity.x = -1;
+  }
 
-      // Don't do anything else with remaining keys.
-      default:
-        break;
-    }
+  else {
+    velocity.x = 0;
+  }
+
+  // If the player is running...
+  if (map.isActive("running")) {
+    movable.SpeedMultiplier(10);
+  } else {
+    movable.SpeedMultiplier(1);
   }
 }
 

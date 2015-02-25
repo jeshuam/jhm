@@ -24,6 +24,14 @@ Drawable::Drawable(const std::string& sprite_filename, sf::Vector2u offset,
   sprite_.setTextureRect(sf::IntRect(offset.x, offset.y, size.x, size.y));
 }
 
+Drawable::~Drawable() {
+
+}
+
+void Drawable::Update(const thor::ActionMap<std::string>& map) {
+
+}
+
 void Drawable::Draw(sf::RenderWindow& window) const {
   window.draw(sprite_);
 }

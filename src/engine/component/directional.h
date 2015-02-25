@@ -28,16 +28,15 @@ public:
   };
 
   Directional();
-  Directional(std::vector<sf::Vector2i> up, std::vector<sf::Vector2i> down,
-              std::vector<sf::Vector2i> left, std::vector<sf::Vector2i> right);
   virtual ~Directional();
 
   // Method for adding directions to the directional object.
-  Directional& AddDirection(Direction direction, 
-                            const std::vector<sf::Vector2i>& frames);
+  Directional& AddDirection(
+    Direction direction, sf::Time length,
+    const std::vector<std::pair<sf::Vector2i, double>>& frames);
 
   // Update the directional object.
-  virtual void Update();
+  virtual void Update(const thor::ActionMap<std::string>& map);
 
   // Methods for moving in a particular direction.
   void MoveUp();

@@ -1,6 +1,9 @@
 #ifndef _ENGINE_COMPONENTS_COMPONENT_H_
 #define _ENGINE_COMPONENTS_COMPONENT_H_
 
+#include <SFML/System.hpp>
+#include <Thor/Input/ActionMap.hpp>
+
 namespace engine {
 namespace component {
 
@@ -16,9 +19,7 @@ public:
   }
 
   // Update the given component. This will be called once per loop.
-  virtual void Update() {
-    
-  }
+  virtual void Update(const thor::ActionMap<std::string>& map) = 0;
   
   // Bind the given entity to this component.
   void Bind(Entity* parent) {

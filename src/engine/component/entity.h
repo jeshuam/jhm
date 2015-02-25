@@ -4,6 +4,8 @@
 #include <memory>
 #include <unordered_set>
 
+#include <Thor/Input/ActionMap.hpp>
+
 namespace engine {
 namespace component {
 
@@ -22,7 +24,7 @@ public:
   void AddComponent(Component* component);
 
   // Update all internal components.
-  void Update();
+  void Update(const thor::ActionMap<std::string>& map);
 
   // Remove a component from this entity.
   template <typename T>

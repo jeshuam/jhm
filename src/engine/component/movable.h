@@ -17,20 +17,27 @@ namespace component {
 // must also have an X and Y coordinate (i.e. be drawable).
 class Movable : public Component {
 public:
-  Movable(int speed=1);
+  Movable(double speed=1.0);
   virtual ~Movable();
 
   // Update this movable object (by changing it's X and Y location).
-  virtual void Update();
+  virtual void Update(const thor::ActionMap<std::string>& map);
 
   // Get access to the velocity.
   sf::Vector2i& Velocity() {
     return velocity_;
   }
 
+  // Set the speed multiplier.
+  void SpeedMultiplier(double speed_multiplier) {
+    speed_multiplier_ = speed_multiplier;
+  }
+
 protected:
   sf::Vector2i velocity_;
-  int speed_;
+  double speed_;
+  double speed_multiplier_;
+  sf::Clock clock_;
 };
 
 }}  // namepsace engine::component

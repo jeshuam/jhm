@@ -2,6 +2,7 @@
 #define _ENGINE_COMPONENTS_PLAYER_H_
 
 #include <SFML/Window.hpp>
+#include <Thor/Input/Action.hpp>
 
 #include "engine/component/component.h"
 #include "engine/component/movable.h"
@@ -13,11 +14,11 @@ namespace component {
 // must be drawable and movable.
 class Player : public Component {
 public:
-  Player();
+  Player(thor::ActionMap<std::string>& map);
   virtual ~Player();
 
   // The player just responds to keypresses.
-  virtual void KeyPressed(const sf::Event& event);
+  virtual void Update(const thor::ActionMap<std::string>& map);
 };
 
 }}  // namepsace engine::component

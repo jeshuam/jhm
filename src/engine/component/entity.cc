@@ -32,9 +32,9 @@ void Entity::AddComponent(Component* component) {
   component->Bind(this);
 }
 
-void Entity::Update() {
+void Entity::Update(const thor::ActionMap<std::string>& map) {
   for (auto& component : components_) {
-    component->Update();
+    component->Update(map);
   }
 }
 

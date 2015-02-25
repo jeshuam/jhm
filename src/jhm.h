@@ -2,6 +2,8 @@
 #define _JHM_H_
 
 #include <SFML/Graphics.hpp>
+#include <Thor/Input/Action.hpp>
+#include <Thor/Input/ActionMap.hpp>
 
 #include "engine/component/drawable.h"
 #include "engine/component/directional.h"
@@ -36,11 +38,9 @@ private:
   // True if the game is running or not.
   bool running_;
 
-  // This is the last time the main loop was run.
-  sf::Clock last_loop_run_clock_;
-
   // Main game window.
   sf::RenderWindow window_;
+  thor::ActionMap<std::string> action_map_;
 };
 
 #endif  // _JHM_H_

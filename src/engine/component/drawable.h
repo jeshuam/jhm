@@ -20,6 +20,10 @@ public:
   Drawable(const std::string& sprite_filename);
   Drawable(const std::string& sprite_filename, sf::Vector2u offset,
            sf::Vector2u size=sf::Vector2u());
+  virtual ~Drawable();
+
+  // Update the drawable (do nothing, really).
+  virtual void Update(const thor::ActionMap<std::string>& map);
 
   // Draw this sprite onto the screen at its current location.
   virtual void Draw(sf::RenderWindow& window) const;

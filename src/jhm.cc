@@ -22,13 +22,8 @@ void JHM::Run() {
   running_ = true;
   while (running_) {
     ProcessEvents();
-
-    if (last_loop_run_clock_.getElapsedTime().asMilliseconds() > 32) {
-      Loop();
-      Render();
-
-      last_loop_run_clock_.restart();
-    }
+    Loop();
+    Render();
   }
 
   // Shutdown the game.
@@ -36,56 +31,55 @@ void JHM::Run() {
 }
 
 void JHM::Setup() {
-  // Setup the window.
-  window_.setKeyRepeatEnabled(false);
-
   // Clear the screen.
   window_.clear();
+
+  // When the window is closed, stop running.
+  action_map_["quit"] = thor::Action(sf::Event::Closed);
 
   // Create the main character.
   Entity* main_character = new Entity({
     new Drawable("../assets/character.png", {0, 0}, {32, 48}),
-    new Movable(10),
-    new Player(),
+    new Movable(1),
+    new Player(action_map_),
     new Directional()
   });
 
   main_character->GetComponent<Directional>()
-      .AddDirection(Directional::UP,
-                    {{0, 144}, {32, 144}, {64, 144}, {96, 144}})
-      .AddDirection(Directional::DOWN,
-                    {{0,   0}, {32,   0}, {64,   0}, {96,   0}})
-      .AddDirection(Directional::LEFT,
-                    {{0,  48}, {32,  48}, {64,  48}, {96,  48}})
-      .AddDirection(Directional::RIGHT,
-                    {{0,  96}, {32,  96}, {64,  96}, {96,  96}});
+      .AddDirection(Directional::UP, sf::seconds(1.0),
+                    {{{ 0, 144}, 2},
+                     {{32, 144}, 2},
+                     {{64, 144}, 2},
+                     {{96, 144}, 2}})
+      .AddDirection(Directional::DOWN, sf::seconds(1.0),
+                    {{{ 0,   0}, 2},
+                     {{32,   0}, 2},
+                     {{64,   0}, 2},
+                     {{96,   0}, 2}})
+      .AddDirection(Directional::LEFT, sf::seconds(1.0),
+                    {{{ 0,  48}, 2},
+                     {{32,  48}, 2},
+                     {{64,  48}, 2},
+                     {{96,  48}, 2}})
+      .AddDirection(Directional::RIGHT, sf::seconds(1.0),
+                    {{{ 0,  96}, 2},
+                     {{32,  96}, 2},
+                     {{64,  96}, 2},
+                     {{96,  96}, 2}});
 }
 
 void JHM::ProcessEvents() {
-  sf::Event event;
-  while (window_.pollEvent(event)) {
-    switch (event.type) {
-      case sf::Event::Closed:
-        running_ = false;
-        break;
-
-      case sf::Event::KeyPressed:
-      case sf::Event::KeyReleased:
-        for (Entity* entity : Entity::GetEntitiesWithComponent<Player>()) {
-          entity->GetComponent<Player>().KeyPressed(event);
-        }
-
-        break;
-
-      default:
-        break;
-    }
-  }
+  action_map_.update(window_);
 }
 
 void JHM::Loop() {
-  for (Entity* entity : Entity::GetEntitiesWithComponent<Movable>()) {
-    entity->GetComponent<Movable>().Update();
+  for (Entity* entity : Entity::GetAllEntities()) {
+    entity->Update(action_map_);
+  }
+
+  // If we have to quit, then do so.
+  if (action_map_.isActive("quit")) {
+    running_ = false;
   }
 }
 
