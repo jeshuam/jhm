@@ -3,11 +3,11 @@ root = True
 compiler = 'clang++'
 
 cc_flags = [
-  '-std=c++11',
-  '-I' + os.path.abspath('../dependencies/SFML-2/include')
+  '-Wall', '-Werror',
+  '-std=c++11'
 ]
 
-link_flags = ['-L' + os.path.abspath('../dependencies/SFML-2/bin/lib')]
+link_flags = []
 
 targets = {
   'jhm': {
