@@ -19,7 +19,7 @@ public:
   // Construct a new drawable component.
   Drawable(const std::string& sprite_filename);
   Drawable(const std::string& sprite_filename, sf::Vector2u offset,
-           sf::Vector2u size=sf::Vector2u());
+           sf::Vector2u size=sf::Vector2u(), double scale=1);
   virtual ~Drawable();
 
   // Update the drawable (do nothing, really).

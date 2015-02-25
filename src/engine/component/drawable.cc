@@ -9,7 +9,7 @@ Drawable::Drawable(const std::string& sprite_filename)
 }
 
 Drawable::Drawable(const std::string& sprite_filename, sf::Vector2u offset,
-                   sf::Vector2u size) {
+                   sf::Vector2u size, double scale) {
   // Get a reference to the texture.
   texture_ = utility::resource_loader::cache.acquire(
       thor::Resources::fromFile<sf::Texture>(sprite_filename));
@@ -22,6 +22,7 @@ Drawable::Drawable(const std::string& sprite_filename, sf::Vector2u offset,
   // Construct the sprite.
   sprite_.setTexture(*texture_);
   sprite_.setTextureRect(sf::IntRect(offset.x, offset.y, size.x, size.y));
+  sprite_.setScale(scale, scale);
 }
 
 Drawable::~Drawable() {
