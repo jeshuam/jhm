@@ -24,7 +24,8 @@ targets = {
     'link_with': [
       'sfml-graphics',
       'sfml-window',
-      'sfml-system'
+      'sfml-system',
+      'thor'
     ]
   },
 }
