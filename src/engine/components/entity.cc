@@ -1,20 +1,30 @@
 #include "entity.h"
 
-Entity::Entity() {
-  Entity::Register(this);
-}
-
-Entity::~Entity() {
-  Entity::Unregister(this);
-}
+#include "engine/components/component.h"
 
 // Container to store entitites.
 std::unordered_set<Entity*> Entity::entities_;
 
-void Entity::Register(Entity* entity) {
-  entities_.insert(entity);
+Entity::Entity() : Entity({}) {
+  
 }
 
-void Entity::Unregister(Entity* entity) {
-  entities_.erase(entity);
+Entity::Entity(std::initializer_list<Component*> components) {
+  entities_.insert(this);
+
+  // Load the components.
+  for (Component* component : components) {
+    AddComponent(component);
+  }
+}
+
+Entity::~Entity() {
+  entities_.erase(this);
+}
+
+void Entity::AddComponent(Component* component) {
+  components_.insert(std::shared_ptr<Component>(component));
+
+  // Bind this component to the entity.
+  component->Bind(this);
 }

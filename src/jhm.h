@@ -3,9 +3,10 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "engine/character.h"
-#include "engine/entity/drawable.h"
-#include "engine/entity/entity.h"
+#include "engine/components/drawable.h"
+#include "engine/components/entity.h"
+#include "engine/components/movable.h"
+#include "engine/components/player.h"
 
 class JHM {
 public:
@@ -39,9 +40,6 @@ private:
 
   // Main game window.
   sf::RenderWindow window_;
-
-  // Main character.
-  Character player_;
 };
 
 #endif  // _JHM_H_

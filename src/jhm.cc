@@ -30,11 +30,18 @@ void JHM::Run() {
 }
 
 void JHM::Setup() {
+  // Setup the window.
+  window_.setKeyRepeatEnabled(false);
+
   // Clear the screen.
   window_.clear();
 
   // Create the main character.
-  player_ = Character("../assets/character.png", 0, 0, 32, 48);
+  new Entity({
+    new Drawable("../assets/character.png", {0, 0}, {32, 48}),
+    new Movable(),
+    new Player()
+  });
 }
 
 void JHM::ProcessEvents() {
@@ -47,8 +54,8 @@ void JHM::ProcessEvents() {
 
       case sf::Event::KeyPressed:
       case sf::Event::KeyReleased:
-        for (Controllable* entity : Entity::GetEntitiesOfType<Controllable>()) {
-          entity->KeyPressed(event);
+        for (Entity* entity : Entity::GetEntitiesWithComponent<Player>()) {
+          entity->GetComponent<Player>().KeyPressed(event);
         }
 
         break;
@@ -60,8 +67,8 @@ void JHM::ProcessEvents() {
 }
 
 void JHM::Loop() {
-  for (Entity* entity : Entity::GetEntitiesOfType<Entity>()) {
-    entity->Update();
+  for (Entity* entity : Entity::GetEntitiesWithComponent<Movable>()) {
+    entity->GetComponent<Movable>().Update();
   }
 }
 
@@ -69,8 +76,8 @@ void JHM::Render() {
   window_.clear();
 
   // Render all rendable objects.
-  for (const Drawable* entity : Entity::GetEntitiesOfType<Drawable>()) {
-    entity->Draw(window_);
+  for (const Entity* entity : Entity::GetEntitiesWithComponent<Drawable>()) {
+    entity->GetComponent<Drawable>().Draw(window_);
   }
 
   // Display the window.
