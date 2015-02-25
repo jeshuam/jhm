@@ -2,6 +2,9 @@
 
 #include "engine/components/component.h"
 
+namespace engine {
+namespace component {
+
 // Container to store entitites.
 std::unordered_set<Entity*> Entity::entities_;
 
@@ -28,3 +31,5 @@ void Entity::AddComponent(Component* component) {
   // Bind this component to the entity.
   component->Bind(this);
 }
+
+}}  // namepsace engine::component

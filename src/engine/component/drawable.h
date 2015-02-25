@@ -4,8 +4,11 @@
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
 
-#include "engine/components/component.h"
+#include "engine/component/component.h"
 #include "engine/utility/texture_loader.h"
+
+namespace engine {
+namespace component {
 
 // Drawable objects have an associated image (which can either be a full file or
 // a subsection within a file). When you create the component, you must specify
@@ -26,5 +29,7 @@ public:
 protected:
   sf::Sprite sprite_;
 };
+
+}}  // namepsace engine::component
 
 #endif  // _ENGINE_COMPONENTS_DRAWABLE_H_

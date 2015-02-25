@@ -1,5 +1,10 @@
 #include "jhm.h"
 
+using engine::component::Entity;
+using engine::component::Drawable;
+using engine::component::Movable;
+using engine::component::Player;
+
 JHM::JHM() : running_(false), window_(sf::VideoMode(800, 600), "JHM") {
 
 }

@@ -3,10 +3,13 @@
 
 #include <SFML/System.hpp>
 
-#include "engine/components/component.h"
-#include "engine/components/drawable.h"
-#include "engine/components/entity.h"
+#include "engine/component/component.h"
+#include "engine/component/drawable.h"
+#include "engine/component/entity.h"
 #include "logging/easylogging++.h"
+
+namespace engine {
+namespace component {
 
 // Movable components have an X and Y velocity. For something to be movable, it
 // must also have an X and Y coordinate (i.e. be drawable).
@@ -27,5 +30,7 @@ protected:
   sf::Vector2i velocity_;
   int speed_;
 };
+
+}}  // namepsace engine::component
 
 #endif  // _ENGINE_COMPONENTS_MOVABLE_H_

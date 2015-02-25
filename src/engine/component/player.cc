@@ -1,5 +1,8 @@
 #include "player.h"
 
+namespace engine {
+namespace component {
+
 Player::Player() {
 
 }
@@ -78,3 +81,5 @@ void Player::KeyPressed(const sf::Event& event) {
     }
   }
 }
+
+}}  // namepsace engine::component

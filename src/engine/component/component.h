@@ -1,6 +1,9 @@
 #ifndef _ENGINE_COMPONENTS_COMPONENT_H_
 #define _ENGINE_COMPONENTS_COMPONENT_H_
 
+namespace engine {
+namespace component {
+
 // Forward declare entity to avoid circular includes.
 class Entity;
 
@@ -23,5 +26,7 @@ protected:
   // destroy all associated components).
   Entity* parent_;
 };
+
+}}  // namepsace engine::component
 
 #endif  // _ENGINE_COMPONENTS_COMPONENT_H_

@@ -1,6 +1,6 @@
-#include "jhm.h"
-
 #include "logging/easylogging++.h"
+
+#include "jhm.h"
 
 INITIALIZE_EASYLOGGINGPP
 

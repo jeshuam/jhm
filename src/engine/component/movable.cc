@@ -1,5 +1,8 @@
 #include "movable.h"
 
+namespace engine {
+namespace component {
+
 Movable::Movable(int speed) : velocity_(), speed_(speed) {
 
 }
@@ -20,3 +23,5 @@ void Movable::Update() {
     throw e;
   }
 }
+
+}}  // namepsace engine::component

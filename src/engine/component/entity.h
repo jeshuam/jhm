@@ -4,6 +4,9 @@
 #include <memory>
 #include <unordered_set>
 
+namespace engine {
+namespace component {
+
 // Forward declare component to avoid circular includes.
 class Component;
 
@@ -83,5 +86,7 @@ private:
   // gain access to the entities themselves.
   static std::unordered_set<Entity*> entities_;
 };
+
+}}  // namepsace engine::component
 
 #endif  // _ENGINE_ENTITY_ENTITY_H_

@@ -1,6 +1,8 @@
 #include "texture_loader.h"
 
-namespace TextureLoader {
+namespace engine {
+namespace utility {
+namespace texture_loader {
 
 // Hash map structure from filename --> texture object.
 std::unordered_map<std::string, sf::Texture> textures_;
@@ -17,4 +19,4 @@ const sf::Texture& Load(const std::string& texture_filename) {
   return textures_[texture_filename];
 }
 
-}  // namespace TextureLoader
+}}}  // namespace engine::utility::texture_loader

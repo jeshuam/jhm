@@ -3,10 +3,10 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "engine/components/drawable.h"
-#include "engine/components/entity.h"
-#include "engine/components/movable.h"
-#include "engine/components/player.h"
+#include "engine/component/drawable.h"
+#include "engine/component/entity.h"
+#include "engine/component/movable.h"
+#include "engine/component/player.h"
 
 class JHM {
 public:
