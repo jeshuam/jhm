@@ -30,6 +30,9 @@
 # Ignore binary directories.
 bin
 
+# Ignore logs directory.
+logs
+
 # Sublime Files
 *.sublime-project
 *.sublime-workspace
