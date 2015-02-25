@@ -39,9 +39,9 @@ void JHM::Setup() {
 
   // Create the main character.
   Entity* main_character = new Entity({
-    new Drawable("../assets/character.png", {0, 0}, {32, 48}),
-    new Movable(1),
-    new Player(action_map_),
+    new Drawable("../assets/character.png", {0, 0}, {32, 48}, 2),
+    new Movable(2.5),
+    new Player(action_map_, 2),
     new Directional()
   });
 
