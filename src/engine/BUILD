@@ -2,7 +2,7 @@ targets = {
   'engine': {
     'type': 'library',
     'srcs': [
-      'components/*.cc',
+      'component/*.cc',
       'utility/*.cc',
     ],
   }

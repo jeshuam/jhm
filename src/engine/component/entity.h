@@ -21,6 +21,9 @@ public:
   // Add a component to this entity.
   void AddComponent(Component* component);
 
+  // Update all internal components.
+  void Update();
+
   // Remove a component from this entity.
   template <typename T>
   void RemoveComponent() {
@@ -31,7 +34,20 @@ public:
     }
   }
 
-  // Check to see whether this entity has a given component type.
+  // Check to see whether this entity has the requested component type. If it
+  // does, return true, otherwise return false.
+  template <typename T>
+  bool HasComponent() {
+    try {
+      GetComponent<T>();
+      return true;
+    } catch (std::logic_error) {
+      return false;
+    }
+  }
+
+  // Get a reference to a given component type. Throws a logic error if this
+  // entity doesn't contain the requested component.
   template <typename T>
   T& GetComponent() {
     for (const std::shared_ptr<Component>& component : components_) {
@@ -76,6 +92,11 @@ public:
     }
 
     return entities;
+  }
+
+  // Get all available entities.
+  static std::unordered_set<Entity*> GetAllEntities() {
+    return entities_;
   }
 
 private:

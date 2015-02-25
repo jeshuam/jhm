@@ -13,11 +13,8 @@ Player::~Player() {
 
 void Player::KeyPressed(const sf::Event& event) {
   // Get a reference to the Movable component.
-  try {
-    parent_->GetComponent<Movable>();
-  } catch (std::logic_error& e) {
+  if (not parent_->HasComponent<Movable>()) {
     LOG(FATAL) << "Player entity does not have required Movable component.";
-    throw e;
   }
 
   // Get a reference to the velocity vector.

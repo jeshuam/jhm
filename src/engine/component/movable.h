@@ -3,10 +3,12 @@
 
 #include <SFML/System.hpp>
 
+#include "logging/easylogging++.h"
+
 #include "engine/component/component.h"
+#include "engine/component/directional.h"
 #include "engine/component/drawable.h"
 #include "engine/component/entity.h"
-#include "logging/easylogging++.h"
 
 namespace engine {
 namespace component {

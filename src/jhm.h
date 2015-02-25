@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "engine/component/drawable.h"
+#include "engine/component/directional.h"
 #include "engine/component/entity.h"
 #include "engine/component/movable.h"
 #include "engine/component/player.h"

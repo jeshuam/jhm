@@ -1,7 +1,8 @@
 #include "jhm.h"
 
-using engine::component::Entity;
+using engine::component::Directional;
 using engine::component::Drawable;
+using engine::component::Entity;
 using engine::component::Movable;
 using engine::component::Player;
 
@@ -22,7 +23,7 @@ void JHM::Run() {
   while (running_) {
     ProcessEvents();
 
-    if (last_loop_run_clock_.getElapsedTime().asMilliseconds() > 32.0) {
+    if (last_loop_run_clock_.getElapsedTime().asMilliseconds() > 100) {
       Loop();
       Render();
 
@@ -44,8 +45,14 @@ void JHM::Setup() {
   // Create the main character.
   new Entity({
     new Drawable("../assets/character.png", {0, 0}, {32, 48}),
-    new Movable(),
-    new Player()
+    new Movable(10),
+    new Player(),
+    new Directional(
+      {{0, 144}, {32, 144}, {64, 144}, {96, 144}},
+      {{0,   0}, {32,   0}, {64,   0}, {96,   0}},
+      {{0,  48}, {32,  48}, {64,  48}, {96,  48}},
+      {{0,  96}, {32,  96}, {64,  96}, {96,  96}}
+    ),
   });
 }
 

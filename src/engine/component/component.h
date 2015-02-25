@@ -14,6 +14,11 @@ public:
   virtual ~Component() {
 
   }
+
+  // Update the given component. This will be called once per loop.
+  virtual void Update() {
+    
+  }
   
   // Bind the given entity to this component.
   void Bind(Entity* parent) {

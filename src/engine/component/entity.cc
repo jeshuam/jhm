@@ -1,6 +1,6 @@
 #include "entity.h"
 
-#include "engine/components/component.h"
+#include "engine/component/component.h"
 
 namespace engine {
 namespace component {
@@ -30,6 +30,12 @@ void Entity::AddComponent(Component* component) {
 
   // Bind this component to the entity.
   component->Bind(this);
+}
+
+void Entity::Update() {
+  for (auto& component : components_) {
+    component->Update();
+  }
 }
 
 }}  // namepsace engine::component
