@@ -48,22 +48,6 @@ void Directional::Update(const thor::ActionMap<std::string>& map) {
   LOG->trace("Done Directional::Update");
 }
 
-void Directional::MoveUp() {
-  ChangeDirection(UP);
-}
-
-void Directional::MoveDown() {
-  ChangeDirection(DOWN);
-}
-
-void Directional::MoveLeft() {
-  ChangeDirection(LEFT);
-}
-
-void Directional::MoveRight() {
-  ChangeDirection(RIGHT);
-}
-
 Directional* Directional::AddDirection(
     Direction direction, sf::Time length,
     const std::vector<std::pair<sf::IntRect, double>>& frames) {

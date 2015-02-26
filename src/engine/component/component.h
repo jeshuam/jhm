@@ -1,5 +1,5 @@
-#ifndef _ENGINE_COMPONENTS_COMPONENT_H_
-#define _ENGINE_COMPONENTS_COMPONENT_H_
+#ifndef _ENGINE_COMPONENT_COMPONENT_H_
+#define _ENGINE_COMPONENT_COMPONENT_H_
 
 #include <SFML/System.hpp>
 #include <Thor/Input/ActionMap.hpp>
@@ -8,6 +8,19 @@
 
 namespace engine {
 namespace component {
+
+// All components must declare this at the top of their PUBLIC section. This
+// will setup the name_ and name() methods automatically.
+#define COMPONENT_KEY(KEY)                                  \
+  static const std::string& name_() {                       \
+    static const std::string name = KEY;                    \
+    return name;                                            \
+  }                                                         \
+                                                            \
+  virtual const std::string& name() {                       \
+    return name_();                                         \
+  }                                                         \
+
 
 // Forward declare entity to avoid circular includes.
 class Entity;
@@ -45,4 +58,4 @@ protected:
 
 }}  // namepsace engine::component
 
-#endif  // _ENGINE_COMPONENTS_COMPONENT_H_
+#endif  // _ENGINE_COMPONENT_COMPONENT_H_

@@ -22,44 +22,34 @@ namespace component {
 // show that moving in that direction is animatable.
 class Directional : public Component {
 public:
+  COMPONENT_KEY("DIRECTIONAL");
+
+  // Directional objects can 'face' a specific direction. They also have an
+  // animation that will play if they are moving in that direction.
   enum Direction {
     UP, DOWN, LEFT, RIGHT
   };
 
+  // Constructor + Destructor.
   Directional();
   virtual ~Directional();
 
-  // Method for adding directions to the directional object.
+  // Update this component.
+  virtual void Update(const thor::ActionMap<std::string>& map);
+
+  // Add an animation for a specific direction of some total length.
   Directional* AddDirection(
     Direction direction, sf::Time length,
     const std::vector<std::pair<sf::IntRect, double>>& frames);
 
-  // Update the directional object.
-  virtual void Update(const thor::ActionMap<std::string>& map);
-
-  static const std::string& name_() {
-    static const std::string name = "DIRECTIONAL";
-    return name;
-  }
-
-  virtual const std::string& name() {
-    return name_();
-  }
-
-  // Methods for moving in a particular direction.
-  void MoveUp();
-  void MoveDown();
-  void MoveLeft();
-  void MoveRight();
+  // Change the direction this object is facing.
+  void ChangeDirection(Direction direction);
 
 protected:
   // Thor animation manager.
   thor::Animator<sf::Sprite, Direction> animator_;
   Direction current_direction_;
   sf::Clock clock_;
-
-  // Change the direction this object is facing.
-  void ChangeDirection(Direction direction);
 };
 
 }}  // namepsace engine::component

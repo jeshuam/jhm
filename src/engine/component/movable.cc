@@ -15,7 +15,7 @@ void Movable::Update(const thor::ActionMap<std::string>& map) {
   LOG->trace("Movable::Update");
 
   // Only run this every x ms.
-  if (clock_.getElapsedTime().asMilliseconds() < 20) {
+  if (clock_.getElapsedTime().asMilliseconds() < kUpdateFrequencyMs) {
     LOG->trace("Done (early) Movable::Update");
     return;
   }
@@ -36,13 +36,13 @@ void Movable::Update(const thor::ActionMap<std::string>& map) {
   if (parent_->HasComponent<Directional>()) {
     Directional& directional = parent_->GetComponent<Directional>();
     if (velocity_.x < 0) {
-      directional.MoveLeft();
+      directional.ChangeDirection(Directional::LEFT);
     } else if (velocity_.x > 0) {
-      directional.MoveRight();
+      directional.ChangeDirection(Directional::RIGHT);
     } else if (velocity_.y > 0) {
-      directional.MoveUp();
+      directional.ChangeDirection(Directional::UP);
     } else if (velocity_.y < 0) {
-      directional.MoveDown();
+      directional.ChangeDirection(Directional::DOWN);
     }
   }
 

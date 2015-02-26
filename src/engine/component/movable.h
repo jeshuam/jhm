@@ -1,5 +1,5 @@
-#ifndef _ENGINE_COMPONENTS_MOVABLE_H_
-#define _ENGINE_COMPONENTS_MOVABLE_H_
+#ifndef _ENGINE_COMPONENT_MOVABLE_H_
+#define _ENGINE_COMPONENT_MOVABLE_H_
 
 #include <SFML/System.hpp>
 
@@ -16,10 +16,13 @@ namespace component {
 // must also have an X and Y coordinate (i.e. be drawable).
 class Movable : public Component {
 public:
+  COMPONENT_KEY("MOVABLE");
+
   Movable(double speed=1.0);
   virtual ~Movable();
 
-  // Update this movable object (by changing it's X and Y location).
+  // Update the component. This will change the X and Y value based on the
+  // current X and Y velocity.
   virtual void Update(const thor::ActionMap<std::string>& map);
 
   // Get access to the velocity.
@@ -27,27 +30,25 @@ public:
     return velocity_;
   }
 
-  // Set the speed multiplier.
+  // Set the speed multiplier. This can be used to modify the effective speed at
+  // runtime (e.g. a running person).
   void SpeedMultiplier(double speed_multiplier) {
     speed_multiplier_ = speed_multiplier;
   }
 
-  static const std::string& name_() {
-    static const std::string name = "MOVABLE";
-    return name;
-  }
-
-  virtual const std::string& name() {
-    return name_();
-  }
-
 protected:
+  // The X and Y velocity (usually -1, 0 or 1).
   sf::Vector2i velocity_;
+
+  // Control the overall speed of the entity.
   double speed_;
   double speed_multiplier_;
+
+  // Only update movable objects every x milliseconds.
+  static const int kUpdateFrequencyMs = 20;
   sf::Clock clock_;
 };
 
 }}  // namepsace engine::component
 
-#endif  // _ENGINE_COMPONENTS_MOVABLE_H_
+#endif  // _ENGINE_COMPONENT_MOVABLE_H_
