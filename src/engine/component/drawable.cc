@@ -1,5 +1,7 @@
 #include "drawable.h"
 
+#include "engine/component/player.h"
+
 namespace engine {
 namespace component {
 
@@ -36,6 +38,14 @@ void Drawable::Update(const thor::ActionMap<std::string>& map) {
 
 void Drawable::Draw(sf::RenderWindow& window) const {
   LOG->trace("Drawable::Draw");
+
+  // If we are a player, then center the window's view around us.
+  if (parent_->HasComponent<Player>()) {
+    sf::View current_view = window.getView();
+    current_view.setCenter(sprite_.getPosition());
+    window.setView(current_view);
+  }
+
   window.draw(sprite_);
   LOG->trace("Done Drawable::Draw");
 }

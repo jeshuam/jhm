@@ -6,6 +6,7 @@
 #include <SFML/System.hpp>
 
 #include "engine/component/component.h"
+#include "engine/component/entity.h"
 #include "engine/utility/resource_loader.h"
 #include "log.h"
 

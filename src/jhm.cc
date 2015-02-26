@@ -33,6 +33,9 @@ void JHM::Run() {
 void JHM::Setup() {
   LOG->trace("JHM::Setup");
 
+  // Create the main view.
+  window_.setView(sf::View(sf::FloatRect(0, 0, 800, 600)));
+
   // Clear the screen.
   window_.clear();
 
@@ -44,6 +47,10 @@ void JHM::Setup() {
     new Drawable("../assets/main-character.png", {7, 26}, {19, 29}, 2),
     new Movable(2.5),
     new Player(action_map_, 2)
+  });
+  
+  new Entity({
+    new Drawable("../assets/main-character.png")
   });
 
   LOG->trace("done JHM::Setup");
@@ -77,6 +84,9 @@ void JHM::Render() {
   for (const Entity* entity : Entity::GetEntitiesWithComponent<Drawable>()) {
     entity->GetComponent<Drawable>().Draw(window_);
   }
+
+  // Set the center of the view to the X and Y location of the player.
+
 
   // Display the window.
   window_.display();
