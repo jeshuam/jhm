@@ -35,6 +35,8 @@ logs
 
 # Ignore GBA rom files.
 *.gba
+*.sav
+*.sgm
 
 # Sublime Files
 *.sublime-project
