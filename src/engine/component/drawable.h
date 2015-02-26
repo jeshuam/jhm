@@ -23,10 +23,19 @@ public:
   // Construct a new drawable component. Drawable objects require a either a
   // sprite file or a sprite map and location. You can also specify a scaling
   // factor for the sprite if desired.
-  Drawable(const std::string& sprite_filename);
-  Drawable(const std::string& sprite_filename, sf::Vector2u offset,
-           sf::Vector2u size=sf::Vector2u(), double scale=1);
+  Drawable(const std::string& sprite_filename,
+           sf::Vector2u offset={0, 0}, sf::Vector2u size={0, 0});
   virtual ~Drawable();
+
+  // Build methods for creating drawables.
+  Drawable* scale(double scale);
+  Drawable* z_index(double z_index);
+  Drawable* location(sf::Vector2f location);
+  Drawable* repeat();
+
+  double z_index() {
+    return z_index_;
+  }
 
   // Update this component.
   virtual void Update(const thor::ActionMap<std::string>& map);
@@ -43,6 +52,9 @@ protected:
 
   // A reference to the texture used by this drawable.
   std::shared_ptr<sf::Texture> texture_;
+
+  // The location this drawable should be displayed on the z-axis.
+  double z_index_;
 };
 
 }}  // namepsace engine::component

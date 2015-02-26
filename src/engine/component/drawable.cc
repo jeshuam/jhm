@@ -5,13 +5,8 @@
 namespace engine {
 namespace component {
 
-Drawable::Drawable(const std::string& sprite_filename)
-    : Drawable(sprite_filename, {0, 0}) {
-
-}
-
 Drawable::Drawable(const std::string& sprite_filename, sf::Vector2u offset,
-                   sf::Vector2u size, double scale) {
+                   sf::Vector2u size) {
   // Get a reference to the texture.
   texture_ = utility::resource_loader::cache.acquire(
       thor::Resources::fromFile<sf::Texture>(sprite_filename));
@@ -24,11 +19,31 @@ Drawable::Drawable(const std::string& sprite_filename, sf::Vector2u offset,
   // Construct the sprite.
   sprite_.setTexture(*texture_);
   sprite_.setTextureRect(sf::IntRect(offset.x, offset.y, size.x, size.y));
-  sprite_.setScale(scale, scale);
 }
 
 Drawable::~Drawable() {
 
+}
+
+Drawable* Drawable::scale(double scale) {
+  sprite_.setScale(scale, scale);
+  return this;
+}
+
+Drawable* Drawable::z_index(double z_index) {
+  z_index_ = z_index;
+  return this;
+}
+
+Drawable* Drawable::location(sf::Vector2f location) {
+  sprite_.move(location);
+  return this;
+}
+
+Drawable* Drawable::repeat() {
+  texture_->setRepeated(true);
+  sprite_.setTexture(*texture_);
+  return this;
 }
 
 void Drawable::Update(const thor::ActionMap<std::string>& map) {

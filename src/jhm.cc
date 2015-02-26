@@ -33,25 +33,39 @@ void JHM::Run() {
 void JHM::Setup() {
   LOG->trace("JHM::Setup");
 
+  // When the window is closed, stop running.
+  action_map_["quit"] = thor::Action(sf::Event::Closed);
+
+  // Create the main character.
+  LOG->info("Creating main character...");
+  new Entity({
+    (new Drawable("../assets/main-character.png", {7, 26}, {19, 29}))
+      ->z_index(100)
+      ->location({200.0, 200.0})
+      ->scale(2),
+    new Movable(4),
+    new Player(action_map_, 2)
+  });
+  LOG->info("Done!");
+  
+  LOG->info("Creating background map...");
+  new Entity({
+    (new Drawable("../assets/main-farm-large.png"))->z_index(0),
+  });
+  LOG->info("Done!");
+
+  LOG->info("Constructing left-most wall...");
+  new Entity({
+    (new Drawable("../assets/farm-sprites.png", {0, 0}, {7, 405}))
+      ->location({128.0, 118.0})->z_index(1000)->scale(2)->repeat(),
+  });
+  LOG->info("Done!");
+
   // Create the main view.
   window_.setView(sf::View(sf::FloatRect(0, 0, 800, 600)));
 
   // Clear the screen.
   window_.clear();
-
-  // When the window is closed, stop running.
-  action_map_["quit"] = thor::Action(sf::Event::Closed);
-
-  // Create the main character.
-  new Entity({
-    new Drawable("../assets/main-character.png", {7, 26}, {19, 29}, 2),
-    new Movable(2.5),
-    new Player(action_map_, 2)
-  });
-  
-  new Entity({
-    new Drawable("../assets/main-character.png")
-  });
 
   LOG->trace("done JHM::Setup");
 }
@@ -81,12 +95,15 @@ void JHM::Render() {
   window_.clear();
 
   // Render all rendable objects.
-  for (const Entity* entity : Entity::GetEntitiesWithComponent<Drawable>()) {
+  std::vector<Entity*> entities = Entity::GetEntitiesWithComponent<Drawable>();
+  std::sort(entities.begin(), entities.end(), [](Entity* a, Entity* b) {
+    return a->GetComponent<Drawable>().z_index() <
+           b->GetComponent<Drawable>().z_index();
+  });
+
+  for (const Entity* entity : entities) {
     entity->GetComponent<Drawable>().Draw(window_);
   }
-
-  // Set the center of the view to the X and Y location of the player.
-
 
   // Display the window.
   window_.display();

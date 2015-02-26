@@ -66,11 +66,11 @@ public:
 
   // Get all entities that contain a specific component.
   template <typename T>
-  static std::unordered_set<Entity*> GetEntitiesWithComponent() {
-    std::unordered_set<Entity*> entities;
+  static std::vector<Entity*> GetEntitiesWithComponent() {
+    std::vector<Entity*> entities;
     for (Entity* entity : entities_) {
       if (entity->HasComponent<T>()) {
-        entities.insert(entity);
+        entities.push_back(entity);
       }
     }
 

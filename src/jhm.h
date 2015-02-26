@@ -1,6 +1,8 @@
 #ifndef _JHM_H_
 #define _JHM_H_
 
+#include <algorithm>
+
 #include <SFML/Graphics.hpp>
 #include <Thor/Input/Action.hpp>
 #include <Thor/Input/ActionMap.hpp>
