@@ -33,6 +33,9 @@ bin
 # Ignore logs directory.
 logs
 
+# Ignore GBA rom files.
+*.gba
+
 # Sublime Files
 *.sublime-project
 *.sublime-workspace
