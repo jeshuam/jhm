@@ -1,6 +1,6 @@
-[submodule "dependencies/SFML"]
-	path = dependencies/SFML
-	url = git@github.com:LaurentGomila/SFML.git
 [submodule "dependencies/Thor"]
 	path = dependencies/Thor
 	url = git@github.com:Bromeon/Thor.git
+[submodule "dependencies/SFML"]
+	path = dependencies/SFML
+	url = git@github.com:LaurentGomila/SFML.git
