@@ -7,6 +7,7 @@
 #include <Thor/Input/Action.hpp>
 #include <Thor/Input/ActionMap.hpp>
 
+#include "engine/component/block_movement.h"
 #include "engine/component/drawable.h"
 #include "engine/component/directional.h"
 #include "engine/component/entity.h"

@@ -24,7 +24,7 @@ public:
   // sprite file or a sprite map and location. You can also specify a scaling
   // factor for the sprite if desired.
   Drawable(const std::string& sprite_filename,
-           sf::Vector2u offset={0, 0}, sf::Vector2u size={0, 0});
+           sf::Vector2i offset={0, 0}, sf::Vector2i size={0, 0});
   virtual ~Drawable();
 
   // Build methods for creating drawables.
@@ -32,8 +32,10 @@ public:
   Drawable* z_index(double z_index);
   Drawable* location(sf::Vector2f location);
   Drawable* repeat();
+  Drawable* rotate(double degrees);
+  Drawable* hit_box(sf::Vector2f hit_box);
 
-  double z_index() {
+  double z_index() const {
     return z_index_;
   }
 
@@ -44,11 +46,36 @@ public:
   virtual void Draw(sf::RenderWindow& window) const;
 
   // Get access to the internal sprite.
-  sf::Sprite& Sprite();
+  sf::Sprite& Sprite() {
+    return sprite_;
+  }
+
+  const sf::Sprite& Sprite() const {
+    return sprite_;
+  }
+
+  sf::FloatRect HitBox() const {
+    if (hit_box_.x <= 0 and hit_box_.y <= 0) {
+      return sprite_.getGlobalBounds();
+    }
+
+    sf::FloatRect global_bounds = sprite_.getGlobalBounds();
+
+    sf::FloatRect hit_box;
+    hit_box.left = global_bounds.left + hit_box_.x;
+    hit_box.top = global_bounds.top + hit_box_.y;
+    hit_box.width = global_bounds.width - hit_box_.x;
+    hit_box.height = global_bounds.height - hit_box_.y;
+
+    return hit_box;
+  }
 
 protected:
   // The internal sprite used to draw the drawable to the screen.
   sf::Sprite sprite_;
+
+  // What counts as 'hitting' this object?
+  sf::Vector2f hit_box_;
 
   // A reference to the texture used by this drawable.
   std::shared_ptr<sf::Texture> texture_;

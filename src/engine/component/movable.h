@@ -3,6 +3,7 @@
 
 #include <SFML/System.hpp>
 
+#include "engine/component/block_movement.h"
 #include "engine/component/component.h"
 #include "engine/component/directional.h"
 #include "engine/component/drawable.h"

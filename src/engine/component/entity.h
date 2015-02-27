@@ -39,7 +39,7 @@ public:
   // Check to see whether this entity has the requested component type. If it
   // does, return true, otherwise return false.
   template <typename T>
-  bool HasComponent() {
+  bool HasComponent() const {
     return components_.find(T::name_()) != components_.end();
   }
 
@@ -50,7 +50,7 @@ public:
     try {
       return *dynamic_cast<T*>(components_.at(T::name_()));
     } catch (std::out_of_range) {
-      throw std::logic_error("Request for component where none exists.");  
+      throw std::logic_error("Request for component where none exists.");
     }
   }
 

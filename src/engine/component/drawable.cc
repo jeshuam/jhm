@@ -5,15 +5,16 @@
 namespace engine {
 namespace component {
 
-Drawable::Drawable(const std::string& sprite_filename, sf::Vector2u offset,
-                   sf::Vector2u size) {
+Drawable::Drawable(const std::string& sprite_filename, sf::Vector2i offset,
+                   sf::Vector2i size) {
   // Get a reference to the texture.
   texture_ = utility::resource_loader::cache.acquire(
       thor::Resources::fromFile<sf::Texture>(sprite_filename));
 
   // If width or height is -1, then set it to the max.
-  if (size.x <= 0 or size.y <= 0) {
-    size = texture_->getSize();
+  if (size.x == 0 or size.y == 0) {
+    size.x = texture_->getSize().x;
+    size.y = texture_->getSize().y;
   }
 
   // Construct the sprite.
@@ -46,6 +47,16 @@ Drawable* Drawable::repeat() {
   return this;
 }
 
+Drawable* Drawable::rotate(double degrees) {
+  sprite_.rotate(degrees);
+  return this;
+}
+
+Drawable* Drawable::hit_box(sf::Vector2f hit_box) {
+  hit_box_ = hit_box;
+  return this;
+}
+
 void Drawable::Update(const thor::ActionMap<std::string>& map) {
   LOG->trace("Drawable::Update");
   LOG->trace("Done Drawable::Update");
@@ -53,20 +64,8 @@ void Drawable::Update(const thor::ActionMap<std::string>& map) {
 
 void Drawable::Draw(sf::RenderWindow& window) const {
   LOG->trace("Drawable::Draw");
-
-  // If we are a player, then center the window's view around us.
-  if (parent_->HasComponent<Player>()) {
-    sf::View current_view = window.getView();
-    current_view.setCenter(sprite_.getPosition());
-    window.setView(current_view);
-  }
-
   window.draw(sprite_);
   LOG->trace("Done Drawable::Draw");
-}
-
-sf::Sprite& Drawable::Sprite() {
-  return sprite_;
 }
 
 }}  // namepsace engine::component
