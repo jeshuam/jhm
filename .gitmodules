@@ -4,3 +4,6 @@
 [submodule "dependencies/SFML"]
 	path = dependencies/SFML
 	url = git@github.com:LaurentGomila/SFML.git
+[submodule "dependencies/rapidjson"]
+	path = dependencies/rapidjson
+	url = git@github.com:miloyip/rapidjson.git
