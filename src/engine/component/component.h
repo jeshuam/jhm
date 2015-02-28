@@ -3,8 +3,8 @@
 
 #include <SFML/System.hpp>
 #include <Thor/Input/ActionMap.hpp>
+#include <json/json.h>
 
-#include "engine/json/json.h"
 #include "log.h"
 
 namespace engine {

@@ -6,10 +6,10 @@
 // TODO(jeshua): Use platform independent code.
 #include <unistd.h>
 
+#include <json/json.h>
+
 #include "engine/component/drawable.h"
 #include "engine/component/entity.h"
-#include "engine/json/json.h"
-
 #include "engine/game/map.h"
 #include "log.h"
 
