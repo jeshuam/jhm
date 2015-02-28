@@ -37,16 +37,18 @@ void JHM::Setup() {
   // Create the main view.
   window_.create(sf::VideoMode(800, 600), "Harvest Moon");
   window_.clear();
-  window_.setFramerateLimit(30);
   window_.setView(sf::View(sf::FloatRect(0, 0, 800, 600)));
 
   // When the window is closed, stop running.
   action_map_["quit"] = thor::Action(sf::Event::Closed);
 
+  // Load the map.
+  engine::game::Loader::LoadMap("../maps/fomt/farm.map");
+
   // Create the main character.
   LOG->info("Creating main character...");
   new Entity({
-    (new Drawable("../assets/main-character.png", {7, 26}, {19, 29}))
+    (new Drawable("../maps/fomt/assets/main-character.png", {7, 26}, {19, 29}))
       ->z_index(10000)
       ->location({200.0, 200.0})
       ->scale(2)
@@ -58,7 +60,7 @@ void JHM::Setup() {
 
   LOG->info("Creating background map...");
   new Entity({
-    (new Drawable("../assets/main-farm-large.png"))->z_index(0),
+    (new Drawable("../maps/fomt/assets/main-farm-large.png"))->z_index(0),
   });
   LOG->info("Done!");
 
@@ -66,38 +68,38 @@ void JHM::Setup() {
 
   // Vertical fences (0, 0, 7, 16).
   new Entity({
-    (new Drawable("../assets/farm-fence-vertical.png", {0, 0}, {7, 16 * 26 - 6}))
+    (new Drawable("../maps/fomt/assets/farm-fence-vertical.png", {0, 0}, {7, 16 * 26 - 6}))
       ->location({128.0, 110.0})->z_index(1002)->scale(2)->repeat(),
     new BlockMovement(),
   });
 
   new Entity({
-    (new Drawable("../assets/farm-fence-vertical.png", {7, 0}, {-7, 16 * 35 + 10}))
+    (new Drawable("../maps/fomt/assets/farm-fence-vertical.png", {7, 0}, {-7, 16 * 35 + 10}))
       ->location({2004.0, 118.0})->z_index(1002)->scale(2)->repeat(),
     new BlockMovement(),
   });
 
   new Entity({
-    (new Drawable("../assets/farm-fence-vertical.png", {0, 0}, {7, 16 * 4}))
+    (new Drawable("../maps/fomt/assets/farm-fence-vertical.png", {0, 0}, {7, 16 * 4}))
       ->location({578.0, -16})->z_index(1002)->scale(2)->repeat(),
     new BlockMovement(),
   });
 
   new Entity({
-    (new Drawable("../assets/farm-fence-vertical.png", {7, 0}, {-7, 16 * 4}))
+    (new Drawable("../maps/fomt/assets/farm-fence-vertical.png", {7, 0}, {-7, 16 * 4}))
       ->location({770.0, -16})->z_index(1002)->scale(2)->repeat(),
     new BlockMovement(),
   });
 
   // Horizontal fences (0, 0, 11, 16).
   new Entity({
-    (new Drawable("../assets/farm-fence-horizontal.png", {7, 0}, {11 * 20, 16}))
+    (new Drawable("../maps/fomt/assets/farm-fence-horizontal.png", {7, 0}, {11 * 20, 16}))
       ->location({140.0, 102.0 - 22})->z_index(1002)->scale(2)->repeat(),
     new BlockMovement(),
   });
 
   new Entity({
-    (new Drawable("../assets/farm-fence-horizontal.png", {7, 0}, {11 * 57, 16}))
+    (new Drawable("../maps/fomt/assets/farm-fence-horizontal.png", {7, 0}, {11 * 57, 16}))
       ->location({770.0, 102.0 - 22})->z_index(1002)->scale(2)->repeat(),
     new BlockMovement(),
   });
@@ -107,51 +109,51 @@ void JHM::Setup() {
   // Horizontal water edge. (0, 0, 32, 8)
   // TOP EDGE OF THE RIVER.
   new Entity({
-    (new Drawable("../assets/farm-water-edge-corners.png", {10, 0}, {10, 10}))
+    (new Drawable("../maps/fomt/assets/farm-water-edge-corners.png", {10, 0}, {10, 10}))
       ->location({86.0, 706.0})->z_index(1001)->scale(2)->repeat(),
   });
 
   new Entity({
-    (new Drawable("../assets/farm-water-edge-vertical.png", {0, 0}, {8, 35}))
+    (new Drawable("../maps/fomt/assets/farm-water-edge-vertical.png", {0, 0}, {8, 35}))
       ->location({90.0, 716.0})->z_index(1000)->scale(2)->repeat(),
   });
 
   new Entity({
-    (new Drawable("../assets/farm-water-edge-corners.png", {0, 0}, {10, 10}))
+    (new Drawable("../maps/fomt/assets/farm-water-edge-corners.png", {0, 0}, {10, 10}))
       ->location({93.0, 768.0})->z_index(1001)->scale(2)->repeat(),
   });
 
   new Entity({
-    (new Drawable("../assets/farm-water-edge-corners.png", {10, 0}, {10, 10}))
+    (new Drawable("../maps/fomt/assets/farm-water-edge-corners.png", {10, 0}, {10, 10}))
       ->location({110.0, 768.0})->z_index(1001)->scale(2)->repeat(),
   });
 
   new Entity({
-    (new Drawable("../assets/farm-water-edge-vertical.png", {0, 0}, {8, 155}))
+    (new Drawable("../maps/fomt/assets/farm-water-edge-vertical.png", {0, 0}, {8, 155}))
       ->location({112.0, 785.0})->z_index(1000)->scale(2)->repeat(),
     new BlockMovement(),
   });
 
   new Entity({
-    (new Drawable("../assets/farm-water-edge-corners.png", {0, 0}, {10, 10}))
+    (new Drawable("../maps/fomt/assets/farm-water-edge-corners.png", {0, 0}, {10, 10}))
       ->location({118.0, 1086.0})->z_index(1001)->scale(2)->repeat(),
     new BlockMovement(),
   });
 
   new Entity({
-    (new Drawable("../assets/farm-water-edge-corners.png", {10, 0}, {10, 10}))
+    (new Drawable("../maps/fomt/assets/farm-water-edge-corners.png", {10, 0}, {10, 10}))
       ->location({133.0, 1086.0})->z_index(1001)->scale(2)->repeat(),
       new BlockMovement(),
   });
 
   new Entity({
-    (new Drawable("../assets/farm-water-edge-vertical.png", {0, 0}, {8, 25}))
+    (new Drawable("../maps/fomt/assets/farm-water-edge-vertical.png", {0, 0}, {8, 25}))
       ->location({138.0, 1096.0})->z_index(1000)->scale(2)->repeat(),
     new BlockMovement(),
   });
 
   new Entity({
-    (new Drawable("../assets/farm-water-edge-corners.png", {0, 0}, {10, 10}))
+    (new Drawable("../maps/fomt/assets/farm-water-edge-corners.png", {0, 0}, {10, 10}))
       ->location({138.0, 1140.0})->z_index(1001)->scale(2)->repeat(),
       new BlockMovement(),
   });
@@ -159,19 +161,19 @@ void JHM::Setup() {
   // TODO: need horizontal piece here.
 
   new Entity({
-    (new Drawable("../assets/farm-water-edge-corners.png", {10, 0}, {10, 10}))
+    (new Drawable("../maps/fomt/assets/farm-water-edge-corners.png", {10, 0}, {10, 10}))
       ->location({158.0, 1140.0})->z_index(1001)->scale(2)->repeat(),
       new BlockMovement(),
   });
 
   new Entity({
-    (new Drawable("../assets/farm-water-edge-vertical.png", {0, 0}, {8, 40}))
+    (new Drawable("../maps/fomt/assets/farm-water-edge-vertical.png", {0, 0}, {8, 40}))
       ->location({162.0, 1150.0})->z_index(1000)->scale(2)->repeat(),
     new BlockMovement(),
   });
 
   new Entity({
-    (new Drawable("../assets/farm-water-edge-corners.png", {0, 0}, {10, 10}))
+    (new Drawable("../maps/fomt/assets/farm-water-edge-corners.png", {0, 0}, {10, 10}))
       ->location({166.0, 1222.0})->z_index(1001)->scale(2)->repeat(),
       new BlockMovement(),
   });
@@ -179,31 +181,31 @@ void JHM::Setup() {
   // TODO: need horizontal piece here.
 
   new Entity({
-    (new Drawable("../assets/farm-water-edge-corners.png", {10, 0}, {10, 10}))
+    (new Drawable("../maps/fomt/assets/farm-water-edge-corners.png", {10, 0}, {10, 10}))
       ->location({230.0, 1222.0})->z_index(1001)->scale(2)->repeat(),
       new BlockMovement(),
   });
 
   new Entity({
-    (new Drawable("../assets/farm-water-edge-vertical.png", {0, 0}, {8, 20}))
+    (new Drawable("../maps/fomt/assets/farm-water-edge-vertical.png", {0, 0}, {8, 20}))
       ->location({236.0, 1232.0})->z_index(1000)->scale(2)->repeat(),
     new BlockMovement(),
   });
 
   new Entity({
-    (new Drawable("../assets/farm-water-edge-corners.png", {0, 0}, {10, 10}))
+    (new Drawable("../maps/fomt/assets/farm-water-edge-corners.png", {0, 0}, {10, 10}))
       ->location({230.0, 1250.0})->z_index(1001)->scale(2)->repeat(),
       new BlockMovement(),
   });
 
   new Entity({
-    (new Drawable("../assets/farm-water-edge-horizontal.png", {0, 0}, {125, 8}))
+    (new Drawable("../maps/fomt/assets/farm-water-edge-horizontal.png", {0, 0}, {125, 8}))
       ->location({240.0, 1250.0})->z_index(1000)->scale(2)->repeat(),
       new BlockMovement(),
   });
 
   new Entity({
-    (new Drawable("../assets/farm-water-edge-horizontal.png", {0, 0}, {739, 8}))
+    (new Drawable("../maps/fomt/assets/farm-water-edge-horizontal.png", {0, 0}, {739, 8}))
       ->location({572.0, 1250.0})->z_index(1000)->scale(2)->repeat(),
       new BlockMovement(),
   });

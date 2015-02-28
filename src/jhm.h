@@ -13,6 +13,7 @@
 #include "engine/component/entity.h"
 #include "engine/component/movable.h"
 #include "engine/component/player.h"
+#include "engine/game/loader.h"
 #include "log.h"
 
 class JHM {
