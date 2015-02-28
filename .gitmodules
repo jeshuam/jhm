@@ -7,3 +7,6 @@
 [submodule "dependencies/jsoncpp"]
 	path = dependencies/jsoncpp
 	url = git@github.com:open-source-parsers/jsoncpp.git
+[submodule "dependencies/spdlog"]
+	path = dependencies/spdlog
+	url = git@github.com:gabime/spdlog.git
