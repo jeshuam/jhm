@@ -93,7 +93,7 @@ void LoadSave(const std::string& save_filepath) {
   Entity* player = LoadComponents(save_json["components"]);
 
   // Add this player to the requested map.
-  Map::Get(save_json["map"].asString()).add(player);
+  Map::Get(save_json["map"].asString()).add(player).Activate();
 
   // Change back to the old directory.
   chdir(cwd);

@@ -54,7 +54,7 @@ void JHM::Setup() {
   action_map_["running"] = Action(sf::Keyboard::Space, Action::Hold);
 
   // Load the map.
-  engine::game::Loader::LoadMap("../maps/fomt/farm.map").Activate();
+  engine::game::Loader::LoadMap("../maps/fomt/farm.map");
   engine::game::Loader::LoadSave("../maps/fomt/player.save");
 
   LOG->trace("done JHM::Setup");
