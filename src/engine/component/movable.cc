@@ -3,7 +3,8 @@
 namespace engine {
 namespace component {
 
-Movable::Movable(double speed) : speed_(speed), speed_multiplier_(1.0) {
+Movable::Movable() : velocity_(), speed_(0.0), speed_multiplier_(1.0)
+                   , clock_() {
 
 }
 
@@ -44,13 +45,14 @@ void Movable::Update(const thor::ActionMap<std::string>& map) {
 
   // If the sprite's new position interferes with anything that blocks movement,
   // don't actually move.
-  for (const Entity* entity : Entity::GetEntitiesWithComponent<BlockMovement>()) {
+  for (const Entity* entity :
+        game::Map::GetActive().GetEntitiesWithComponent<BlockMovement>()) {
     if (not entity->HasComponent<Drawable>()) {
       LOG->emerg("Something blocks movement but is isn't drawable!");
     }
 
     const Drawable& d2 = entity->GetComponent<Drawable>();
-    sf::FloatRect d2_bounds = d2.sprite().getGlobalBounds();
+    sf::FloatRect d2_bounds = d2.HitBox();
 
     // Add some padding around the movement-blocking object. It makes the
     // controls a little less likely to get stuck.
@@ -58,7 +60,7 @@ void Movable::Update(const thor::ActionMap<std::string>& map) {
     d2_bounds.top -= 4;
     d2_bounds.width += 8;
     d2_bounds.height += 8;
-    if (d2.HitBox().intersects(d.HitBox())) {
+    if (d2_bounds.intersects(d.HitBox())) {
       LOG->debug("Collision detected! Not moving the sprite.");
       d.sprite().setPosition(old_position);
       break;

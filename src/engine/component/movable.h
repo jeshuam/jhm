@@ -8,6 +8,7 @@
 #include "engine/component/directional.h"
 #include "engine/component/drawable.h"
 #include "engine/component/entity.h"
+#include "engine/game/map.h"
 #include "log.h"
 
 namespace engine {
@@ -20,7 +21,7 @@ public:
   COMPONENT_KEY("MOVABLE");
 
   // Constructor + destructor.
-  Movable(double speed=1.0);
+  Movable();
   virtual ~Movable();
 
   // Update the parameter with key `key` to value `value`.

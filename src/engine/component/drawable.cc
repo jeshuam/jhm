@@ -5,13 +5,8 @@
 namespace engine {
 namespace component {
 
-Drawable::Drawable() {
+Drawable::Drawable() : sprite_(), hit_box_(), texture_(), z_index_(0) {
 
-}
-
-Drawable::Drawable(const std::string& sprite_filename, sf::Vector2i offset,
-                   sf::Vector2i size) {
-  create(sprite_filename, offset, size);
 }
 
 Drawable::~Drawable() {

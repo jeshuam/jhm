@@ -21,11 +21,10 @@ class Component;
 class Entity {
 public:
   Entity();
-  Entity(std::initializer_list<Component*> components);
   virtual ~Entity();
 
   // Add a component to this entity.
-  void AddComponent(Component* component);
+  Entity* AddComponent(Component* component);
 
   // Update all internal components.
   void Update(const thor::ActionMap<std::string>& map);
@@ -73,7 +72,6 @@ public:
         entities.push_back(entity);
       }
     }
-
 
     return entities;
   }

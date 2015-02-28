@@ -3,61 +3,10 @@
 namespace engine {
 namespace component {
 
-Player::Player() {
+Player::Player() : running_multiplier_(1)
+                 , walking_directional_(new Directional())
+                 , running_directional_(new Directional()) {
   
-}
-
-Player::Player(thor::ActionMap<std::string>& map, double running_multiplier)
-    : running_multiplier_(running_multiplier) {
-  map["moving_up"] = thor::Action(sf::Keyboard::Up, thor::Action::Hold);
-  map["moving_down"] = thor::Action(sf::Keyboard::Down, thor::Action::Hold);
-  map["moving_right"] = thor::Action(sf::Keyboard::Right, thor::Action::Hold);
-  map["moving_left"] = thor::Action(sf::Keyboard::Left, thor::Action::Hold);
-  map["running"] = thor::Action(sf::Keyboard::Space, thor::Action::Hold);
-
-  walking_directional_ = (new Directional())
-      ->AddDirection(Directional::UP, sf::seconds(1.0),
-                    {{{ 95, 25, 19, 30}, 2},
-                     {{117, 26, 18, 29}, 2},
-                     {{137, 25, 19, 30}, 2},
-                     {{159, 26, 18, 29}, 2}})
-      ->AddDirection(Directional::DOWN, sf::seconds(1.0),
-                    {{{ 7, 26, 19, 29}, 2},
-                     {{29, 27, 18, 28}, 2},
-                     {{50, 26, 19, 29}, 2},
-                     {{72, 27, 17, 28}, 2}})
-      ->AddDirection(Directional::LEFT, sf::seconds(1.0),
-                    {{{22 + 182, 26, -22, 29}, 2},
-                     {{22 + 206, 27, -22, 28}, 2},
-                     {{22 + 232, 26, -22, 29}, 2},
-                     {{23 + 257, 27, -23, 28}, 2}})
-      ->AddDirection(Directional::RIGHT, sf::seconds(1.0),
-                    {{{182, 26, 22, 29}, 2},
-                     {{206, 27, 22, 28}, 2},
-                     {{232, 26, 22, 29}, 2},
-                     {{257, 27, 23, 28}, 2}});
-
-  running_directional_ = (new Directional())
-      ->AddDirection(Directional::UP, sf::seconds(1.0),
-                    {{{ 77, 76, 17, 29}, 2},
-                     {{ 98, 76, 17, 29}, 2},
-                     {{120, 76, 17, 29}, 2},
-                     {{ 98, 76, 17, 29}, 2}})
-      ->AddDirection(Directional::DOWN, sf::seconds(1.0),
-                    {{{5, 77, 17, 27}, 2},
-                     {{26, 75, 19, 28}, 2},
-                     {{50, 77, 16, 27}, 2},
-                     {{26, 75, 19, 28}, 2}})
-      ->AddDirection(Directional::LEFT, sf::seconds(1.0),
-                    {{{142, 77, 24, 26}, 2},
-                     {{169, 74, 22, 29}, 2},
-                     {{196, 77, 24, 26}, 2},
-                     {{169, 74, 22, 29}, 2}})
-      ->AddDirection(Directional::RIGHT, sf::seconds(1.0),
-                    {{{24 + 142, 77, -24, 26}, 2},
-                     {{22 + 169, 74, -22, 29}, 2},
-                     {{24 + 196, 77, -24, 26}, 2},
-                     {{22 + 169, 74, -22, 29}, 2}});
 }
 
 Player::~Player() {
@@ -73,8 +22,21 @@ void Player::Bind(Entity* entity) {
 }
 
 void Player::SetParameter(const std::string& key, const Json::Value& value) {
-  // TODO(jeshua) implement this.
-  throw std::logic_error("Player::SetParameter() isn't implemented!");
+  if (key == "walking_directional") {
+    for (const std::string& key : value.getMemberNames()) {
+      walking_directional_->SetParameter(key, value[key]);
+    }
+  }
+
+  else if (key == "running_directional") {
+    for (const std::string& key : value.getMemberNames()) {
+      running_directional_->SetParameter(key, value[key]);
+    }
+  }
+
+  else if (key == "running_multiplier") {
+    running_multiplier(value.asDouble());
+  }
 }
 
 void Player::Update(const thor::ActionMap<std::string>& map) {

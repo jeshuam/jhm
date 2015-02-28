@@ -21,7 +21,6 @@ public:
 
   // Constructor + Destructor.
   Player();
-  Player(thor::ActionMap<std::string>& map, double running_multiplier);
   virtual ~Player();
 
   // For now, we need to override the bind option to especially bind both

@@ -24,8 +24,6 @@ public:
   // sprite file or a sprite map and location. You can also specify a scaling
   // factor for the sprite if desired.
   Drawable();
-  Drawable(const std::string& sprite_filename,
-           sf::Vector2i offset={0, 0}, sf::Vector2i size={0, 0});
   virtual ~Drawable();
 
   // Setup the parameter with the given value. The special key "sprite" can be

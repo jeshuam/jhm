@@ -7,6 +7,10 @@ using engine::component::Entity;
 using engine::component::Movable;
 using engine::component::Player;
 
+using engine::game::Map;
+
+using thor::Action;
+
 JHM::JHM() : running_(false) {
 
 }
@@ -42,23 +46,16 @@ void JHM::Setup() {
   // When the window is closed, stop running.
   action_map_["quit"] = thor::Action(sf::Event::Closed);
 
-  // Load the map.
-  LOG->info("Loading map...");
-  engine::game::Loader::LoadMap("../maps/fomt/farm.map");
-  LOG->info("Done!");
+  // Define controls.
+  action_map_["moving_up"] = Action(sf::Keyboard::Up, Action::Hold);
+  action_map_["moving_down"] = Action(sf::Keyboard::Down, Action::Hold);
+  action_map_["moving_right"] = Action(sf::Keyboard::Right, Action::Hold);
+  action_map_["moving_left"] = Action(sf::Keyboard::Left, Action::Hold);
+  action_map_["running"] = Action(sf::Keyboard::Space, Action::Hold);
 
-  // Create the main character.
-  LOG->info("Creating main character...");
-  new Entity({
-    (new Drawable("../maps/fomt/assets/main-character.png", {7, 26}, {19, 29}))
-      ->z_index(10000)
-      ->location({200.0, 200.0})
-      ->scale(2)
-      ->hit_box({0, 28}),
-    new Movable(4),
-    new Player(action_map_, 4)
-  });
-  LOG->info("Done!");
+  // Load the map.
+  engine::game::Loader::LoadMap("../maps/fomt/farm.map").Activate();
+  engine::game::Loader::LoadSave("../maps/fomt/player.save");
 
   LOG->trace("done JHM::Setup");
 }
@@ -70,7 +67,7 @@ void JHM::ProcessEvents() {
 void JHM::Loop() {
   LOG->trace("JHM::Loop");
 
-  for (Entity* entity : Entity::GetAllEntities()) {
+  for (Entity* entity : Map::GetActive().entities()) {
     entity->Update(action_map_);
   }
 
@@ -88,14 +85,16 @@ void JHM::Render() {
   window_.clear();
 
   // Update the view to match the player.
-  for (const Entity* entity : Entity::GetEntitiesWithComponent<Player>()) {
+  for (const Entity* entity :
+        Map::GetActive().GetEntitiesWithComponent<Player>()) {
     sf::View view = window_.getView();
     view.setCenter(entity->GetComponent<Drawable>().sprite().getPosition());
     window_.setView(view);
   }
 
   // Render all rendable objects.
-  std::vector<Entity*> entities = Entity::GetEntitiesWithComponent<Drawable>();
+  std::vector<Entity*> entities =
+      Map::GetActive().GetEntitiesWithComponent<Drawable>();
   std::sort(entities.begin(), entities.end(), [](Entity* a, Entity* b) {
     return a->GetComponent<Drawable>().z_index() <
            b->GetComponent<Drawable>().z_index();

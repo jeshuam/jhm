@@ -5,7 +5,15 @@
 namespace engine {
 namespace component {
 
-Directional::Directional() : current_direction_(DOWN) {
+// Map from direction names to directions.
+const std::unordered_map<std::string, Directional::Direction> directions = {
+  {"UP", Directional::UP},
+  {"DOWN", Directional::DOWN},
+  {"LEFT", Directional::LEFT},
+  {"RIGHT", Directional::RIGHT},
+};
+
+Directional::Directional() : animator_(), current_direction_(DOWN), clock_() {
 
 }
 
@@ -15,8 +23,39 @@ Directional::~Directional() {
 
 void Directional::SetParameter(const std::string& key,
                                const Json::Value& value) {
-  // TODO(jeshua) implement this.
-  throw std::logic_error("Directional::SetParameter() isn't implemented!");
+  if (key == "directions") {
+    // For each direction...
+    for (int i = 0; i < value.size(); i++) {
+      const Json::Value& direction_json = value[i];
+
+      // Get the current direction enum.
+      Direction dir = directions.at(direction_json["direction"].asString());
+
+      // Get the total length of time this animation should take.
+      sf::Time length = sf::seconds(direction_json["length"].asDouble());
+
+      // Load all of the frames.
+      const Json::Value& frames_json = direction_json["frames"];
+      std::vector<std::pair<sf::IntRect, double>> frames;
+
+      for (int frame = 0; frame < frames_json.size(); frame++) {
+        const Json::Value& frame_json = frames_json[frame];
+
+        // Load the rectangle from JSON.
+        sf::IntRect rect = {frame_json[0][0].asInt(), frame_json[0][1].asInt(),
+                            frame_json[0][2].asInt(), frame_json[0][3].asInt()};
+
+        // Load the relative timer values for each frame.
+        double relative_time = frame_json[1].asDouble();
+
+        // Save the frame.
+        frames.push_back({rect, relative_time});
+      }
+
+      // Save the direction.
+      AddDirection(dir, length, frames);
+    }
+  }
 }
 
 void Directional::Update(const thor::ActionMap<std::string>& map) {
