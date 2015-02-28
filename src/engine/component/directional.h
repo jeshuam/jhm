@@ -45,6 +45,8 @@ public:
   // Change the direction this object is facing.
   void ChangeDirection(Direction direction);
 
+  virtual void SetParameter(const std::string& key, const Json::Value& value);
+
 protected:
   // Thor animation manager.
   thor::Animator<sf::Sprite, Direction> animator_;

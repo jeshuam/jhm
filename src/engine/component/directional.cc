@@ -67,4 +67,9 @@ void Directional::ChangeDirection(Direction direction) {
   current_direction_ = direction;
 }
 
+void Directional::SetParameter(const std::string& key,
+                               const Json::Value& value) {
+  // TODO(jeshua) implement this.
+}
+
 }}  // namepsace engine::component

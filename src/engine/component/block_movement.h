@@ -27,6 +27,10 @@ public:
   virtual void Update(const thor::ActionMap<std::string>& map) {
 
   }
+
+  virtual void SetParameter(const std::string& key, const Json::Value& value) {
+  
+  }
 };
 
 }}  // namepsace engine::component

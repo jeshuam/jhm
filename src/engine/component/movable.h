@@ -37,6 +37,8 @@ public:
     speed_multiplier_ = speed_multiplier;
   }
 
+  virtual void SetParameter(const std::string& key, const Json::Value& value);
+
 protected:
   // The X and Y velocity (usually -1, 0 or 1).
   sf::Vector2i velocity_;

@@ -1,12 +1,29 @@
 {
   "name": "farm",
   "entities": [
+    ///
+    /// Main background map.
+    ///
+    {
+      "drawable": {
+        "sprite": {
+          "file": "assets/main-farm.png"
+        },
+
+        "z_index": 0,
+        "scale": 2
+      }
+    },
+
+    ///
+    /// Fences! First, the main veritcal fences.
+    ///
     {
       "drawable": {
         "sprite": {
           "file": "assets/farm-fence-vertical.png",
-          "position": [0, 0],
-          "offset": [7, 410]
+          "offset": [0, 0],
+          "size": [7, 410]
         },
 
         "location": [128, 110],
@@ -22,14 +39,353 @@
       "drawable": {
         "sprite": {
           "file": "assets/farm-fence-vertical.png",
-          "position": [7, 0],
-          "offset": [-7, 570]
+          "offset": [7, 0],
+          "size": [-7, 570]
         },
 
         "location": [2004, 118],
         "z_index": 1002,
-        "scale": 2,
-        "repeat": true
+        "scale": 2
+      },
+
+      "block_movement": {}
+    },
+
+    {
+      "drawable": {
+        "sprite": {
+          "file": "assets/farm-fence-vertical.png",
+          "offset": [0, 0],
+          "size": [7, 64]
+        },
+
+        "location": [578, -16],
+        "z_index": 1002,
+        "scale": 2
+      },
+
+      "block_movement": {}
+    },
+
+    {
+      "drawable": {
+        "sprite": {
+          "file": "assets/farm-fence-vertical.png",
+          "offset": [7, 0],
+          "size": [-7, 64]
+        },
+
+        "location": [770, -16],
+        "z_index": 1002,
+        "scale": 2
+      },
+
+      "block_movement": {}
+    },
+
+    // Now, the horizontal fences.
+    {
+      "drawable": {
+        "sprite": {
+          "file": "assets/farm-fence-horizontal.png",
+          "offset": [7, 0],
+          "size": [220, 16]
+        },
+
+        "location": [140, 80],
+        "z_index": 1002,
+        "scale": 2
+      },
+
+      "block_movement": {}
+    },
+
+    {
+      "drawable": {
+        "sprite": {
+          "file": "assets/farm-fence-horizontal.png",
+          "offset": [7, 0],
+          "size": [627, 16]
+        },
+
+        "location": [770, 80],
+        "z_index": 1002,
+        "scale": 2
+      },
+
+      "block_movement": {}
+    },
+
+    ///
+    /// Rocks! These will stop the player from going in the water.
+    ///
+    {
+      "drawable": {
+        "sprite": {
+          "file": "assets/farm-water-edge-corners.png",
+          "offset": [10, 0],
+          "size": [10, 10]
+        },
+
+        "location": [86.0, 706.0],
+        "z_index": 1001,
+        "scale": 2
+      },
+
+      "block_movement": {}
+    },
+
+    {
+      "drawable": {
+        "sprite": {
+          "file": "assets/farm-water-edge-vertical.png",
+          "offset": [0, 0],
+          "size": [8, 35]
+        },
+
+        "location": [90.0, 716.0],
+        "z_index": 1000,
+        "scale": 2
+      },
+
+      "block_movement": {}
+    },
+    
+    {
+      "drawable": {
+        "sprite": {
+          "file": "assets/farm-water-edge-corners.png",
+          "offset": [0, 0],
+          "size": [10, 10]
+        },
+
+        "location": [93.0, 768.0],
+        "z_index": 1001,
+        "scale": 2
+      },
+
+      "block_movement": {}
+    },
+    
+    {
+      "drawable": {
+        "sprite": {
+          "file": "assets/farm-water-edge-corners.png",
+          "offset": [10, 0],
+          "size": [10, 10]
+        },
+
+        "location": [110.0, 768.0],
+        "z_index": 1001,
+        "scale": 2
+      },
+
+      "block_movement": {}
+    },
+    
+    {
+      "drawable": {
+        "sprite": {
+          "file": "assets/farm-water-edge-vertical.png",
+          "offset": [0, 0],
+          "size": [8, 155]
+        },
+
+        "location": [112.0, 785.0],
+        "z_index": 1000,
+        "scale": 2
+      },
+
+      "block_movement": {}
+    },
+    
+    {
+      "drawable": {
+        "sprite": {
+          "file": "assets/farm-water-edge-corners.png",
+          "offset": [0, 0],
+          "size": [10, 10]
+        },
+
+        "location": [118.0, 1086.0],
+        "z_index": 1001,
+        "scale": 2
+      },
+
+      "block_movement": {}
+    },
+    
+    {
+      "drawable": {
+        "sprite": {
+          "file": "assets/farm-water-edge-corners.png",
+          "offset": [10, 0],
+          "size": [10, 10]
+        },
+
+        "location": [133.0, 1086.0],
+        "z_index": 1001,
+        "scale": 2
+      },
+
+      "block_movement": {}
+    },
+    
+    {
+      "drawable": {
+        "sprite": {
+          "file": "assets/farm-water-edge-vertical.png",
+          "offset": [0, 0],
+          "size": [8, 25]
+        },
+
+        "location": [138.0, 1096.0],
+        "z_index": 1000,
+        "scale": 2
+      },
+
+      "block_movement": {}
+    },
+    
+    {
+      "drawable": {
+        "sprite": {
+          "file": "assets/farm-water-edge-corners.png",
+          "offset": [0, 0],
+          "size": [10, 10]
+        },
+
+        "location": [138.0, 1140.0],
+        "z_index": 1001,
+        "scale": 2
+      },
+
+      "block_movement": {}
+    },
+    
+    {
+      "drawable": {
+        "sprite": {
+          "file": "assets/farm-water-edge-corners.png",
+          "offset": [10, 0],
+          "size": [10, 10]
+        },
+
+        "location": [158.0, 1140.0],
+        "z_index": 1001,
+        "scale": 2
+      },
+
+      "block_movement": {}
+    },
+    
+    {
+      "drawable": {
+        "sprite": {
+          "file": "assets/farm-water-edge-vertical.png",
+          "offset": [0, 0],
+          "size": [8, 40]
+        },
+
+        "location": [162.0, 1150.0],
+        "z_index": 1000,
+        "scale": 2
+      },
+
+      "block_movement": {}
+    },
+    
+    {
+      "drawable": {
+        "sprite": {
+          "file": "assets/farm-water-edge-corners.png",
+          "offset": [0, 0],
+          "size": [10, 10]
+        },
+
+        "location": [166.0, 1222.0],
+        "z_index": 1001,
+        "scale": 2
+      },
+
+      "block_movement": {}
+    },
+    
+    {
+      "drawable": {
+        "sprite": {
+          "file": "assets/farm-water-edge-corners.png",
+          "offset": [10, 0],
+          "size": [10, 10]
+        },
+
+        "location": [230.0, 1222.0],
+        "z_index": 1001,
+        "scale": 2
+      },
+
+      "block_movement": {}
+    },
+    
+    {
+      "drawable": {
+        "sprite": {
+          "file": "assets/farm-water-edge-vertical.png",
+          "offset": [0, 0],
+          "size": [8, 20]
+        },
+
+        "location": [236.0, 1232.0],
+        "z_index": 1000,
+        "scale": 2
+      },
+
+      "block_movement": {}
+    },
+    
+    {
+      "drawable": {
+        "sprite": {
+          "file": "assets/farm-water-edge-corners.png",
+          "offset": [0, 0],
+          "size": [10, 10]
+        },
+
+        "location": [230.0, 1250.0],
+        "z_index": 1001,
+        "scale": 2
+      },
+
+      "block_movement": {}
+    },
+    
+    {
+      "drawable": {
+        "sprite": {
+          "file": "assets/farm-water-edge-horizontal.png",
+          "offset": [0, 0],
+          "size": [125, 8]
+        },
+
+        "location": [240.0, 1250.0],
+        "z_index": 1000,
+        "scale": 2
+      },
+
+      "block_movement": {}
+    },
+    
+    {
+      "drawable": {
+        "sprite": {
+          "file": "assets/farm-water-edge-horizontal.png",
+          "offset": [0, 0],
+          "size": [739, 8]
+        },
+
+        "location": [572.0, 1250.0],
+        "z_index": 1000,
+        "scale": 2
       },
 
       "block_movement": {}

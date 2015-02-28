@@ -4,6 +4,7 @@
 #include <SFML/System.hpp>
 #include <Thor/Input/ActionMap.hpp>
 
+#include "engine/json/json.h"
 #include "log.h"
 
 namespace engine {
@@ -48,6 +49,14 @@ public:
   virtual void Bind(Entity* parent) {
     this->parent_ = parent;
   }
+
+  // Get a new component of the given type.
+  static Component* Get(const std::string& key);
+
+  // Set the parameter of the current component. This is required to be
+  // set by each component to allow for easy loading from configuration files.
+  virtual void SetParameter(const std::string& key,
+                            const Json::Value& value) = 0;
 
 protected:
   // A reference to the entity this component is attached to. Ownership will not

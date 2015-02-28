@@ -23,15 +23,17 @@ public:
   // Construct a new drawable component. Drawable objects require a either a
   // sprite file or a sprite map and location. You can also specify a scaling
   // factor for the sprite if desired.
+  Drawable();
   Drawable(const std::string& sprite_filename,
            sf::Vector2i offset={0, 0}, sf::Vector2i size={0, 0});
   virtual ~Drawable();
 
   // Build methods for creating drawables.
+  Drawable* create(const std::string& sprite_filename, sf::Vector2i offset,
+                   sf::Vector2i size);
   Drawable* scale(double scale);
   Drawable* z_index(double z_index);
   Drawable* location(sf::Vector2f location);
-  Drawable* repeat();
   Drawable* rotate(double degrees);
   Drawable* hit_box(sf::Vector2f hit_box);
 
@@ -69,6 +71,8 @@ public:
 
     return hit_box;
   }
+
+  virtual void SetParameter(const std::string& key, const Json::Value& value);
 
 protected:
   // The internal sprite used to draw the drawable to the screen.

@@ -1,11 +1,12 @@
 #ifndef _ENGINE_GAME_LOADER_H_
 #define _ENGINE_GAME_LOADER_H_
 
-#include <string>
 #include <fstream>
-#include <streambuf>
-#include <sstream>
 
+#include <unistd.h>
+
+#include "engine/component/drawable.h"
+#include "engine/component/entity.h"
 #include "engine/json/json.h"
 
 #include "engine/game/map.h"
@@ -21,7 +22,7 @@ namespace Loader {
 
 // Load a map from a configuration file. This will contain all _statc_ things in
 // the area (such as boundaries, backgrounds, shipping crates etc.).
-Map LoadMap(const std::string& map_filename);
+Map LoadMap(const std::string& map_filepath);
 
 }  // namespace Loader
 

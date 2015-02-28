@@ -74,4 +74,8 @@ void Movable::Update(const thor::ActionMap<std::string>& map) {
   LOG->trace("Done Movable::Update");
 }
 
+void Movable::SetParameter(const std::string& key, const Json::Value& value) {
+  
+}
+
 }}  // namepsace engine::component
