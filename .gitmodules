@@ -4,3 +4,6 @@
 [submodule "dependencies/SFML"]
 	path = dependencies/SFML
 	url = git@github.com:LaurentGomila/SFML.git
+[submodule "dependencies/jsoncpp"]
+	path = dependencies/jsoncpp
+	url = git@github.com:open-source-parsers/jsoncpp.git

@@ -4,6 +4,7 @@ targets = {
     'srcs': [
       'component/*.cc',
       'utility/*.cc',
-    ],
-  }
+      'game/*.cc',
+    ]
+  },
 }

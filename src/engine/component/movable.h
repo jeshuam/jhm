@@ -3,10 +3,12 @@
 
 #include <SFML/System.hpp>
 
+#include "engine/component/block_movement.h"
 #include "engine/component/component.h"
 #include "engine/component/directional.h"
 #include "engine/component/drawable.h"
 #include "engine/component/entity.h"
+#include "engine/game/map.h"
 #include "log.h"
 
 namespace engine {
@@ -18,23 +20,26 @@ class Movable : public Component {
 public:
   COMPONENT_KEY("MOVABLE");
 
-  Movable(double speed=1.0);
+  // Constructor + destructor.
+  Movable();
   virtual ~Movable();
+
+  // Update the parameter with key `key` to value `value`.
+  virtual void SetParameter(const std::string& key, const Json::Value& value);
 
   // Update the component. This will change the X and Y value based on the
   // current X and Y velocity.
   virtual void Update(const thor::ActionMap<std::string>& map);
 
-  // Get access to the velocity.
-  sf::Vector2i& Velocity() {
-    return velocity_;
-  }
+  // Build methods for creating a movable.
+  Movable* speed(double speed);
+  Movable* speed_multiplier(double speed_multiplier);
 
-  // Set the speed multiplier. This can be used to modify the effective speed at
-  // runtime (e.g. a running person).
-  void SpeedMultiplier(double speed_multiplier) {
-    speed_multiplier_ = speed_multiplier;
-  }
+  // Getters for various member variables.
+  sf::Vector2i& velocity();
+  const sf::Vector2i& velocity() const;
+  double speed() const;
+  double speed_multiplier() const;
 
 protected:
   // The X and Y velocity (usually -1, 0 or 1).

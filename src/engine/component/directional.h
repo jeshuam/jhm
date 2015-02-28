@@ -1,7 +1,6 @@
 #ifndef _ENGINE_COMPONENT_DIRECTIONAL_H_
 #define _ENGINE_COMPONENT_DIRECTIONAL_H_
 
-#include <array>
 #include <vector>
 
 #include <SFML/Graphics.hpp>
@@ -33,6 +32,9 @@ public:
   // Constructor + Destructor.
   Directional();
   virtual ~Directional();
+
+  // Update the given parameter to match the given value.
+  virtual void SetParameter(const std::string& key, const Json::Value& value);
 
   // Update this component.
   virtual void Update(const thor::ActionMap<std::string>& map);

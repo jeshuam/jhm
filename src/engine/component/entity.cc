@@ -8,17 +8,8 @@ namespace component {
 // Container to store entitites.
 std::unordered_set<Entity*> Entity::entities_;
 
-Entity::Entity() : Entity({}) {
-  
-}
-
-Entity::Entity(std::initializer_list<Component*> components) {
+Entity::Entity() {
   entities_.insert(this);
-
-  // Load the components.
-  for (Component* component : components) {
-    AddComponent(component);
-  }
 }
 
 Entity::~Entity() {
@@ -29,12 +20,13 @@ Entity::~Entity() {
   }
 }
 
-void Entity::AddComponent(Component* component) {
-  //components_.insert(component);
+Entity* Entity::AddComponent(Component* component) {
+  // Insert the component.
   components_[component->name()] = component;
 
   // Bind this component to the entity.
   component->Bind(this);
+  return this;
 }
 
 void Entity::Update(const thor::ActionMap<std::string>& map) {

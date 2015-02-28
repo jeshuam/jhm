@@ -26,7 +26,9 @@ targets = {
       'sfml-graphics',
       'sfml-window',
       'sfml-system',
-      'thor'
+      'thor',
+      'pthread',
+      'jsoncpp'
     ]
   },
 }

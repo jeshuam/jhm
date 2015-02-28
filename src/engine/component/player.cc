@@ -3,82 +3,57 @@
 namespace engine {
 namespace component {
 
-Player::Player(thor::ActionMap<std::string>& map, double running_multiplier)
-    : running_multiplier_(running_multiplier) {
-  map["moving_up"] = thor::Action(sf::Keyboard::Up, thor::Action::Hold);
-  map["moving_down"] = thor::Action(sf::Keyboard::Down, thor::Action::Hold);
-  map["moving_right"] = thor::Action(sf::Keyboard::Right, thor::Action::Hold);
-  map["moving_left"] = thor::Action(sf::Keyboard::Left, thor::Action::Hold);
-  map["running"] = thor::Action(sf::Keyboard::Space, thor::Action::Hold);
-
-  walking_directional_ = (new Directional())
-      ->AddDirection(Directional::UP, sf::seconds(1.0),
-                    {{{ 95, 25, 19, 30}, 2},
-                     {{117, 26, 18, 29}, 2},
-                     {{137, 25, 19, 30}, 2},
-                     {{159, 26, 18, 29}, 2}})
-      ->AddDirection(Directional::DOWN, sf::seconds(1.0),
-                    {{{ 7, 26, 19, 29}, 2},
-                     {{29, 27, 18, 28}, 2},
-                     {{50, 26, 19, 29}, 2},
-                     {{72, 27, 17, 28}, 2}})
-      ->AddDirection(Directional::LEFT, sf::seconds(1.0),
-                    {{{22 + 182, 26, -22, 29}, 2},
-                     {{22 + 206, 27, -22, 28}, 2},
-                     {{22 + 232, 26, -22, 29}, 2},
-                     {{23 + 257, 27, -23, 28}, 2}})
-      ->AddDirection(Directional::RIGHT, sf::seconds(1.0),
-                    {{{182, 26, 22, 29}, 2},
-                     {{206, 27, 22, 28}, 2},
-                     {{232, 26, 22, 29}, 2},
-                     {{257, 27, 23, 28}, 2}});
-
-  running_directional_ = (new Directional())
-      ->AddDirection(Directional::UP, sf::seconds(1.0),
-                    {{{ 77, 76, 17, 29}, 2},
-                     {{98, 76, 17, 29}, 2},
-                     {{120, 76, 17, 29}, 2}})
-      ->AddDirection(Directional::DOWN, sf::seconds(1.0),
-                    {{{5, 77, 17, 27}, 2},
-                     {{26, 75, 19, 28}, 2},
-                     {{50, 77, 16, 27}, 2}})
-      ->AddDirection(Directional::LEFT, sf::seconds(1.0),
-                    {{{142, 77, 24, 26}, 2},
-                     {{169, 74, 22, 29}, 2},
-                     {{196, 77, 24, 26}, 2}})
-      ->AddDirection(Directional::RIGHT, sf::seconds(1.0),
-                    {{{24 + 142, 77, -24, 26}, 2},
-                     {{22 + 169, 74, -22, 29}, 2},
-                     {{24 + 196, 77, -24, 26}, 2}});
+Player::Player() : running_multiplier_(1)
+                 , walking_directional_(new Directional())
+                 , running_directional_(new Directional()) {
+  
 }
 
 Player::~Player() {
 
 }
 
-void Player::Bind(Entity* parent) {
-  Component::Bind(parent);
+void Player::Bind(Entity* entity) {
+  Component::Bind(entity);
 
-  walking_directional_->Bind(parent);
-  running_directional_->Bind(parent);
-  parent_->AddComponent(walking_directional_);
+  walking_directional_->Bind(entity);
+  running_directional_->Bind(entity);
+  entity->AddComponent(walking_directional_);
+}
+
+void Player::SetParameter(const std::string& key, const Json::Value& value) {
+  if (key == "walking_directional") {
+    for (const std::string& key : value.getMemberNames()) {
+      walking_directional_->SetParameter(key, value[key]);
+    }
+  }
+
+  else if (key == "running_directional") {
+    for (const std::string& key : value.getMemberNames()) {
+      running_directional_->SetParameter(key, value[key]);
+    }
+  }
+
+  else if (key == "running_multiplier") {
+    running_multiplier(value.asDouble());
+  }
 }
 
 void Player::Update(const thor::ActionMap<std::string>& map) {
   LOG->trace("Player::Update");
 
   // Get a reference to the Movable component.
-  if (not parent_->HasComponent<Movable>()) {
+  if (not entity_->HasComponent<Movable>()) {
     LOG->emerg("Player entity does not have required Movable component.");
   }
 
-  if (not parent_->HasComponent<Directional>()) {
+  if (not entity_->HasComponent<Directional>()) {
     LOG->emerg("Player entity does not have required Directional component.");
   }
 
   // Get a reference to the velocity vector.
-  Movable& movable = parent_->GetComponent<Movable>();
-  sf::Vector2i& velocity = movable.Velocity();
+  Movable& movable = entity_->GetComponent<Movable>();
+  sf::Vector2i& velocity = movable.velocity();
 
   // Determine the Y velocity.
   if (map.isActive("moving_up") and not map.isActive("moving_down")) {
@@ -109,19 +84,42 @@ void Player::Update(const thor::ActionMap<std::string>& map) {
   // If the player is running...
   if (map.isActive("running")) {
     // Update the speed multiplier.
-    movable.SpeedMultiplier(running_multiplier_);
+    movable.speed_multiplier(running_multiplier_);
 
     // Change the sprite.
-    parent_->ReplaceComponent<Directional>(running_directional_);
+    entity_->ReplaceComponent<Directional>(running_directional_);
   } else {
     // Update the speed multiplier.
-    movable.SpeedMultiplier(1);
+    movable.speed_multiplier(1);
 
     // Change the sprite.
-    parent_->ReplaceComponent<Directional>(walking_directional_);
+    entity_->ReplaceComponent<Directional>(walking_directional_);
   }
 
   LOG->trace("Done Player::Update");
+}
+
+Player* Player::running_multiplier(double running_multiplier) {
+  running_multiplier_ = running_multiplier;
+  return this;
+}
+
+Player* Player::walking_directional(Directional* walking_directional) {
+  walking_directional_ = walking_directional;
+  walking_directional_->Bind(entity_);
+  entity_->AddComponent(walking_directional_);
+  return this;
+}
+
+Player* Player::running_directional(Directional* running_directional) {
+  running_directional_ = running_directional;
+  running_directional_->Bind(entity_);
+  entity_->AddComponent(running_directional_);
+  return this;
+}
+
+double Player::running_multiplier() const {
+  return running_multiplier_;
 }
 
 }}  // namepsace engine::component

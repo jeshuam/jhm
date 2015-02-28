@@ -1,15 +1,20 @@
 #ifndef _JHM_H_
 #define _JHM_H_
 
+#include <algorithm>
+
 #include <SFML/Graphics.hpp>
 #include <Thor/Input/Action.hpp>
 #include <Thor/Input/ActionMap.hpp>
 
+#include "engine/component/block_movement.h"
 #include "engine/component/drawable.h"
 #include "engine/component/directional.h"
 #include "engine/component/entity.h"
 #include "engine/component/movable.h"
 #include "engine/component/player.h"
+#include "engine/game/map.h"
+#include "engine/game/loader.h"
 #include "log.h"
 
 class JHM {

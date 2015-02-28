@@ -6,6 +6,7 @@
 #include <SFML/System.hpp>
 
 #include "engine/component/component.h"
+#include "engine/component/entity.h"
 #include "engine/utility/resource_loader.h"
 #include "log.h"
 
@@ -22,10 +23,12 @@ public:
   // Construct a new drawable component. Drawable objects require a either a
   // sprite file or a sprite map and location. You can also specify a scaling
   // factor for the sprite if desired.
-  Drawable(const std::string& sprite_filename);
-  Drawable(const std::string& sprite_filename, sf::Vector2u offset,
-           sf::Vector2u size=sf::Vector2u(), double scale=1);
+  Drawable();
   virtual ~Drawable();
+
+  // Setup the parameter with the given value. The special key "sprite" can be
+  // used to configure the internal sprite (i.e. call `create`).
+  virtual void SetParameter(const std::string& key, const Json::Value& value);
 
   // Update this component.
   virtual void Update(const thor::ActionMap<std::string>& map);
@@ -33,15 +36,37 @@ public:
   // Draw this sprite onto the screen at its current location.
   virtual void Draw(sf::RenderWindow& window) const;
 
-  // Get access to the internal sprite.
-  sf::Sprite& Sprite();
+  // Get the hit box of this drawable element. This box can be modified using
+  // the hit_box_ attribute.
+  const sf::FloatRect HitBox() const;
+
+  // Build methods for creating drawables.
+  Drawable* create(const std::string& sprite_filename, sf::Vector2i offset,
+                   sf::Vector2i size);
+  Drawable* scale(double scale);
+  Drawable* z_index(double z_index);
+  Drawable* location(sf::Vector2f location);
+  Drawable* rotate(double degrees);
+  Drawable* hit_box(sf::Vector2f hit_box);
+
+  // Getter methods for variables.
+  sf::Sprite& sprite();
+  const sf::Sprite& sprite() const;
+  const sf::Vector2f& hit_box() const;
+  double z_index() const;
 
 protected:
   // The internal sprite used to draw the drawable to the screen.
   sf::Sprite sprite_;
 
+  // What counts as 'hitting' this object?
+  sf::Vector2f hit_box_;
+
   // A reference to the texture used by this drawable.
   std::shared_ptr<sf::Texture> texture_;
+
+  // The location this drawable should be displayed on the z-axis.
+  double z_index_;
 };
 
 }}  // namepsace engine::component

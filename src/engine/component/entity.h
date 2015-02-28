@@ -21,11 +21,10 @@ class Component;
 class Entity {
 public:
   Entity();
-  Entity(std::initializer_list<Component*> components);
   virtual ~Entity();
 
   // Add a component to this entity.
-  void AddComponent(Component* component);
+  Entity* AddComponent(Component* component);
 
   // Update all internal components.
   void Update(const thor::ActionMap<std::string>& map);
@@ -39,7 +38,7 @@ public:
   // Check to see whether this entity has the requested component type. If it
   // does, return true, otherwise return false.
   template <typename T>
-  bool HasComponent() {
+  bool HasComponent() const {
     return components_.find(T::name_()) != components_.end();
   }
 
@@ -50,7 +49,7 @@ public:
     try {
       return *dynamic_cast<T*>(components_.at(T::name_()));
     } catch (std::out_of_range) {
-      throw std::logic_error("Request for component where none exists.");  
+      throw std::logic_error("Request for component where none exists.");
     }
   }
 
@@ -66,14 +65,13 @@ public:
 
   // Get all entities that contain a specific component.
   template <typename T>
-  static std::unordered_set<Entity*> GetEntitiesWithComponent() {
-    std::unordered_set<Entity*> entities;
+  static std::vector<Entity*> GetEntitiesWithComponent() {
+    std::vector<Entity*> entities;
     for (Entity* entity : entities_) {
       if (entity->HasComponent<T>()) {
-        entities.insert(entity);
+        entities.push_back(entity);
       }
     }
-
 
     return entities;
   }
