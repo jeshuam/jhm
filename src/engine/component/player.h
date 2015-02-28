@@ -20,16 +20,27 @@ public:
   COMPONENT_KEY("PLAYER");
 
   // Constructor + Destructor.
+  Player();
   Player(thor::ActionMap<std::string>& map, double running_multiplier);
   virtual ~Player();
 
-  // Override the bind method to also automatically bind the walking and running
-  // directional objects.
+  // For now, we need to override the bind option to especially bind both
+  // special directionals.
   virtual void Bind(Entity* entity);
+
+  // Update the value of 'key' to 'value'.
+  virtual void SetParameter(const std::string& key, const Json::Value& value);
 
   // The player just responds to keypresses.
   virtual void Update(const thor::ActionMap<std::string>& map);
-  virtual void SetParameter(const std::string& key, const Json::Value& value);
+
+  // Build methods for a player.
+  Player* running_multiplier(double running_multiplier);
+  Player* walking_directional(Directional* walking_directional);
+  Player* running_directional(Directional* running_directional);
+
+  // Getter methods.
+  double running_multiplier() const;
 
 protected:
   // How much faster should running be?

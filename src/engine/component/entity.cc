@@ -30,7 +30,7 @@ Entity::~Entity() {
 }
 
 void Entity::AddComponent(Component* component) {
-  //components_.insert(component);
+  // Insert the component.
   components_[component->name()] = component;
 
   // Bind this component to the entity.

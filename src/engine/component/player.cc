@@ -3,6 +3,10 @@
 namespace engine {
 namespace component {
 
+Player::Player() {
+  
+}
+
 Player::Player(thor::ActionMap<std::string>& map, double running_multiplier)
     : running_multiplier_(running_multiplier) {
   map["moving_up"] = thor::Action(sf::Keyboard::Up, thor::Action::Hold);
@@ -60,29 +64,34 @@ Player::~Player() {
 
 }
 
-void Player::Bind(Entity* parent) {
-  Component::Bind(parent);
+void Player::Bind(Entity* entity) {
+  Component::Bind(entity);
 
-  walking_directional_->Bind(parent);
-  running_directional_->Bind(parent);
-  parent_->AddComponent(walking_directional_);
+  walking_directional_->Bind(entity);
+  running_directional_->Bind(entity);
+  entity->AddComponent(walking_directional_);
+}
+
+void Player::SetParameter(const std::string& key, const Json::Value& value) {
+  // TODO(jeshua) implement this.
+  throw std::logic_error("Player::SetParameter() isn't implemented!");
 }
 
 void Player::Update(const thor::ActionMap<std::string>& map) {
   LOG->trace("Player::Update");
 
   // Get a reference to the Movable component.
-  if (not parent_->HasComponent<Movable>()) {
+  if (not entity_->HasComponent<Movable>()) {
     LOG->emerg("Player entity does not have required Movable component.");
   }
 
-  if (not parent_->HasComponent<Directional>()) {
+  if (not entity_->HasComponent<Directional>()) {
     LOG->emerg("Player entity does not have required Directional component.");
   }
 
   // Get a reference to the velocity vector.
-  Movable& movable = parent_->GetComponent<Movable>();
-  sf::Vector2i& velocity = movable.Velocity();
+  Movable& movable = entity_->GetComponent<Movable>();
+  sf::Vector2i& velocity = movable.velocity();
 
   // Determine the Y velocity.
   if (map.isActive("moving_up") and not map.isActive("moving_down")) {
@@ -113,23 +122,42 @@ void Player::Update(const thor::ActionMap<std::string>& map) {
   // If the player is running...
   if (map.isActive("running")) {
     // Update the speed multiplier.
-    movable.SpeedMultiplier(running_multiplier_);
+    movable.speed_multiplier(running_multiplier_);
 
     // Change the sprite.
-    parent_->ReplaceComponent<Directional>(running_directional_);
+    entity_->ReplaceComponent<Directional>(running_directional_);
   } else {
     // Update the speed multiplier.
-    movable.SpeedMultiplier(1);
+    movable.speed_multiplier(1);
 
     // Change the sprite.
-    parent_->ReplaceComponent<Directional>(walking_directional_);
+    entity_->ReplaceComponent<Directional>(walking_directional_);
   }
 
   LOG->trace("Done Player::Update");
 }
 
-void Player::SetParameter(const std::string& key, const Json::Value& value) {
-  
+Player* Player::running_multiplier(double running_multiplier) {
+  running_multiplier_ = running_multiplier;
+  return this;
+}
+
+Player* Player::walking_directional(Directional* walking_directional) {
+  walking_directional_ = walking_directional;
+  walking_directional_->Bind(entity_);
+  entity_->AddComponent(walking_directional_);
+  return this;
+}
+
+Player* Player::running_directional(Directional* running_directional) {
+  running_directional_ = running_directional;
+  running_directional_->Bind(entity_);
+  entity_->AddComponent(running_directional_);
+  return this;
+}
+
+double Player::running_multiplier() const {
+  return running_multiplier_;
 }
 
 }}  // namepsace engine::component

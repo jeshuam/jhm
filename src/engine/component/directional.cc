@@ -13,26 +13,32 @@ Directional::~Directional() {
   
 }
 
+void Directional::SetParameter(const std::string& key,
+                               const Json::Value& value) {
+  // TODO(jeshua) implement this.
+  throw std::logic_error("Directional::SetParameter() isn't implemented!");
+}
+
 void Directional::Update(const thor::ActionMap<std::string>& map) {
   LOG->trace("Directional::Update");
 
   // Directional components must be movable.
-  if (not parent_->HasComponent<Movable>()) {
+  if (not entity_->HasComponent<Movable>()) {
     LOG->emerg("Directional entity does not have required Movable component.");
   }  
 
 
-  Movable& movable = parent_->GetComponent<Movable>();
-  if (movable.Velocity().x == 0 and movable.Velocity().y == 0) {
+  Movable& movable = entity_->GetComponent<Movable>();
+  if (movable.velocity().x == 0 and movable.velocity().y == 0) {
     // Cheat the system to force the first animation frame to come back.
     animator_.playAnimation(current_direction_);
-    animator_.animate(parent_->GetComponent<Drawable>().Sprite());
+    animator_.animate(entity_->GetComponent<Drawable>().sprite());
     animator_.stopAnimation();
   } else {
     // If we aren't playing an animation, then start it up.
     if (not animator_.isPlayingAnimation()) {
       animator_.playAnimation(current_direction_, true);
-      animator_.animate(parent_->GetComponent<Drawable>().Sprite());
+      animator_.animate(entity_->GetComponent<Drawable>().sprite());
     } else {
       // If the animation currently playing isn't the right one, move to the
       // right one.
@@ -41,7 +47,7 @@ void Directional::Update(const thor::ActionMap<std::string>& map) {
       }
       
       animator_.update(clock_.restart());
-      animator_.animate(parent_->GetComponent<Drawable>().Sprite());
+      animator_.animate(entity_->GetComponent<Drawable>().sprite());
     }
   }
 
@@ -65,11 +71,6 @@ Directional* Directional::AddDirection(
 
 void Directional::ChangeDirection(Direction direction) {
   current_direction_ = direction;
-}
-
-void Directional::SetParameter(const std::string& key,
-                               const Json::Value& value) {
-  // TODO(jeshua) implement this.
 }
 
 }}  // namepsace engine::component

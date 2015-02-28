@@ -22,7 +22,6 @@ namespace component {
     return name_();                                         \
   }                                                         \
 
-
 // Forward declare entity to avoid circular includes.
 class Entity;
 
@@ -30,39 +29,30 @@ class Entity;
 // to an entity and that entity will gain the effects of the components.
 class Component {
 public:
-  virtual ~Component() {
-
-  }
-
-  // Update the given component. This will be called once per loop.
-  virtual void Update(const thor::ActionMap<std::string>& map) = 0;
-
-  // Get the name of the concrete component.
-  static const std::string& name_() {
-    static const std::string name = "COMPONENT";
-    return name;
-  }
-
-  virtual const std::string& name() = 0;
-  
-  // Bind the given entity to this component.
-  virtual void Bind(Entity* parent) {
-    this->parent_ = parent;
-  }
+  COMPONENT_KEY("COMPONENT");
 
   // Get a new component of the given type.
   static Component* Get(const std::string& key);
+
+  // Virtual destructor (which does nothing).
+  virtual ~Component();
+
+  // Bind the given entity to this component.
+  virtual void Bind(Entity* entity);
 
   // Set the parameter of the current component. This is required to be
   // set by each component to allow for easy loading from configuration files.
   virtual void SetParameter(const std::string& key,
                             const Json::Value& value) = 0;
 
+  // Update the given component. This will be called once per loop.
+  virtual void Update(const thor::ActionMap<std::string>& map) = 0;
+
 protected:
   // A reference to the entity this component is attached to. Ownership will not
   // be taken of this pointer (is is assumed that destroying an entity will also
   // destroy all associated components).
-  Entity* parent_;
+  Entity* entity_;
 };
 
 }}  // namepsace engine::component

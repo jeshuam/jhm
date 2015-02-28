@@ -28,6 +28,20 @@ public:
            sf::Vector2i offset={0, 0}, sf::Vector2i size={0, 0});
   virtual ~Drawable();
 
+  // Setup the parameter with the given value. The special key "sprite" can be
+  // used to configure the internal sprite (i.e. call `create`).
+  virtual void SetParameter(const std::string& key, const Json::Value& value);
+
+  // Update this component.
+  virtual void Update(const thor::ActionMap<std::string>& map);
+
+  // Draw this sprite onto the screen at its current location.
+  virtual void Draw(sf::RenderWindow& window) const;
+
+  // Get the hit box of this drawable element. This box can be modified using
+  // the hit_box_ attribute.
+  const sf::FloatRect HitBox() const;
+
   // Build methods for creating drawables.
   Drawable* create(const std::string& sprite_filename, sf::Vector2i offset,
                    sf::Vector2i size);
@@ -37,42 +51,11 @@ public:
   Drawable* rotate(double degrees);
   Drawable* hit_box(sf::Vector2f hit_box);
 
-  double z_index() const {
-    return z_index_;
-  }
-
-  // Update this component.
-  virtual void Update(const thor::ActionMap<std::string>& map);
-
-  // Draw this sprite onto the screen at its current location.
-  virtual void Draw(sf::RenderWindow& window) const;
-
-  // Get access to the internal sprite.
-  sf::Sprite& Sprite() {
-    return sprite_;
-  }
-
-  const sf::Sprite& Sprite() const {
-    return sprite_;
-  }
-
-  sf::FloatRect HitBox() const {
-    if (hit_box_.x <= 0 and hit_box_.y <= 0) {
-      return sprite_.getGlobalBounds();
-    }
-
-    sf::FloatRect global_bounds = sprite_.getGlobalBounds();
-
-    sf::FloatRect hit_box;
-    hit_box.left = global_bounds.left + hit_box_.x;
-    hit_box.top = global_bounds.top + hit_box_.y;
-    hit_box.width = global_bounds.width - hit_box_.x;
-    hit_box.height = global_bounds.height - hit_box_.y;
-
-    return hit_box;
-  }
-
-  virtual void SetParameter(const std::string& key, const Json::Value& value);
+  // Getter methods for variables.
+  sf::Sprite& sprite();
+  const sf::Sprite& sprite() const;
+  const sf::Vector2f& hit_box() const;
+  double z_index() const;
 
 protected:
   // The internal sprite used to draw the drawable to the screen.

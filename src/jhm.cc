@@ -90,7 +90,7 @@ void JHM::Render() {
   // Update the view to match the player.
   for (const Entity* entity : Entity::GetEntitiesWithComponent<Player>()) {
     sf::View view = window_.getView();
-    view.setCenter(entity->GetComponent<Drawable>().Sprite().getPosition());
+    view.setCenter(entity->GetComponent<Drawable>().sprite().getPosition());
     window_.setView(view);
   }
 
