@@ -1,0 +1,38 @@
+{
+  "name": "farm",
+  "entities": [
+    {
+      "drawable": {
+        "sprite": {
+          "file": "assets/farm-fence-vertical.png",
+          "position": [0, 0],
+          "offset": [7, 410]
+        },
+
+        "location": [128, 110],
+        "z_index": 1002,
+        "scale": 2,
+        "repeat": true
+      },
+
+      "block_movement": {}
+    },
+
+    {
+      "drawable": {
+        "sprite": {
+          "file": "assets/farm-fence-vertical.png",
+          "position": [7, 0],
+          "offset": [-7, 570]
+        },
+
+        "location": [2004, 118],
+        "z_index": 1002,
+        "scale": 2,
+        "repeat": true
+      },
+
+      "block_movement": {}
+    }
+  ]
+}
