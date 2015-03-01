@@ -47,20 +47,22 @@ void Movable::Update(const thor::ActionMap<std::string>& map) {
   // don't actually move.
   for (const Entity* entity :
         game::Map::GetActive().GetEntitiesWithComponent<BlockMovement>()) {
-    if (not entity->HasComponent<Drawable>()) {
-      LOG->emerg("Something blocks movement but is isn't drawable!");
+    sf::FloatRect other_boundary;
+    if (entity->HasComponent<Drawable>()) {
+      other_boundary = entity->GetComponent<Drawable>().HitBox();
+    } else if (entity->HasComponent<Zone>()) {
+      other_boundary = entity->GetComponent<Zone>().area();
+    } else {
+      LOG->emerg("Something blocks movement but isn't a Zone or Drawable!");
     }
-
-    const Drawable& d2 = entity->GetComponent<Drawable>();
-    sf::FloatRect d2_bounds = d2.HitBox();
 
     // Add some padding around the movement-blocking object. It makes the
     // controls a little less likely to get stuck.
-    d2_bounds.left -= 4;
-    d2_bounds.top -= 4;
-    d2_bounds.width += 8;
-    d2_bounds.height += 8;
-    if (d2_bounds.intersects(d.HitBox())) {
+    other_boundary.left -= 4;
+    other_boundary.top -= 4;
+    other_boundary.width += 8;
+    other_boundary.height += 8;
+    if (other_boundary.intersects(d.HitBox())) {
       LOG->debug("Collision detected! Not moving the sprite.");
       d.sprite().setPosition(old_position);
       break;

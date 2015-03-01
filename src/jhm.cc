@@ -55,6 +55,7 @@ void JHM::Setup() {
 
   // Load the map.
   engine::game::Loader::LoadMap("../maps/fomt/farm.map");
+  engine::game::Loader::LoadMap("../maps/fomt/farm-house.map");
   engine::game::Loader::LoadSave("../maps/fomt/player.save");
 
   LOG->trace("done JHM::Setup");

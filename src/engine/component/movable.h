@@ -8,6 +8,7 @@
 #include "engine/component/directional.h"
 #include "engine/component/drawable.h"
 #include "engine/component/entity.h"
+#include "engine/component/zone.h"
 #include "engine/game/map.h"
 #include "log.h"
 
