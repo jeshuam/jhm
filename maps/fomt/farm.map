@@ -18,16 +18,33 @@
     ///
     /// House!
     ///
+    // House roof!
     {
       "drawable": {
         "sprite": {
-          "file": "assets/main-farm-house-small.png"
+          "file": "assets/main-farm-house-small.png",
+          "offset": [0, 0],
+          "size": [64, 27]
         },
 
         "location": [410, 48],
         "z_index": 15000,
-        "scale": 2,
-        "hit_box": [0, 27, 64, 61]
+        "scale": 2
+      }
+    },
+
+    // Rest of the house!
+    {
+      "drawable": {
+        "sprite": {
+          "file": "assets/main-farm-house-small.png",
+          "offset": [0, 27],
+          "size": [64, 61]
+        },
+
+        "location": [410, 102],
+        "z_index": 5000,
+        "scale": 2
       },
 
       "block_movement": {}
