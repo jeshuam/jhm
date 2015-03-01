@@ -94,7 +94,15 @@
         "scale": 2
       },
 
-      "block_movement": {}
+      "block_movement": {},
+
+      "interactable": {
+        "action": "display_message",
+        "facing": ["UP"],
+        "parameters": {
+          "message": "Hello, World!"
+        }
+      }
     },
 
     // Bookshelf.

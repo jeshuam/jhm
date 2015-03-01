@@ -29,6 +29,9 @@ public:
     UP, DOWN, LEFT, RIGHT
   };
 
+  // Convert strings --> directional ENUM values.
+  static Direction GetDirection(const std::string& direction);
+
   // Constructor + Destructor.
   Directional();
   virtual ~Directional();
@@ -47,6 +50,9 @@ public:
   // Change the direction this object is facing.
   void ChangeDirection(Direction direction);
 
+  // Getters.
+  Direction current_direction() const;
+
 protected:
   // Thor animation manager.
   thor::Animator<sf::Sprite, Direction> animator_;
@@ -55,5 +61,17 @@ protected:
 };
 
 }}  // namepsace engine::component
+
+// Add a hash function for Direction.
+using engine::component::Directional;
+namespace std {
+  template <> struct hash<Directional::Direction>
+  {
+    size_t operator()(const Directional::Direction & x) const
+    {
+      return int(x);
+    }
+  };
+}
 
 #endif  // _ENGINE_COMPONENT_DIRECTIONAL_H_

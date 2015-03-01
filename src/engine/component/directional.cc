@@ -13,6 +13,10 @@ const std::unordered_map<std::string, Directional::Direction> directions = {
   {"RIGHT", Directional::RIGHT},
 };
 
+Directional::Direction Directional::GetDirection(const std::string& direction) {
+  return directions.at(direction);
+}
+
 Directional::Directional() : animator_(), current_direction_(DOWN), clock_() {
 
 }
@@ -29,7 +33,7 @@ void Directional::SetParameter(const std::string& key,
       const Json::Value& direction_json = value[i];
 
       // Get the current direction enum.
-      Direction dir = directions.at(direction_json["direction"].asString());
+      Direction dir = GetDirection(direction_json["direction"].asString());
 
       // Get the total length of time this animation should take.
       sf::Time length = sf::seconds(direction_json["length"].asDouble());
@@ -111,6 +115,10 @@ Directional* Directional::AddDirection(
 
 void Directional::ChangeDirection(Direction direction) {
   current_direction_ = direction;
+}
+
+Directional::Direction Directional::current_direction() const {
+  return current_direction_;
 }
 
 }}  // namepsace engine::component

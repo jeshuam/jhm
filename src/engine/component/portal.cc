@@ -41,7 +41,6 @@ bool Portal::Update(const thor::ActionMap<std::string>& map) {
   // If they haven't pressed the required key, don't even bother checking for
   // collisions.
   if (require_interaction() and not map.isActive("interact")) {
-
     return true;
   }
 
