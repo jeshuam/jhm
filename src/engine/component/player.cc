@@ -56,6 +56,8 @@ bool Player::Update(const thor::ActionMap<std::string>& map) {
   sf::Vector2i& velocity = movable.velocity();
 
   // Determine the Y velocity.
+  velocity.x = 0;
+  velocity.y = 0;
   if (map.isActive("moving_up") and not map.isActive("moving_down")) {
     velocity.y = 1;
   }
@@ -64,21 +66,13 @@ bool Player::Update(const thor::ActionMap<std::string>& map) {
     velocity.y = -1;
   }
 
-  else {
-    velocity.y = 0;
-  }
-
   // Determine the X velocity.
-  if (map.isActive("moving_right") and not map.isActive("moving_left")) {
+  else if (map.isActive("moving_right") and not map.isActive("moving_left")) {
     velocity.x = 1;
   }
 
   else if (map.isActive("moving_left") and not map.isActive("moving_right")) {
     velocity.x = -1;
-  }
-
-  else {
-    velocity.x = 0;
   }
 
   // If the player is running...

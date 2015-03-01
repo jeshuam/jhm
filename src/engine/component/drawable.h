@@ -47,12 +47,12 @@ public:
   Drawable* z_index(double z_index);
   Drawable* location(sf::Vector2f location);
   Drawable* rotate(double degrees);
-  Drawable* hit_box(sf::Vector2f hit_box);
+  Drawable* hit_box(sf::FloatRect hit_box);
 
   // Getter methods for variables.
   sf::Sprite& sprite();
   const sf::Sprite& sprite() const;
-  const sf::Vector2f& hit_box() const;
+  const sf::FloatRect& hit_box() const;
   double z_index() const;
 
 protected:
@@ -60,7 +60,7 @@ protected:
   sf::Sprite sprite_;
 
   // What counts as 'hitting' this object?
-  sf::Vector2f hit_box_;
+  sf::FloatRect hit_box_;
 
   // A reference to the texture used by this drawable.
   std::shared_ptr<sf::Texture> texture_;

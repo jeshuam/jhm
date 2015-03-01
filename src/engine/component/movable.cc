@@ -38,7 +38,6 @@ bool Movable::Update(const thor::ActionMap<std::string>& map) {
 
   // Update the current position of the object.
   Drawable& d = entity_->GetComponent<Drawable>();
-  sf::Vector2f old_position = d.sprite().getPosition();
   d.sprite().setPosition(
       d.sprite().getPosition().x + (velocity_.x * speed_ * speed_multiplier_),
       d.sprite().getPosition().y - (velocity_.y * speed_ * speed_multiplier_));
@@ -58,13 +57,17 @@ bool Movable::Update(const thor::ActionMap<std::string>& map) {
 
     // Add some padding around the movement-blocking object. It makes the
     // controls a little less likely to get stuck.
-    other_boundary.left -= 4;
-    other_boundary.top -= 4;
-    other_boundary.width += 8;
-    other_boundary.height += 8;
-    if (other_boundary.intersects(d.HitBox())) {
-      LOG->debug("Collision detected! Not moving the sprite.");
-      d.sprite().setPosition(old_position);
+    sf::FloatRect intersection;
+    if (other_boundary.intersects(d.HitBox(), intersection)) {
+      LOG->debug("Collision detected!");
+
+      // Move the sprite back by the intersection size. This works well because
+      // the sprite is a uniform size and we can only move in either X or Y at
+      // once.
+      d.sprite().setPosition(
+          d.sprite().getPosition().x + (-velocity_.x * intersection.width),
+          d.sprite().getPosition().y - (-velocity_.y * intersection.height));
+
       break;
     }
   }

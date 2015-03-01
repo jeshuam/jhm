@@ -31,7 +31,8 @@ void Drawable::SetParameter(const std::string& key, const Json::Value& value) {
   }
 
   else if (key == "hit_box") {
-    hit_box(sf::Vector2f(value[0].asDouble(), value[1].asDouble()));
+    hit_box({value[0].asFloat(), value[1].asFloat(),
+             value[2].asFloat(), value[3].asFloat()});
   }
 
   else if (key == "sprite") {
@@ -63,17 +64,17 @@ void Drawable::Draw(sf::RenderWindow& window) const {
 }
 
 const sf::FloatRect Drawable::HitBox() const {
-  if (hit_box_.x <= 0 and hit_box_.y <= 0) {
+  if (hit_box_.width == 0 and hit_box_.height == 0) {
     return sprite_.getGlobalBounds();
   }
 
   sf::FloatRect global_bounds = sprite_.getGlobalBounds();
 
   sf::FloatRect hit_box;
-  hit_box.left = global_bounds.left + hit_box_.x;
-  hit_box.top = global_bounds.top + hit_box_.y;
-  hit_box.width = global_bounds.width - hit_box_.x;
-  hit_box.height = global_bounds.height - hit_box_.y;
+  hit_box.left = global_bounds.left + hit_box_.left * sprite_.getScale().x;
+  hit_box.top = global_bounds.top + hit_box_.top * sprite_.getScale().y;
+  hit_box.width = hit_box_.width * sprite_.getScale().x;
+  hit_box.height = hit_box_.height * sprite_.getScale().y;
 
   return hit_box;
 }
@@ -119,7 +120,7 @@ Drawable* Drawable::rotate(double degrees) {
   return this;
 }
 
-Drawable* Drawable::hit_box(sf::Vector2f hit_box) {
+Drawable* Drawable::hit_box(sf::FloatRect hit_box) {
   hit_box_ = hit_box;
   return this;
 }
@@ -132,7 +133,7 @@ const sf::Sprite& Drawable::sprite() const {
   return sprite_;
 }
 
-const sf::Vector2f& Drawable::hit_box() const {
+const sf::FloatRect& Drawable::hit_box() const {
   return hit_box_;
 }
 
