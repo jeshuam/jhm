@@ -77,6 +77,190 @@
           "scale": 2
         }
       }
+    },
+
+    // House objects.
+    // TV.
+    {
+      "drawable": {
+        "sprite": {
+          "file": "assets/farm-house.png",
+          "offset": [224, 8],
+          "size": [32, 40]
+        },
+
+        "location": [240, 48],
+        "z_index": 1000,
+        "scale": 2
+      },
+
+      "block_movement": {}
+    },
+
+    // Bookshelf.
+    {
+      "drawable": {
+        "sprite": {
+          "file": "assets/farm-house.png",
+          "offset": [184, 8],
+          "size": [32, 40]
+        },
+
+        "location": [176, 48],
+        "z_index": 1000,
+        "scale": 2
+      },
+
+      "block_movement": {}
+    },
+
+    // Side table (plain).
+    {
+      "drawable": {
+        "sprite": {
+          "file": "assets/farm-house.png",
+          "offset": [264, 58],
+          "size": [16, 24]
+        },
+
+        "location": [304, 96],
+        "z_index": 1000,
+        "scale": 2
+      },
+
+      "block_movement": {}
+    },
+
+    // Side table (with journal).
+    {
+      "drawable": {
+        "sprite": {
+          "file": "assets/farm-house.png",
+          "offset": [248, 56],
+          "size": [16, 24]
+        },
+
+        "location": [368, 96],
+        "z_index": 1000,
+        "scale": 2
+      },
+
+      "block_movement": {}
+    },
+
+    // Calendar.
+    {
+      "drawable": {
+        "sprite": {
+          "file": "assets/farm-house.png",
+          "offset": [264, 8],
+          "size": [16, 24]
+        },
+
+        "location": [336, 32],
+        "z_index": 1000,
+        "scale": 2
+      },
+
+      "block_movement": {}
+    },
+
+    // Bed.
+    {
+      "drawable": {
+        "sprite": {
+          "file": "assets/farm-house.png",
+          "offset": [216, 211],
+          "size": [32, 53]
+        },
+
+        "location": [400, 86],
+        "z_index": 1000,
+        "scale": 2
+      },
+
+      "block_movement": {}
+    },
+
+    // Table.
+    {
+      "drawable": {
+        "sprite": {
+          "file": "assets/farm-house.png",
+          "offset": [248, 96],
+          "size": [32, 28]
+        },
+
+        "location": [208, 192],
+        "z_index": 1000,
+        "scale": 2
+      },
+
+      "block_movement": {}
+    },
+
+    // Chair (RIGHT).
+    {
+      "drawable": {
+        "sprite": {
+          "file": "assets/farm-house.png",
+          "offset": [280, 105],
+          "size": [16, 15]
+        },
+
+        "location": [272, 210],
+        "z_index": 1000,
+        "scale": 2
+      }
+    },
+
+    // Chair (LEFT).
+    {
+      "drawable": {
+        "sprite": {
+          "file": "assets/farm-house.png",
+          "offset": [280, 105],
+          "size": [16, 15]
+        },
+
+        "location": [176, 210],
+        "z_index": 1000,
+        "scale": 2
+      }
+    },
+
+    // Bench (BOTTOM LEFT).
+    {
+      "drawable": {
+        "sprite": {
+          "file": "assets/farm-house.png",
+          "offset": [200, 56],
+          "size": [32, 24]
+        },
+
+        "location": [16, 288],
+        "z_index": 1000,
+        "scale": 2
+      },
+
+      "block_movement": {}
+    },
+
+    // Toolbox.
+    {
+      "drawable": {
+        "sprite": {
+          "file": "assets/farm-house.png",
+          "offset": [448, 176],
+          "size": [24, 32]
+        },
+
+        "location": [400, 272],
+        "z_index": 1000,
+        "scale": 2
+      },
+
+      "block_movement": {}
     }
   ]
 }
