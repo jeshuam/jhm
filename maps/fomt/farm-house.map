@@ -64,6 +64,19 @@
       },
 
       "block_movement": {}
+    },
+
+    // Transport area (warp to farm map).
+    {
+      "portal": {
+        "destination": "farm",
+        "destination_position": [432, 198],
+        "require_interaction": false,
+        "zone": {
+          "area": [104, 206, 32, 18],
+          "scale": 2
+        }
+      }
     }
   ]
 }

@@ -16,6 +16,36 @@
     },
 
     ///
+    /// House!
+    ///
+    {
+      "drawable": {
+        "sprite": {
+          "file": "assets/main-farm-house-small.png"
+        },
+
+        "location": [410, 48],
+        "z_index": 5000,
+        "scale": 2
+      },
+
+      "block_movement": {}
+    },
+
+    // Portal into the house.
+    {
+      "portal": {
+        "destination": "farm-house",
+        "destination_position": [222, 352],
+        "require_interaction": true,
+        "zone": {
+          "area": [216, 81, 21, 36],
+          "scale": 2
+        }
+      }
+    },
+
+    ///
     /// Fences! First, the main veritcal fences.
     ///
     {
@@ -28,8 +58,7 @@
 
         "location": [128, 110],
         "z_index": 1002,
-        "scale": 2,
-        "repeat": true
+        "scale": 2
       },
 
       "block_movement": {}
