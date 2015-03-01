@@ -1,5 +1,5 @@
 {
-  "map": "farm",
+  "map": "farm-house",
   "components": {
     "player": {
       "running_multiplier": 10,
