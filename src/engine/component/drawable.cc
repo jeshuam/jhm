@@ -50,9 +50,10 @@ void Drawable::SetParameter(const std::string& key, const Json::Value& value) {
   }
 }
 
-void Drawable::Update(const thor::ActionMap<std::string>& map) {
+bool Drawable::Update(const thor::ActionMap<std::string>& map) {
   LOG->trace("Drawable::Update");
   LOG->trace("Done Drawable::Update");
+  return true;
 }
 
 void Drawable::Draw(sf::RenderWindow& window) const {

@@ -22,8 +22,8 @@ void Zone::SetParameter(const std::string& key, const Json::Value& value) {
   }
 }
 
-void Zone::Update(const thor::ActionMap<std::string>& map) {
-  // Do nothing...
+bool Zone::Update(const thor::ActionMap<std::string>& map) {
+  return true;
 }
 
 Zone* Zone::area(sf::FloatRect area) {

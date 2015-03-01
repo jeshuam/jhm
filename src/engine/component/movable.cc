@@ -22,13 +22,13 @@ void Movable::SetParameter(const std::string& key, const Json::Value& value) {
   }
 }
 
-void Movable::Update(const thor::ActionMap<std::string>& map) {
+bool Movable::Update(const thor::ActionMap<std::string>& map) {
   LOG->trace("Movable::Update");
 
   // Only run this every x ms.
   if (clock_.getElapsedTime().asMilliseconds() < kUpdateFrequencyMs) {
     LOG->trace("Done (early) Movable::Update");
-    return;
+    return true;
   }
 
   // The object _must_ be drawable.
@@ -86,6 +86,7 @@ void Movable::Update(const thor::ActionMap<std::string>& map) {
 
   clock_.restart();
   LOG->trace("Done Movable::Update");
+  return true;
 }
 
 Movable* Movable::speed(double speed) {

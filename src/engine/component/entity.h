@@ -26,8 +26,9 @@ public:
   // Add a component to this entity.
   Entity* AddComponent(Component* component);
 
-  // Update all internal components.
-  void Update(const thor::ActionMap<std::string>& map);
+  // Update all internal components. Will return false if any components return
+  // false on update.
+  bool Update(const thor::ActionMap<std::string>& map);
 
   // Remove a component from this entity.
   template <typename T>
@@ -49,7 +50,8 @@ public:
     try {
       return *dynamic_cast<T*>(components_.at(T::name_()));
     } catch (std::out_of_range) {
-      throw std::logic_error("Request for component where none exists.");
+      LOG->emerg("Request for component {} where none exists.", T::name_());
+      throw std::logic_error("Invalid component requested.");
     }
   }
 

@@ -19,6 +19,11 @@ Map& Map::add(component::Entity* entity) {
   return *this;
 }
 
+Map& Map::remove(component::Entity* entity) {
+  entities_.erase(entity);
+  return *this;
+}
+
 void Map::Activate() {
   active_map_ = this;
 }

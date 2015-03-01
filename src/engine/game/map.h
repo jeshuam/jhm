@@ -20,6 +20,9 @@ public:
   // Map will use a builer-like interface.
   Map& add(component::Entity* entity);
 
+  // Remove the given entity.
+  Map& remove(component::Entity* entity);
+
   // Get all entities which have the given component.
   template <typename T>
   std::vector<component::Entity*> GetEntitiesWithComponent() {

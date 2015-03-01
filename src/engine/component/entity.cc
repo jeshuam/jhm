@@ -29,10 +29,14 @@ Entity* Entity::AddComponent(Component* component) {
   return this;
 }
 
-void Entity::Update(const thor::ActionMap<std::string>& map) {
+bool Entity::Update(const thor::ActionMap<std::string>& map) {
   for (auto& type_component : components_) {
-    type_component.second->Update(map);
+    if (not type_component.second->Update(map)) {
+      return false;
+    }
   }
+
+  return true;
 }
 
 }}  // namepsace engine::component

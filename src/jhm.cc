@@ -27,7 +27,11 @@ void JHM::Run() {
   running_ = true;
   while (running_) {
     ProcessEvents();
-    Loop();
+
+    if (not Loop()) {
+      continue;
+    }
+    
     Render();
   }
 
@@ -52,6 +56,7 @@ void JHM::Setup() {
   action_map_["moving_right"] = Action(sf::Keyboard::Right, Action::Hold);
   action_map_["moving_left"] = Action(sf::Keyboard::Left, Action::Hold);
   action_map_["running"] = Action(sf::Keyboard::Space, Action::Hold);
+  action_map_["interact"] = Action(sf::Keyboard::E);
 
   // Load the map.
   engine::game::Loader::LoadMap("../maps/fomt/farm.map");
@@ -65,11 +70,13 @@ void JHM::ProcessEvents() {
   action_map_.update(window_);
 }
 
-void JHM::Loop() {
+bool JHM::Loop() {
   LOG->trace("JHM::Loop");
 
   for (Entity* entity : Map::GetActive().entities()) {
-    entity->Update(action_map_);
+    if (not entity->Update(action_map_)) {
+      return false;
+    }
   }
 
   // If we have to quit, then do so.
@@ -78,6 +85,7 @@ void JHM::Loop() {
   }
 
   LOG->trace("Done JHM::Loop");
+  return true;
 }
 
 void JHM::Render() {

@@ -33,7 +33,7 @@ private:
   void ProcessEvents();
 
   // Run any loop events.
-  void Loop();
+  bool Loop();
 
   // Render things to the screen.
   void Render();

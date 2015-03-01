@@ -45,8 +45,11 @@ public:
   virtual void SetParameter(const std::string& key,
                             const Json::Value& value) = 0;
 
-  // Update the given component. This will be called once per loop.
-  virtual void Update(const thor::ActionMap<std::string>& map) = 0;
+  // Update the given component. This will be called once per loop. If false is
+  // returned from the update step, the current loop will be terminated and
+  // all update events will happen again. This could be useful if an area
+  // transition has occurred.
+  virtual bool Update(const thor::ActionMap<std::string>& map) = 0;
 
 protected:
   // A reference to the entity this component is attached to. Ownership will not

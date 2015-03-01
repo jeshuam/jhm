@@ -26,6 +26,7 @@ Entity* LoadComponents(const Json::Value& components_json) {
     const Json::Value& component_json = components_json[component_name];
 
     Component* component = Component::Get(component_name);
+    entity->AddComponent(component);
 
     LOG->debug("Loading component {}", component_name);
 
@@ -35,8 +36,6 @@ Entity* LoadComponents(const Json::Value& components_json) {
     }
 
     LOG->debug("Done!");
-
-    entity->AddComponent(component);
   }
 
   return entity;

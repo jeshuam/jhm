@@ -58,7 +58,7 @@ void Directional::SetParameter(const std::string& key,
   }
 }
 
-void Directional::Update(const thor::ActionMap<std::string>& map) {
+bool Directional::Update(const thor::ActionMap<std::string>& map) {
   LOG->trace("Directional::Update");
 
   // Directional components must be movable.
@@ -91,6 +91,7 @@ void Directional::Update(const thor::ActionMap<std::string>& map) {
   }
 
   LOG->trace("Done Directional::Update");
+  return true;
 }
 
 Directional* Directional::AddDirection(

@@ -37,7 +37,7 @@ public:
   virtual void SetParameter(const std::string& key, const Json::Value& value);
 
   // Update this component.
-  virtual void Update(const thor::ActionMap<std::string>& map);
+  virtual bool Update(const thor::ActionMap<std::string>& map);
 
   // Add an animation for a specific direction of some total length.
   Directional* AddDirection(

@@ -5,6 +5,7 @@
 #include "engine/component/drawable.h"
 #include "engine/component/movable.h"
 #include "engine/component/player.h"
+#include "engine/component/portal.h"
 #include "engine/component/zone.h"
 
 namespace engine {
@@ -29,6 +30,10 @@ Component* Component::Get(const std::string& key) {
 
   else if (key == "player") {
     return new Player();
+  }
+
+  else if (key == "portal") {
+    return new Portal();
   }
 
   else if (key == "zone") {

@@ -39,7 +39,7 @@ void Player::SetParameter(const std::string& key, const Json::Value& value) {
   }
 }
 
-void Player::Update(const thor::ActionMap<std::string>& map) {
+bool Player::Update(const thor::ActionMap<std::string>& map) {
   LOG->trace("Player::Update");
 
   // Get a reference to the Movable component.
@@ -97,6 +97,7 @@ void Player::Update(const thor::ActionMap<std::string>& map) {
   }
 
   LOG->trace("Done Player::Update");
+  return true;
 }
 
 Player* Player::running_multiplier(double running_multiplier) {

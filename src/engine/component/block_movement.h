@@ -24,8 +24,8 @@ public:
 
   }
 
-  virtual void Update(const thor::ActionMap<std::string>& map) {
-
+  virtual bool Update(const thor::ActionMap<std::string>& map) {
+    return true;
   }
 
   virtual void SetParameter(const std::string& key, const Json::Value& value) {
