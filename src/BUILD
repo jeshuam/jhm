@@ -33,6 +33,7 @@ targets = {
       'sfml-graphics-2',
       'sfml-window-2',
       'sfml-system-2',
+      'sfml-audio-2',
       'thor',
       'pthread',
       'jsoncpp'
