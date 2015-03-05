@@ -22,14 +22,14 @@ Directional::Directional() : animator_(), current_direction_(DOWN), clock_() {
 }
 
 Directional::~Directional() {
-  
+
 }
 
 void Directional::SetParameter(const std::string& key,
                                const Json::Value& value) {
   if (key == "directions") {
     // For each direction...
-    for (int i = 0; i < value.size(); i++) {
+    for (unsigned int i = 0; i < value.size(); i++) {
       const Json::Value& direction_json = value[i];
 
       // Get the current direction enum.
@@ -42,7 +42,7 @@ void Directional::SetParameter(const std::string& key,
       const Json::Value& frames_json = direction_json["frames"];
       std::vector<std::pair<sf::IntRect, double>> frames;
 
-      for (int frame = 0; frame < frames_json.size(); frame++) {
+      for (unsigned int frame = 0; frame < frames_json.size(); frame++) {
         const Json::Value& frame_json = frames_json[frame];
 
         // Load the rectangle from JSON.
@@ -68,7 +68,7 @@ bool Directional::Update(const thor::ActionMap<std::string>& map) {
   // Directional components must be movable.
   if (not entity_->HasComponent<Movable>()) {
     LOG->emerg("Directional entity does not have required Movable component.");
-  }  
+  }
 
 
   Movable& movable = entity_->GetComponent<Movable>();
@@ -88,7 +88,7 @@ bool Directional::Update(const thor::ActionMap<std::string>& map) {
       if (animator_.getPlayingAnimation() != current_direction_) {
         animator_.playAnimation(current_direction_, true);
       }
-      
+
       animator_.update(clock_.restart());
       animator_.animate(entity_->GetComponent<Drawable>().sprite());
     }

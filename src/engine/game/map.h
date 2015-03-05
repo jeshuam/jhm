@@ -5,6 +5,8 @@
 #include <unordered_set>
 #include <vector>
 
+#include <SFML/Audio.hpp>
+
 #include "engine/component/entity.h"
 
 namespace engine {
@@ -14,7 +16,7 @@ namespace game {
 // the map (i.e. static objects) and shouldn't include any characters or items.
 class Map {
 public:
-  Map(const std::string& name);
+  Map(const std::string& name, const std::string& music);
   ~Map();
 
   // Map will use a builer-like interface.
@@ -41,13 +43,14 @@ public:
 
   // Getters for members.
   const std::string& name() const;
+  const std::string& music() const;
   std::unordered_set<component::Entity*> entities();
 
   // Get the map with a given name from the registry.
   static Map& Get(const std::string& name);
 
   // Set the currently 'active' map.
-  static void Activate(const std::string& name);
+  static void Activate(Map& new_map);
 
   // Get the currently 'active' map.
   static Map& GetActive();
@@ -55,6 +58,9 @@ public:
 private:
   // String name of the map. Can be referenced by entities and should be unique.
   std::string name_;
+
+  // File path of the music to play when on this map.
+  std::string music_;
 
   // A set of entities associated with this map. This should be all of the
   // background entities.
@@ -65,6 +71,10 @@ private:
 
   // Currently active map.
   static Map* active_map_;
+
+  // Currently playing music.
+  static std::string active_music_key_;
+  static sf::Music active_music_;
 };
 
 }}  // namespace engine::game

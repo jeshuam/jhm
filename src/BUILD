@@ -1,14 +1,21 @@
 root = True
 
-compiler = 'clang++'
+compiler = 'g++'
 
 cc_flags = [
   '-Wall', '-Werror',
-  '-std=c++11',
-  '-I' + os.path.abspath('../dependencies/spdlog/include'),
+  '-std=c++0x',
+  '-I"{}"'.format(os.path.abspath('.')),
+  '-D_WIN32_WINNT=0x600'
 ]
 
-link_flags = []
+link_flags = [
+
+]
+
+if os.name == 'nt':
+  cc_flags.append('-D_WIN32_WINNT=0x600')
+  link_flags.append('-L"{}"'.format('C:\\Libraries\\bin'))
 
 targets = {
   'jhm': {
@@ -23,12 +30,15 @@ targets = {
     ],
 
     'link_with': [
-      'sfml-graphics',
-      'sfml-window',
-      'sfml-system',
+      'sfml-graphics-2',
+      'sfml-window-2',
+      'sfml-system-2',
+      'sfml-audio-2',
       'thor',
       'pthread',
       'jsoncpp'
     ]
   },
 }
+
+# C:\Python34\python.exe ..\..\cc-build\src\cc_build.py --static :all

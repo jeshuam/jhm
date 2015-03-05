@@ -38,6 +38,9 @@ logs
 *.sav
 *.sgm
 
+# Windows files.
+Thumbs.db
+
 # Sublime Files
 *.sublime-project
 *.sublime-workspace

@@ -1,5 +1,6 @@
 {
   "name": "farm",
+  "music": "assets/farm-spring.ogg",
   "entities": [
     ///
     /// Main background map.
@@ -197,7 +198,7 @@
 
       "block_movement": {}
     },
-    
+
     {
       "drawable": {
         "sprite": {
@@ -213,7 +214,7 @@
 
       "block_movement": {}
     },
-    
+
     {
       "drawable": {
         "sprite": {
@@ -229,7 +230,7 @@
 
       "block_movement": {}
     },
-    
+
     {
       "drawable": {
         "sprite": {
@@ -245,7 +246,7 @@
 
       "block_movement": {}
     },
-    
+
     {
       "drawable": {
         "sprite": {
@@ -261,7 +262,7 @@
 
       "block_movement": {}
     },
-    
+
     {
       "drawable": {
         "sprite": {
@@ -277,7 +278,7 @@
 
       "block_movement": {}
     },
-    
+
     {
       "drawable": {
         "sprite": {
@@ -293,7 +294,7 @@
 
       "block_movement": {}
     },
-    
+
     {
       "drawable": {
         "sprite": {
@@ -309,7 +310,7 @@
 
       "block_movement": {}
     },
-    
+
     {
       "drawable": {
         "sprite": {
@@ -325,7 +326,7 @@
 
       "block_movement": {}
     },
-    
+
     {
       "drawable": {
         "sprite": {
@@ -341,7 +342,7 @@
 
       "block_movement": {}
     },
-    
+
     {
       "drawable": {
         "sprite": {
@@ -357,7 +358,7 @@
 
       "block_movement": {}
     },
-    
+
     {
       "drawable": {
         "sprite": {
@@ -373,7 +374,7 @@
 
       "block_movement": {}
     },
-    
+
     {
       "drawable": {
         "sprite": {
@@ -389,7 +390,7 @@
 
       "block_movement": {}
     },
-    
+
     {
       "drawable": {
         "sprite": {
@@ -405,7 +406,7 @@
 
       "block_movement": {}
     },
-    
+
     {
       "drawable": {
         "sprite": {
@@ -421,7 +422,7 @@
 
       "block_movement": {}
     },
-    
+
     {
       "drawable": {
         "sprite": {

@@ -58,11 +58,13 @@ Map& LoadMap(const std::string& map_filepath) {
 
   // Load the map ID.
   LOG->info("Loading map {}...", map_filename);
-  Map* map = new Map(map_json["name"].asString());
+  Map* map = new Map(map_json["name"].asString(),
+                     std::string(cwd) + "/" + map_file_dir + "/"
+                                      + map_json["music"].asString());
 
   // Load the entities.
   const Json::Value& entities = map_json["entities"];
-  for (int i = 0; i < entities.size(); i++) {
+  for (unsigned int i = 0; i < entities.size(); i++) {
     LOG->debug("Processing entity {}", i);
     map->add(LoadComponents(entities[i]));
   }

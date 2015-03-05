@@ -1,5 +1,6 @@
 {
   "name": "farm-house",
+  "music": "assets/farm-spring.ogg",
   "entities": [
     ///
     /// Main background.
