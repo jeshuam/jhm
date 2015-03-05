@@ -62,7 +62,7 @@ Map& LoadMap(const std::string& map_filepath) {
 
   // Load the entities.
   const Json::Value& entities = map_json["entities"];
-  for (int i = 0; i < entities.size(); i++) {
+  for (unsigned int i = 0; i < entities.size(); i++) {
     LOG->debug("Processing entity {}", i);
     map->add(LoadComponents(entities[i]));
   }
