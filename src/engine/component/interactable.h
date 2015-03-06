@@ -2,9 +2,12 @@
 #define _ENGINE_COMPONENT_INTERACTABLE_H_
 
 #include <unordered_set>
+#include <memory>
 
 #include <SFML/Graphics.hpp>
 
+#include "engine/action/action.h"
+#include "engine/action/display_message.h"
 #include "engine/component/component.h"
 #include "engine/component/directional.h"
 #include "engine/component/drawable.h"
@@ -30,19 +33,19 @@ public:
   virtual bool Update(Game& game);
 
   // Setters.
-  Interactable* action(const std::string& action);
+  Interactable* action_key(const std::string& action_key);
   Interactable* facing(const std::unordered_set<Directional::Direction> facing);
   Interactable* parameters(const Json::Value& parameters);
 
   // Getters.
-  const std::string& action() const;
+  const std::string& action_key() const;
   const std::unordered_set<Directional::Direction>& facing() const;
   const Json::Value& parameters() const;
   const sf::FloatRect area() const;
 
 private:
   // Action key to perform.
-  std::string action_;
+  std::string action_key_;
 
   // Set of valid directions the user may be facing in order to interact with
   // this object.
@@ -51,10 +54,11 @@ private:
   // Parameters to provide to this action.
   Json::Value parameters_;
 
-  // Actually perform the action described by this class.
-  bool DoAction();
+  // Actual action to be performed.
+  std::unique_ptr<action::Action> action_;
 
-  // Continue an action that was started.
+  // Actually perform the action described by this class.
+  void StartAction(Game& game);
 };
 
 }}  // namepsace engine::component

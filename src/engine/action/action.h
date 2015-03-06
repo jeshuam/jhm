@@ -9,6 +9,8 @@ namespace action {
 // Some action that happens when you interact with something.
 class Action {
 public:
+  virtual ~Action() {}
+
   // Update the current state of the action. This could be playing an animation,
   // performing some processing, waiting for input, anything. All state should
   // be managed by the object which inherits from Action. This should return

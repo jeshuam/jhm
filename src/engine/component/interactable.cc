@@ -5,7 +5,8 @@ namespace component {
 
 using game::Map;
 
-Interactable::Interactable() : action_(), facing_(), parameters_() {
+Interactable::Interactable() : action_key_(), facing_(), parameters_()
+                             , action_(nullptr) {
 
 }
 
@@ -16,7 +17,7 @@ Interactable::~Interactable() {
 void Interactable::SetParameter(const std::string& key,
                                 const Json::Value& value) {
   if (key == "action") {
-    action(value.asString());
+    action_key(value.asString());
   }
 
   else if (key == "facing") {
@@ -35,21 +36,30 @@ void Interactable::SetParameter(const std::string& key,
 
 bool Interactable::Update(Game& game) {
   // If they are interacting...
-  if (game.action_map().isActive("interact")) {
+  if (not action_ and game.action_map().isActive("interact")) {
     // If the player is currently colliding with us.
     Entity* player = Map::GetActive().GetEntitiesWithComponent<Player>()[0];
     auto dir = player->GetComponent<Directional>().current_direction();
     auto hit_box = player->GetComponent<Drawable>().HitBox();
     if (facing().count(dir) == 1 and hit_box.intersects(area())) {
-      return DoAction();
+      StartAction(game);
+    }
+  }
+
+  // If there is an action currently playing, keep playing.
+  if (action_) {
+    if (action_->Update(game)) {
+      game.ReleaseOwnership();
+      action_.reset();
+      return true;
     }
   }
 
   return true;
 }
 
-Interactable* Interactable::action(const std::string& action) {
-  action_ = action;
+Interactable* Interactable::action_key(const std::string& action_key) {
+  action_key_ = action_key;
   return this;
 }
 
@@ -64,8 +74,8 @@ Interactable* Interactable::parameters(const Json::Value& parameters) {
   return this;
 }
 
-const std::string& Interactable::action() const {
-  return action_;
+const std::string& Interactable::action_key() const {
+  return action_key_;
 }
 
 const std::unordered_set<Directional::Direction>& Interactable::facing() const {
@@ -98,14 +108,16 @@ const sf::FloatRect Interactable::area() const {
   return area;
 }
 
-bool Interactable::DoAction() {
+void Interactable::StartAction(Game& game) {
   // Display a message on the screen. This will pause all gameplay and required
   // the player to click "play" to advance it.
-  if (action() == "display_message") {
-    LOG->info("Displaying message {}", parameters_["message"].asString());
+  if (action_key() == "display_message") {
+    action_.reset(
+      new action::DisplayMessage(parameters_["message"].asString()));
   }
 
-  return true;
+  // Take ownership of the game!
+  game.TakeOwnership(entity_);
 }
 
 }}  // namepsace engine::component

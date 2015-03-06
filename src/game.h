@@ -4,6 +4,8 @@
 #include <SFML/Graphics.hpp>
 #include <Thor/Input/ActionMap.hpp>
 
+#include "log.h"
+
 namespace engine {
 namespace component {
 
