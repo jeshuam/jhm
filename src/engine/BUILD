@@ -5,6 +5,7 @@ targets = {
       'component/*.cc',
       'utility/*.cc',
       'game/*.cc',
+      'action/*.cc',
     ]
   },
 }

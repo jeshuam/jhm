@@ -30,7 +30,7 @@ public:
 
   // Update the component. This will change the X and Y value based on the
   // current X and Y velocity.
-  virtual bool Update(JHM& game);
+  virtual bool Update(Game& game);
 
   // Build methods for creating a movable.
   Movable* speed(double speed);

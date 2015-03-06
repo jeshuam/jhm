@@ -63,7 +63,7 @@ void Directional::SetParameter(const std::string& key,
   }
 }
 
-bool Directional::Update(JHM& game) {
+bool Directional::Update(Game& game) {
   LOG->trace("Directional::Update");
 
   // Directional components must be movable.

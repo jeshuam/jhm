@@ -40,7 +40,7 @@ public:
   virtual void SetParameter(const std::string& key, const Json::Value& value);
 
   // Update this component.
-  virtual bool Update(JHM& game);
+  virtual bool Update(Game& game);
 
   // Add an animation for a specific direction of some total length.
   Directional* AddDirection(

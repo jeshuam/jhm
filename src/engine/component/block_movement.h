@@ -24,7 +24,7 @@ public:
 
   }
 
-  virtual bool Update(JHM& game) {
+  virtual bool Update(Game& game) {
     return true;
   }
 

@@ -1,7 +1,6 @@
 #include "entity.h"
 
 #include "engine/component/component.h"
-#include "jhm.h"
 
 namespace engine {
 namespace component {
@@ -30,7 +29,7 @@ Entity* Entity::AddComponent(Component* component) {
   return this;
 }
 
-bool Entity::Update(JHM& game) {
+bool Entity::Update(Game& game) {
   for (auto& type_component : components_) {
     if (not type_component.second->Update(game)) {
       return false;

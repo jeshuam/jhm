@@ -1,7 +1,5 @@
 #include "zone.h"
 
-#include "jhm.h"
-
 namespace engine {
 namespace component {
 
@@ -24,7 +22,7 @@ void Zone::SetParameter(const std::string& key, const Json::Value& value) {
   }
 }
 
-bool Zone::Update(JHM& game) {
+bool Zone::Update(Game& game) {
   return true;
 }
 

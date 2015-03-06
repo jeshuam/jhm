@@ -1,7 +1,6 @@
 #include "drawable.h"
 
 #include "engine/component/player.h"
-#include "jhm.h"
 
 namespace engine {
 namespace component {
@@ -52,7 +51,7 @@ void Drawable::SetParameter(const std::string& key, const Json::Value& value) {
   }
 }
 
-bool Drawable::Update(JHM& game) {
+bool Drawable::Update(Game& game) {
   LOG->trace("Drawable::Update");
   LOG->trace("Done Drawable::Update");
   return true;

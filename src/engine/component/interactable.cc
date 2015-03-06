@@ -1,7 +1,5 @@
 #include "interactable.h"
 
-#include "jhm.h"
-
 namespace engine {
 namespace component {
 
@@ -35,7 +33,7 @@ void Interactable::SetParameter(const std::string& key,
   }
 }
 
-bool Interactable::Update(JHM& game) {
+bool Interactable::Update(Game& game) {
   // If they are interacting...
   if (game.action_map().isActive("interact")) {
     // If the player is currently colliding with us.

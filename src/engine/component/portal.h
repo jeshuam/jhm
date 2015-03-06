@@ -25,7 +25,7 @@ public:
   virtual void SetParameter(const std::string& key, const Json::Value& value);
 
   // Update this component.
-  virtual bool Update(JHM& game);
+  virtual bool Update(Game& game);
 
   // Builder methods for a portal.
   Portal* destination(const std::string& destination);

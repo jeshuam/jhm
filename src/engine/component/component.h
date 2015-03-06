@@ -5,10 +5,8 @@
 #include <Thor/Input/ActionMap.hpp>
 #include <json/json.h>
 
+#include "game.h"
 #include "log.h"
-
-// Avoid circular includes...
-class JHM;
 
 namespace engine {
 namespace component {
@@ -52,7 +50,7 @@ public:
   // returned from the update step, the current loop will be terminated and
   // all update events will happen again. This could be useful if an area
   // transition has occurred.
-  virtual bool Update(JHM& game) = 0;
+  virtual bool Update(Game& game) = 0;
 
 protected:
   // A reference to the entity this component is attached to. Ownership will not

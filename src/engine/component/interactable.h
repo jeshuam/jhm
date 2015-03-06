@@ -27,7 +27,7 @@ public:
   virtual void SetParameter(const std::string& key, const Json::Value& value);
 
   // Update the given component.
-  virtual bool Update(JHM& game);
+  virtual bool Update(Game& game);
 
   // Setters.
   Interactable* action(const std::string& action);
@@ -53,6 +53,8 @@ private:
 
   // Actually perform the action described by this class.
   bool DoAction();
+
+  // Continue an action that was started.
 };
 
 }}  // namepsace engine::component

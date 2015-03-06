@@ -15,12 +15,13 @@
 #include "engine/component/player.h"
 #include "engine/game/map.h"
 #include "engine/game/loader.h"
+#include "game.h"
 #include "log.h"
 
-class JHM {
+class JHM : public Game {
 public:
   JHM();
-  ~JHM();
+  virtual ~JHM();
 
   // Run the game.
   void Run();

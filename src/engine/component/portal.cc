@@ -1,7 +1,5 @@
 #include "portal.h"
 
-#include "jhm.h"
-
 namespace engine {
 namespace component {
 
@@ -39,7 +37,7 @@ void Portal::SetParameter(const std::string& key, const Json::Value& value) {
   }
 }
 
-bool Portal::Update(JHM& game) {
+bool Portal::Update(Game& game) {
   // If they haven't pressed the required key, don't even bother checking for
   // collisions.
   if (require_interaction() and not game.action_map().isActive("interact")) {

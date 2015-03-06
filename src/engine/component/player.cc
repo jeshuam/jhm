@@ -1,7 +1,5 @@
 #include "player.h"
 
-#include "jhm.h"
-
 namespace engine {
 namespace component {
 
@@ -41,7 +39,7 @@ void Player::SetParameter(const std::string& key, const Json::Value& value) {
   }
 }
 
-bool Player::Update(JHM& game) {
+bool Player::Update(Game& game) {
   LOG->trace("Player::Update");
 
   // Get a reference to the Movable component.

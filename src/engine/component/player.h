@@ -31,7 +31,7 @@ public:
   virtual void SetParameter(const std::string& key, const Json::Value& value);
 
   // The player just responds to keypresses.
-  virtual bool Update(JHM& game);
+  virtual bool Update(Game& game);
 
   // Build methods for a player.
   Player* running_multiplier(double running_multiplier);
