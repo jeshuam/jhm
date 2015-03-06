@@ -99,9 +99,14 @@
 
       "interactable": {
         "action": "display_message",
+        "cooldown": 300,
         "facing": ["UP"],
         "parameters": {
-          "message": "Hello, World!"
+          "messages": [
+            "Hello, \n\nWorld!",
+            "How are you?",
+            "This is a long message which will take\nsome time to display. Oh how long this \nmessage is. It has 3 rows!"
+          ]
         }
       }
     },

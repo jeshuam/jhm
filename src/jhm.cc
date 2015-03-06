@@ -87,6 +87,7 @@ void JHM::Setup() {
 }
 
 void JHM::ProcessEvents() {
+  action_map_.clearEvents();
   action_map_.update(window_);
 }
 

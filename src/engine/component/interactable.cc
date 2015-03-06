@@ -6,7 +6,7 @@ namespace component {
 using game::Map;
 
 Interactable::Interactable() : action_key_(), facing_(), parameters_()
-                             , action_(nullptr) {
+                             , action_(nullptr), cooldown_(300) {
 
 }
 
@@ -32,9 +32,19 @@ void Interactable::SetParameter(const std::string& key,
   else if (key == "parameters") {
     parameters(value);
   }
+
+  else if (key == "cooldown") {
+    cooldown(value.asInt());
+  }
 }
 
 bool Interactable::Update(Game& game) {
+  // If we only just interacted with the thing, then don't do it again for a
+  // little while.
+  if (last_activation_.getElapsedTime() < sf::milliseconds(cooldown())) {
+    return true;
+  }
+
   // If they are interacting...
   if (not action_ and game.action_map().isActive("interact")) {
     // If the player is currently colliding with us.
@@ -51,6 +61,7 @@ bool Interactable::Update(Game& game) {
     if (action_->Update(game)) {
       game.ReleaseOwnership();
       action_.reset();
+      last_activation_.restart();
       return true;
     }
   }
@@ -74,6 +85,11 @@ Interactable* Interactable::parameters(const Json::Value& parameters) {
   return this;
 }
 
+Interactable* Interactable::cooldown(int cooldown) {
+  cooldown_ = cooldown;
+  return this;
+}
+
 const std::string& Interactable::action_key() const {
   return action_key_;
 }
@@ -84,6 +100,10 @@ const std::unordered_set<Directional::Direction>& Interactable::facing() const {
 
 const Json::Value& Interactable::parameters() const {
   return parameters_;
+}
+
+const int Interactable::cooldown() const {
+  return cooldown_;
 }
 
 const sf::FloatRect Interactable::area() const {
@@ -112,8 +132,12 @@ void Interactable::StartAction(Game& game) {
   // Display a message on the screen. This will pause all gameplay and required
   // the player to click "play" to advance it.
   if (action_key() == "display_message") {
-    action_.reset(
-      new action::DisplayMessage(parameters_["message"].asString()));
+    std::vector<std::string> messages;
+    for (unsigned int i = 0; i < parameters_["messages"].size(); i++) {
+      messages.push_back(parameters_["messages"][i].asString());
+    }
+
+    action_.reset(new action::DisplayMessage(messages));
   }
 
   // Take ownership of the game!

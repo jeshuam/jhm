@@ -36,11 +36,13 @@ public:
   Interactable* action_key(const std::string& action_key);
   Interactable* facing(const std::unordered_set<Directional::Direction> facing);
   Interactable* parameters(const Json::Value& parameters);
+  Interactable* cooldown(int cooldown);
 
   // Getters.
   const std::string& action_key() const;
   const std::unordered_set<Directional::Direction>& facing() const;
   const Json::Value& parameters() const;
+  const int cooldown() const;
   const sf::FloatRect area() const;
 
 private:
@@ -56,6 +58,10 @@ private:
 
   // Actual action to be performed.
   std::unique_ptr<action::Action> action_;
+
+  // Last time the action was activated (i.e. completed).
+  sf::Clock last_activation_;
+  int cooldown_;  // in ms
 
   // Actually perform the action described by this class.
   void StartAction(Game& game);

@@ -2,24 +2,60 @@
 #define _ENGINE_ACTION_DISPLAY_MESSAGE_H_
 
 #include "engine/action/action.h"
+#include "engine/utility/resource_loader.h"
 
 namespace engine {
 namespace action {
 
 class DisplayMessage : public Action {
 public:
+  enum State {
+    // We are currently waiting for the interact key to be released.
+    WAITING_FOR_INTERACT_KEY_RELEASE,
+
+    // Wait for the interact key to be pressed.
+    WAITING_FOR_INTERACT_KEY_PRESS,
+
+    // We are currently displaying the message. This will be the state during
+    // the whole drawing animation (e.g. revealing the text a little bit at a
+    // time).
+    DISPLAYING_MESSAGE,
+
+    // We are in the ending state (yay).
+    END,
+  };
+
   // Constructor + Destructor.
-  DisplayMessage(const std::string& message);
+  DisplayMessage(const std::vector<std::string>& messages);
   virtual ~DisplayMessage();
 
   // Manage the message.
   virtual bool Update(Game& game);
 
   // Getters + Setters.
-  const std::string& message() const;
+  const std::vector<std::string>& messages() const;
 
 private:
-  std::string message_;
+  std::vector<std::string> messages_;
+
+  // Current state we are in.
+  State state_;
+  State next_state_;
+
+  // How much of the message we have already displayed.
+  unsigned int message_index_;
+  unsigned int characters_displayed_;
+  sf::Clock last_character_displayed_;
+
+  // On-screen text...
+  sf::Text text_display_;
+  sf::RectangleShape text_display_background_;
+  std::shared_ptr<sf::Font> font_;
+
+  // State methods.
+  bool WaitingForInteractKeyPress(Game& game);
+  bool WaitingForInteractKeyRelease(Game& game);
+  bool DisplayingMessage(Game& game);
 };
 
 }} // namespace engine::action
