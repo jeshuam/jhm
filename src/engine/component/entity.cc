@@ -1,6 +1,7 @@
 #include "entity.h"
 
 #include "engine/component/component.h"
+#include "jhm.h"
 
 namespace engine {
 namespace component {
@@ -29,9 +30,9 @@ Entity* Entity::AddComponent(Component* component) {
   return this;
 }
 
-bool Entity::Update(const thor::ActionMap<std::string>& map) {
+bool Entity::Update(JHM& game) {
   for (auto& type_component : components_) {
-    if (not type_component.second->Update(map)) {
+    if (not type_component.second->Update(game)) {
       return false;
     }
   }

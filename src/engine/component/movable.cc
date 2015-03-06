@@ -1,5 +1,7 @@
 #include "movable.h"
 
+#include "jhm.h"
+
 namespace engine {
 namespace component {
 
@@ -22,7 +24,7 @@ void Movable::SetParameter(const std::string& key, const Json::Value& value) {
   }
 }
 
-bool Movable::Update(const thor::ActionMap<std::string>& map) {
+bool Movable::Update(JHM& game) {
   LOG->trace("Movable::Update");
 
   // Only run this every x ms.

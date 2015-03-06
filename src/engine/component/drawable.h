@@ -31,7 +31,7 @@ public:
   virtual void SetParameter(const std::string& key, const Json::Value& value);
 
   // Update this component.
-  virtual bool Update(const thor::ActionMap<std::string>& map);
+  virtual bool Update(JHM& game);
 
   // Draw this sprite onto the screen at its current location.
   virtual void Draw(sf::RenderWindow& window) const;

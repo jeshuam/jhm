@@ -1,5 +1,7 @@
 #include "interactable.h"
 
+#include "jhm.h"
+
 namespace engine {
 namespace component {
 
@@ -21,7 +23,7 @@ void Interactable::SetParameter(const std::string& key,
 
   else if (key == "facing") {
     std::unordered_set<Directional::Direction> facing_new;
-    for (int i = 0; i < value.size(); i++) {
+    for (unsigned int i = 0; i < value.size(); i++) {
       facing_new.insert(Directional::GetDirection(value[i].asString()));
     }
 
@@ -33,9 +35,9 @@ void Interactable::SetParameter(const std::string& key,
   }
 }
 
-bool Interactable::Update(const thor::ActionMap<std::string>& map) {
+bool Interactable::Update(JHM& game) {
   // If they are interacting...
-  if (map.isActive("interact")) {
+  if (game.action_map().isActive("interact")) {
     // If the player is currently colliding with us.
     Entity* player = Map::GetActive().GetEntitiesWithComponent<Player>()[0];
     auto dir = player->GetComponent<Directional>().current_direction();

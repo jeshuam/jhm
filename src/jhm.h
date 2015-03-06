@@ -25,6 +25,22 @@ public:
   // Run the game.
   void Run();
 
+  // An entity may call this to take temporary ownership of the game. All other
+  // updating of entities will stop while this entity has ownership; they will
+  // still be drawn to the screen, however. The entity can use this to display
+  // messages or menus etc. The update method for this entity will be called
+  // after everything has been rendered. It can even take control of the view
+  // (as this will no longer be updated either).
+  void TakeOwnership(engine::component::Entity* entity);
+
+  // Release a previously taken ownership.
+  void ReleaseOwnership();
+
+  // Getters.
+  const sf::RenderWindow& window() const;
+  sf::RenderWindow& window();
+  const thor::ActionMap<std::string>& action_map() const;
+
 private:
   // Setup the game (create the window, load the assets, etc.).
   void Setup();
@@ -43,6 +59,9 @@ private:
 
   // True if the game is running or not.
   bool running_;
+
+  // The entity that has taken ownership of the game.
+  engine::component::Entity* current_owner_;
 
   // Main game window.
   sf::RenderWindow window_;

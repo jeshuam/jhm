@@ -25,7 +25,7 @@ public:
   virtual void SetParameter(const std::string& key, const Json::Value& value);
 
   // Update this component.
-  virtual bool Update(const thor::ActionMap<std::string>& map);
+  virtual bool Update(JHM& game);
 
   // Builder methods for a zone.
   Zone* area(sf::FloatRect area);

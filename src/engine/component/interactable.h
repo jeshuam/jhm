@@ -27,7 +27,7 @@ public:
   virtual void SetParameter(const std::string& key, const Json::Value& value);
 
   // Update the given component.
-  virtual bool Update(const thor::ActionMap<std::string>& map);
+  virtual bool Update(JHM& game);
 
   // Setters.
   Interactable* action(const std::string& action);

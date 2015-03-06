@@ -11,7 +11,7 @@ using engine::game::Map;
 
 using thor::Action;
 
-JHM::JHM() : running_(false) {
+JHM::JHM() : running_(false), current_owner_(nullptr) {
 
 }
 
@@ -39,6 +39,26 @@ void JHM::Run() {
   Stop();
 }
 
+void JHM::TakeOwnership(Entity* entity) {
+  current_owner_ = entity;
+}
+
+void JHM::ReleaseOwnership() {
+  current_owner_ = nullptr;
+}
+
+const sf::RenderWindow& JHM::window() const {
+  return window_;
+}
+
+sf::RenderWindow& JHM::window() {
+  return window_;
+}
+
+const thor::ActionMap<std::string>& JHM::action_map() const {
+  return action_map_;
+}
+
 void JHM::Setup() {
   LOG->trace("JHM::Setup");
 
@@ -59,9 +79,9 @@ void JHM::Setup() {
   action_map_["interact"] = Action(sf::Keyboard::E);
 
   // Load the map.
-  engine::game::Loader::LoadMap("../maps/fomt/farm.map");
-  engine::game::Loader::LoadMap("../maps/fomt/farm-house.map");
-  engine::game::Loader::LoadSave("../maps/fomt/player.save");
+  engine::game::Loader::LoadMap("maps/fomt/farm.map");
+  engine::game::Loader::LoadMap("maps/fomt/farm-house.map");
+  engine::game::Loader::LoadSave("maps/fomt/player.save");
 
   LOG->trace("done JHM::Setup");
 }
@@ -73,9 +93,11 @@ void JHM::ProcessEvents() {
 bool JHM::Loop() {
   LOG->trace("JHM::Loop");
 
-  for (Entity* entity : Map::GetActive().entities()) {
-    if (not entity->Update(action_map_)) {
-      return false;
+  if (not current_owner_) {
+    for (Entity* entity : Map::GetActive().entities()) {
+      if (not entity->Update(*this)) {
+        return false;
+      }
     }
   }
 
@@ -94,11 +116,13 @@ void JHM::Render() {
   window_.clear();
 
   // Update the view to match the player.
-  for (const Entity* entity :
-        Map::GetActive().GetEntitiesWithComponent<Player>()) {
-    sf::View view = window_.getView();
-    view.setCenter(entity->GetComponent<Drawable>().sprite().getPosition());
-    window_.setView(view);
+  if (not current_owner_) {
+    for (const Entity* entity :
+          Map::GetActive().GetEntitiesWithComponent<Player>()) {
+      sf::View view = window_.getView();
+      view.setCenter(entity->GetComponent<Drawable>().sprite().getPosition());
+      window_.setView(view);
+    }
   }
 
   // Render all rendable objects.
@@ -111,6 +135,11 @@ void JHM::Render() {
 
   for (const Entity* entity : entities) {
     entity->GetComponent<Drawable>().Draw(window_);
+  }
+
+  // Update the current owner.
+  if (current_owner_) {
+    current_owner_->Update(*this);
   }
 
   // Display the window.

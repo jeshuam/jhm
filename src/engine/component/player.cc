@@ -1,12 +1,14 @@
 #include "player.h"
 
+#include "jhm.h"
+
 namespace engine {
 namespace component {
 
 Player::Player() : running_multiplier_(1)
                  , walking_directional_(new Directional())
                  , running_directional_(new Directional()) {
-  
+
 }
 
 Player::~Player() {
@@ -39,7 +41,7 @@ void Player::SetParameter(const std::string& key, const Json::Value& value) {
   }
 }
 
-bool Player::Update(const thor::ActionMap<std::string>& map) {
+bool Player::Update(JHM& game) {
   LOG->trace("Player::Update");
 
   // Get a reference to the Movable component.
@@ -58,25 +60,29 @@ bool Player::Update(const thor::ActionMap<std::string>& map) {
   // Determine the Y velocity.
   velocity.x = 0;
   velocity.y = 0;
-  if (map.isActive("moving_up") and not map.isActive("moving_down")) {
+  if (game.action_map().isActive("moving_up") and
+      not game.action_map().isActive("moving_down")) {
     velocity.y = 1;
   }
 
-  else if (map.isActive("moving_down") and not map.isActive("moving_up")) {
+  else if (game.action_map().isActive("moving_down") and
+           not game.action_map().isActive("moving_up")) {
     velocity.y = -1;
   }
 
   // Determine the X velocity.
-  else if (map.isActive("moving_right") and not map.isActive("moving_left")) {
+  else if (game.action_map().isActive("moving_right") and
+           not game.action_map().isActive("moving_left")) {
     velocity.x = 1;
   }
 
-  else if (map.isActive("moving_left") and not map.isActive("moving_right")) {
+  else if (game.action_map().isActive("moving_left") and
+           not game.action_map().isActive("moving_right")) {
     velocity.x = -1;
   }
 
   // If the player is running...
-  if (map.isActive("running")) {
+  if (game.action_map().isActive("running")) {
     // Update the speed multiplier.
     movable.speed_multiplier(running_multiplier_);
 

@@ -10,6 +10,9 @@
 
 #include "log.h"
 
+// Avoid circular includes...
+class JHM;
+
 namespace engine {
 namespace component {
 
@@ -28,7 +31,7 @@ public:
 
   // Update all internal components. Will return false if any components return
   // false on update.
-  bool Update(const thor::ActionMap<std::string>& map);
+  bool Update(JHM& game);
 
   // Remove a component from this entity.
   template <typename T>

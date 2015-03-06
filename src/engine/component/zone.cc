@@ -1,5 +1,7 @@
 #include "zone.h"
 
+#include "jhm.h"
+
 namespace engine {
 namespace component {
 
@@ -22,7 +24,7 @@ void Zone::SetParameter(const std::string& key, const Json::Value& value) {
   }
 }
 
-bool Zone::Update(const thor::ActionMap<std::string>& map) {
+bool Zone::Update(JHM& game) {
   return true;
 }
 

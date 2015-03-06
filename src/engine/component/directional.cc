@@ -1,6 +1,7 @@
 #include "directional.h"
 
 #include "engine/component/movable.h"
+#include "jhm.h"
 
 namespace engine {
 namespace component {
@@ -62,7 +63,7 @@ void Directional::SetParameter(const std::string& key,
   }
 }
 
-bool Directional::Update(const thor::ActionMap<std::string>& map) {
+bool Directional::Update(JHM& game) {
   LOG->trace("Directional::Update");
 
   // Directional components must be movable.
