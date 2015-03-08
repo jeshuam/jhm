@@ -39,23 +39,6 @@ void Interactable::SetParameter(const std::string& key,
 }
 
 bool Interactable::Update(Game& game) {
-  // If we only just interacted with the thing, then don't do it again for a
-  // little while.
-  if (last_activation_.getElapsedTime() < sf::milliseconds(cooldown())) {
-    return true;
-  }
-
-  // If they are interacting...
-  if (not action_ and game.action_map().isActive("interact")) {
-    // If the player is currently colliding with us.
-    Entity* player = Map::GetActive().GetEntitiesWithComponent<Player>()[0];
-    auto dir = player->GetComponent<Directional>().current_direction();
-    auto hit_box = player->GetComponent<Drawable>().HitBox();
-    if (facing().count(dir) == 1 and hit_box.intersects(area())) {
-      StartAction(game);
-    }
-  }
-
   // If there is an action currently playing, keep playing.
   if (action_) {
     if (action_->Update(game)) {
@@ -63,6 +46,26 @@ bool Interactable::Update(Game& game) {
       action_.reset();
       last_activation_.restart();
       return true;
+    }
+  }
+
+  // Otherwise, no action is active...
+  else {
+    // If we only just interacted with the thing, then don't do it again for a
+    // little while.
+    if (last_activation_.getElapsedTime() < sf::milliseconds(cooldown())) {
+      return true;
+    }
+
+    // If they are interacting...
+    if (game.action_map().isActive("interact")) {
+      // If the player is currently colliding with us.
+      Entity* player = Map::GetActive().GetEntitiesWithComponent<Player>()[0];
+      auto dir = player->GetComponent<Directional>().current_direction();
+      auto hit_box = player->GetComponent<Drawable>().HitBox();
+      if (facing().count(dir) == 1 and hit_box.intersects(area())) {
+        StartAction(game);
+      }
     }
   }
 
@@ -141,7 +144,7 @@ void Interactable::StartAction(Game& game) {
   }
 
   else if (action_key() == "show_calendar") {
-    action_.reset(new action::ShowCalendar());
+    action_.reset(new action::ShowCalendar(game));
   }
 
   // Take ownership of the game!
