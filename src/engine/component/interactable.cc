@@ -137,7 +137,7 @@ void Interactable::StartAction(Game& game) {
       messages.push_back(parameters_["messages"][i].asString());
     }
 
-    action_.reset(new action::DisplayMessage(messages));
+    action_.reset(new action::DisplayMessage(game, messages));
   }
 
   else if (action_key() == "show_calendar") {

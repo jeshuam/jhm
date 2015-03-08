@@ -3,7 +3,8 @@
 namespace engine {
 namespace action {
 
-DisplayMessage::DisplayMessage(const std::vector<std::string>& messages)
+DisplayMessage::DisplayMessage(Game& game,
+                               const std::vector<std::string>& messages)
     : messages_(messages)
     , state_(DisplayMessage::WAITING_FOR_INTERACT_KEY_RELEASE)
     , next_state_(DisplayMessage::DISPLAYING_MESSAGE)
@@ -24,13 +25,7 @@ DisplayMessage::DisplayMessage(const std::vector<std::string>& messages)
   text_display_background_.setFillColor(sf::Color(248, 240, 112));
   text_display_background_.setOutlineThickness(-kMessageBorderSize);
   text_display_background_.setOutlineColor(sf::Color(208, 192, 88));
-}
 
-DisplayMessage::~DisplayMessage() {
-
-}
-
-bool DisplayMessage::Update(Game& game) {
   // Get the screen coordinates to display the message on.
   sf::Vector2u window_size = game.window().getSize();
   double message_height_percent = 1.0 / 4.0;
@@ -60,7 +55,13 @@ bool DisplayMessage::Update(Game& game) {
                              message_start.y + 45 + kMessagePaddingY});
   text_display_row_1_.setPosition(text_start_1);
   text_display_row_2_.setPosition(text_start_2);
+}
 
+DisplayMessage::~DisplayMessage() {
+
+}
+
+bool DisplayMessage::Update(Game& game) {
   game.window().draw(text_display_background_);
   game.window().draw(text_display_row_1_);
   game.window().draw(text_display_row_2_);

@@ -2,7 +2,7 @@
   "map": "farm-house",
   "components": {
     "player": {
-      "running_multiplier": 1.25,
+      "running_multiplier": 2,
       "walking_directional": {
         "directions": [
           {

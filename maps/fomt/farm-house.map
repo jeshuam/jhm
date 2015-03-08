@@ -170,8 +170,7 @@
     // Calendar zone for activation.
     {
       "zone": {
-        "area": [168, 32, 16, 24],
-        "debug": true
+        "area": [168, 32, 16, 24]
       },
 
       "interactable": {

@@ -4,6 +4,8 @@
 #include "engine/action/action.h"
 #include "engine/utility/resource_loader.h"
 
+#include "game.h"
+
 namespace engine {
 namespace action {
 
@@ -30,7 +32,7 @@ public:
   };
 
   // Constructor + Destructor.
-  DisplayMessage(const std::vector<std::string>& messages);
+  DisplayMessage(Game& game, const std::vector<std::string>& messages);
   virtual ~DisplayMessage();
 
   // Manage the message.
