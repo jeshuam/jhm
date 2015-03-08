@@ -30,10 +30,12 @@ public:
   // Builder methods for a zone.
   Zone* area(sf::FloatRect area);
   Zone* scale(double scale_factor);
+  Zone* debug(bool debug);
 
   // Getter methods.
   const sf::FloatRect area() const;
   double scale() const;
+  bool debug() const;
 
 private:
   // Each zone is simply a rectangle which can be checked (e.g. collisions). To
@@ -41,6 +43,9 @@ private:
   // _original_ size of the map, and an additional scale factor an be applied.
   sf::FloatRect area_;
   double scale_;
+
+  // If this is true, show the zone on the screen as a rectangle.
+  bool debug_;
 };
 
 }}  // namepsace engine::component

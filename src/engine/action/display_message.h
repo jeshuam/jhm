@@ -9,6 +9,10 @@ namespace action {
 
 class DisplayMessage : public Action {
 public:
+  static const int kMessageBorderSize = 5;
+  static const int kMessagePaddingX = 15;
+  static const int kMessagePaddingY = 5;
+
   enum State {
     // We are currently waiting for the interact key to be released.
     WAITING_FOR_INTERACT_KEY_RELEASE,
@@ -45,10 +49,13 @@ private:
   // How much of the message we have already displayed.
   unsigned int message_index_;
   unsigned int characters_displayed_;
+  unsigned int start_offset_;
   sf::Clock last_character_displayed_;
 
   // On-screen text...
-  sf::Text text_display_;
+  sf::Text* current_row_;
+  sf::Text text_display_row_1_;
+  sf::Text text_display_row_2_;
   sf::RectangleShape text_display_background_;
   std::shared_ptr<sf::Font> font_;
 

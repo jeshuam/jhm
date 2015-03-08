@@ -8,6 +8,7 @@
 
 #include "engine/action/action.h"
 #include "engine/action/display_message.h"
+#include "engine/action/show_calendar.h"
 #include "engine/component/component.h"
 #include "engine/component/directional.h"
 #include "engine/component/drawable.h"

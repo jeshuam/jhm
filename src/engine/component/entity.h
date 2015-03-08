@@ -58,7 +58,12 @@ public:
 
   template <typename T>
   const T& GetComponent() const {
-    return const_cast<Entity*>(this)->GetComponent<T>();
+    try {
+      return *dynamic_cast<T*>(components_.at(T::name_()));
+    } catch (std::out_of_range) {
+      LOG->emerg("Request for component {} where none exists.", T::name_());
+      throw std::logic_error("Invalid component requested.");
+    }
   }
 
   template <typename T>

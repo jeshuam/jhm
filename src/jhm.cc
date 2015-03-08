@@ -6,12 +6,13 @@ using engine::component::Drawable;
 using engine::component::Entity;
 using engine::component::Movable;
 using engine::component::Player;
+using engine::component::Zone;
 
 using engine::game::Map;
 
 using thor::Action;
 
-JHM::JHM() : running_(false), current_owner_(nullptr) {
+JHM::JHM() : running_(false), current_owner_(nullptr), video_mode_(1280, 800) {
 
 }
 
@@ -59,13 +60,20 @@ const thor::ActionMap<std::string>& JHM::action_map() const {
   return action_map_;
 }
 
+const sf::VideoMode& JHM::video_mode() const {
+  return video_mode_;
+}
+
 void JHM::Setup() {
   LOG->trace("JHM::Setup");
 
   // Create the main view.
-  window_.create(sf::VideoMode(800, 600), "Harvest Moon");
+  window_.create(video_mode_, "Harvest Moon");
+  window_.setVerticalSyncEnabled(true);
+  sf::View view({0, 0, 1280, 800});
+  view.zoom(0.5);
+  window_.setView(view);
   window_.clear();
-  window_.setView(sf::View(sf::FloatRect(0, 0, 800, 600)));
 
   // When the window is closed, stop running.
   action_map_["quit"] = thor::Action(sf::Event::Closed);
@@ -77,6 +85,7 @@ void JHM::Setup() {
   action_map_["moving_left"] = Action(sf::Keyboard::Left, Action::Hold);
   action_map_["running"] = Action(sf::Keyboard::Space, Action::Hold);
   action_map_["interact"] = Action(sf::Keyboard::E);
+  action_map_["back"] = Action(sf::Keyboard::Escape);
 
   // Load the map.
   engine::game::Loader::LoadMap("maps/fomt/farm.map");
@@ -141,6 +150,21 @@ void JHM::Render() {
   // Update the current owner.
   if (current_owner_) {
     current_owner_->Update(*this);
+  }
+
+  // Render all debugging zones.
+  for (const Entity* entity :
+        Map::GetActive().GetEntitiesWithComponent<Zone>()) {
+    const Zone& zone = entity->GetComponent<Zone>();
+    if (zone.debug()) {
+      const sf::FloatRect area = zone.area();
+      sf::RectangleShape shape({area.width, area.height});
+      shape.setPosition({area.left, area.top});
+      shape.setOutlineThickness(1);
+      shape.setOutlineColor(sf::Color::Red);
+      shape.setFillColor(sf::Color::Transparent);
+      window_.draw(shape);
+    }
   }
 
   // Display the window.

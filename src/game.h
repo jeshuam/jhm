@@ -31,6 +31,7 @@ public:
   virtual const sf::RenderWindow& window() const = 0;
   virtual sf::RenderWindow& window() = 0;
   virtual const thor::ActionMap<std::string>& action_map() const = 0;
+  virtual const sf::VideoMode& video_mode() const = 0;
 };
 
 #endif  // _GAME_H_

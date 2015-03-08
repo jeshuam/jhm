@@ -13,6 +13,7 @@
 #include "engine/component/entity.h"
 #include "engine/component/movable.h"
 #include "engine/component/player.h"
+#include "engine/component/zone.h"
 #include "engine/game/map.h"
 #include "engine/game/loader.h"
 #include "game.h"
@@ -41,6 +42,7 @@ public:
   const sf::RenderWindow& window() const;
   sf::RenderWindow& window();
   const thor::ActionMap<std::string>& action_map() const;
+  const sf::VideoMode& video_mode() const;
 
 private:
   // Setup the game (create the window, load the assets, etc.).
@@ -67,6 +69,9 @@ private:
   // Main game window.
   sf::RenderWindow window_;
   thor::ActionMap<std::string> action_map_;
+
+  // Video mode settings to apply to the window.
+  sf::VideoMode video_mode_;
 };
 
 #endif  // _JHM_H_

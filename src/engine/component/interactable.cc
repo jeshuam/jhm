@@ -140,6 +140,10 @@ void Interactable::StartAction(Game& game) {
     action_.reset(new action::DisplayMessage(messages));
   }
 
+  else if (action_key() == "show_calendar") {
+    action_.reset(new action::ShowCalendar());
+  }
+
   // Take ownership of the game!
   game.TakeOwnership(entity_);
 }
