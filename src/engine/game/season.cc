@@ -29,7 +29,7 @@ Day Season::start_day(Day start_day, int year) const {
   days_passed += days_per_year * year;
 
   // Work out the first day of THIS season relative to the first day ever.
-  return IntToDay((World::start_day() + days_passed + 1) % Day::N_DAYS);
+  return IntToDay((World::start_day() + days_passed) % Day::N_DAYS);
 }
 
 Day Season::IntToDay(int day) {
