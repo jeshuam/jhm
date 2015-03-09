@@ -1,0 +1,27 @@
+{
+  "name": "My Awesome World",
+
+  // Season information.
+  "season_start_day": "MONDAY",
+  "seasons": [
+    {
+      "name": "Spring",
+      "length": 30
+    },
+
+    {
+      "name": "Autumn",
+      "length": 30
+    },
+
+    {
+      "name": "Summer",
+      "length": 30
+    },
+
+    {
+      "name": "Winter",
+      "length": 30
+    }
+  ]
+}

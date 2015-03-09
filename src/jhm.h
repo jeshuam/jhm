@@ -16,6 +16,7 @@
 #include "engine/component/zone.h"
 #include "engine/game/map.h"
 #include "engine/game/loader.h"
+#include "engine/game/world.h"
 #include "game.h"
 #include "log.h"
 

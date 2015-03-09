@@ -3,50 +3,7 @@
 namespace engine {
 namespace action {
 
-const std::string ShowCalendar::DayToName(Day day) {
-  switch (day) {
-    case    MONDAY: return "MON";
-    case   TUESDAY: return "TUE";
-    case WEDNESDAY: return "WED";
-    case  THURSDAY: return "THU";
-    case    FRIDAY: return "FRI";
-    case  SATURDAY: return "SAT";
-    case    SUNDAY: return "SUN";
-  }
-
-  LOG->emerg("Invalid day {} given to DayToName(Day)!", day);
-  throw std::logic_error("Invalid day");
-}
-
-const sf::Color ShowCalendar::DayToColor(Day day) {
-  switch (day) {
-    case    MONDAY:
-    case   TUESDAY:
-    case WEDNESDAY:
-    case  THURSDAY:
-    case    FRIDAY: return sf::Color(64, 64, 64);
-    case  SATURDAY: return sf::Color(0, 0, 208);
-    case    SUNDAY: return sf::Color(200, 0, 0);
-  }
-
-  LOG->emerg("Invalid day {} given to DayToColor(Day)!", day);
-  throw std::logic_error("Invalid day");
-}
-
-ShowCalendar::Day ShowCalendar::GetDay(int day) {
-  switch (day) {
-    case 0: return MONDAY;
-    case 1: return TUESDAY;
-    case 2: return WEDNESDAY;
-    case 3: return THURSDAY;
-    case 4: return FRIDAY;
-    case 5: return SATURDAY;
-    case 6: return SUNDAY;
-  }
-
-  LOG->emerg("Invalid day {} given to GetDay(int)!", day);
-  throw std::logic_error("Invalid day");
-}
+using namespace game;
 
 ShowCalendar::ShowCalendar(Game& game) {
   // Setup the background.
@@ -117,34 +74,36 @@ ShowCalendar::ShowCalendar(Game& game) {
       // Set the color of the block.
       if (row > 0) {
         sf::Color outline, fill;
-        switch (GetDay(col)) {
-          case    MONDAY:
+        switch (Season::IntToDay(col)) {
+          case    Day::MONDAY:
             outline = sf::Color(248, 176, 80);
             fill =    sf::Color(248, 200, 176);
             break;
-          case   TUESDAY:
+          case   Day::TUESDAY:
             outline = sf::Color(248, 184, 0);
             fill =    sf::Color(248, 232, 136);
             break;
-          case WEDNESDAY:
+          case Day::WEDNESDAY:
             outline = sf::Color(88, 248, 24);
             fill =    sf::Color(208, 248, 136);
             break;
-          case  THURSDAY:
+          case  Day::THURSDAY:
             outline = sf::Color(8, 248, 144);
             fill =    sf::Color(192, 248, 200);
             break;
-          case    FRIDAY:
+          case    Day::FRIDAY:
             outline = sf::Color(32, 248, 248);
             fill =    sf::Color(192, 248, 240);
             break;
-          case  SATURDAY:
+          case  Day::SATURDAY:
             outline = sf::Color(152, 192, 248);
             fill =    sf::Color(208, 224, 248);
             break;
-          case    SUNDAY:
+          case    Day::SUNDAY:
             outline = sf::Color(248, 96, 232);
             fill =    sf::Color(248, 192, 248);
+            break;
+          default:
             break;
         }
 
@@ -153,17 +112,17 @@ ShowCalendar::ShowCalendar(Game& game) {
         block.setFillColor(fill);
       }
 
-      spring_blocks_.push_back(block);
+      blocks_.push_back(block);
 
       /// Add the text for this cell.
       // Row == 0 ==> show the days of the week.
       if (row == 0) {
         sf::Text weekday_text;
-        spring_blocks_.back().setOutlineThickness(0);
+        blocks_.back().setOutlineThickness(0);
         weekday_text.setFont(*font);
-        weekday_text.setString(DayToName(GetDay(col)));
+        weekday_text.setString(Season::DayToStr(Season::IntToDay(col)));
         weekday_text.setCharacterSize(48);
-        weekday_text.setColor(DayToColor(GetDay(col)));
+        weekday_text.setColor(Season::DayToColor(Season::IntToDay(col)));
         weekday_text.setStyle(sf::Text::Bold);
         weekday_text.setPosition(
           x + kDateBlockBorderThickness + (indiv_date_block_size_.x / 2.0)
@@ -172,25 +131,28 @@ ShowCalendar::ShowCalendar(Game& game) {
             - (weekday_text.getGlobalBounds().height) - 5
         );
 
-        spring_block_text_.push_back(weekday_text);
+        block_text_.push_back(weekday_text);
         continue;
       }
 
       else if (row == 1) {
         // Don't start counting days until we get to the first day of the
         // season.
-        if (GetDay(col) == spring_start_) {
+        Day start_day = World::season().start_day(World::start_day(),
+                                                  World::year());
+        if (Season::IntToDay(col) == start_day) {
           current_date = 1;
         }
       }
 
       // If we are drawing a date...
-      if (current_date > 0 and current_date <= spring_days_) {
+      int season_length = World::season().length();
+      if (current_date > 0 and current_date <= season_length) {
         sf::Text date_text;
         date_text.setFont(*font);
         date_text.setString(std::to_string(current_date));
         date_text.setCharacterSize(48);
-        date_text.setColor(DayToColor(GetDay(col)));
+        date_text.setColor(Season::DayToColor(Season::IntToDay(col)));
         date_text.setStyle(sf::Text::Bold);
         date_text.setPosition(
           x + kDateBlockBorderThickness + (indiv_date_block_size_.x / 2.0)
@@ -199,7 +161,7 @@ ShowCalendar::ShowCalendar(Game& game) {
             - (date_text.getGlobalBounds().height) - 5
         );
 
-        spring_block_text_.push_back(date_text);
+        block_text_.push_back(date_text);
         current_date++;
       }
     }
@@ -219,12 +181,12 @@ bool ShowCalendar::Update(Game& game) {
   game.window().draw(background_);
 
   // Display the grid of dates.
-  for (const sf::RectangleShape& block : spring_blocks_) {
+  for (const sf::RectangleShape& block : blocks_) {
     game.window().draw(block);
   }
 
   // Display the text.
-  for (const sf::Text& text : spring_block_text_) {
+  for (const sf::Text& text : block_text_) {
     game.window().draw(text);
   }
 

@@ -87,6 +87,9 @@ void JHM::Setup() {
   action_map_["interact"] = Action(sf::Keyboard::E);
   action_map_["back"] = Action(sf::Keyboard::Escape);
 
+  // Load the world information.
+  engine::game::World::Load("maps/fomt/world.dat");
+
   // Load the map.
   engine::game::Loader::LoadMap("maps/fomt/farm.map");
   engine::game::Loader::LoadMap("maps/fomt/farm-house.map");
