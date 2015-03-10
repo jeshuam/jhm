@@ -2,7 +2,7 @@
   "name": "My Awesome World",
 
   // Season information.
-  "season_start_day": "MONDAY",
+  "season_start_day": "SUNDAY",
   "seasons": [
     {
       "name": "Spring",

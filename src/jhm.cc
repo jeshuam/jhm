@@ -83,6 +83,12 @@ void JHM::Setup() {
   action_map_["moving_down"] = Action(sf::Keyboard::Down, Action::Hold);
   action_map_["moving_right"] = Action(sf::Keyboard::Right, Action::Hold);
   action_map_["moving_left"] = Action(sf::Keyboard::Left, Action::Hold);
+
+  action_map_["up"] = Action(sf::Keyboard::Up, Action::PressOnce);
+  action_map_["down"] = Action(sf::Keyboard::Down, Action::PressOnce);
+  action_map_["right"] = Action(sf::Keyboard::Right, Action::PressOnce);
+  action_map_["left"] = Action(sf::Keyboard::Left, Action::PressOnce);
+
   action_map_["running"] = Action(sf::Keyboard::Space, Action::Hold);
   action_map_["interact"] = Action(sf::Keyboard::E);
   action_map_["back"] = Action(sf::Keyboard::Escape);

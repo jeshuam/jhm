@@ -27,8 +27,14 @@ public:
 private:
   // Calendar background.
   sf::RectangleShape background_;
+  int active_block_, start_block_;
   std::vector<sf::RectangleShape> blocks_;
   std::vector<sf::Text> block_text_;
+
+  // Bouncing selection hand.
+  sf::Sprite selection_hand_;
+  std::shared_ptr<sf::Texture> selection_hand_texture_;
+  sf::Clock selection_hand_timeout_;
 };
 
 }} // namespace engine::action

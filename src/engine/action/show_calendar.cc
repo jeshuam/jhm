@@ -142,6 +142,8 @@ ShowCalendar::ShowCalendar(Game& game) {
                                                   World::year());
         if (Season::IntToDay(col) == start_day) {
           current_date = 1;
+          active_block_ = blocks_.size() - 1;
+          start_block_ = active_block_;
         }
       }
 
@@ -166,6 +168,13 @@ ShowCalendar::ShowCalendar(Game& game) {
       }
     }
   }
+
+  // Show a bouncing selected arrow.
+  selection_hand_texture_ = utility::resource_loader::cache.acquire(
+    thor::Resources::fromFile<sf::Texture>(
+      "maps/fomt/assets/calendar-hand.png"));
+  selection_hand_.setTexture(*selection_hand_texture_);
+  selection_hand_.setScale(2.0, 2.0);
 }
 
 ShowCalendar::~ShowCalendar() {
@@ -175,6 +184,43 @@ ShowCalendar::~ShowCalendar() {
 bool ShowCalendar::Update(Game& game) {
   if (game.action_map().isActive("back")) {
     return true;
+  }
+
+  if (selection_hand_timeout_.getElapsedTime() > sf::milliseconds(0)) {
+    int season_end_block = start_block_ + World::season().length() - 1;
+    if (game.action_map().isActive("up")) {
+      // If we move the active block up one row (subtract seven) and it isn't
+      // before the starting block, the do it.
+      if (active_block_ - 7 >= start_block_) {
+        active_block_ -= 7;
+      }
+    }
+
+    if (game.action_map().isActive("down")) {
+      // If we move the active block down one row (add seven) and it isn't after
+      // the finishing block, the do it.
+      if (active_block_ + 7 <= season_end_block) {
+        active_block_ += 7;
+      }
+    }
+
+    if (game.action_map().isActive("right")) {
+      // If the active block isn't the last block in a row or the last block
+      // of the season, then add one (move right).
+      if (active_block_ % 7 < 6 and active_block_ < season_end_block) {
+        active_block_++;
+      }
+    }
+
+    if (game.action_map().isActive("left")) {
+      // If the active block isn't the first block in a row or the first block
+      // of the season, the subtract one (move left).
+      if (active_block_ % 7 > 0 and active_block_ > start_block_) {
+        active_block_--;
+      }
+    }
+
+    selection_hand_timeout_.restart();
   }
 
   // Display the background.
@@ -189,6 +235,15 @@ bool ShowCalendar::Update(Game& game) {
   for (const sf::Text& text : block_text_) {
     game.window().draw(text);
   }
+
+  // Decide where to put the hand, and put it there.
+  const sf::Vector2f pos = blocks_[active_block_].getPosition();
+  const sf::Vector2f size = blocks_[active_block_].getSize();
+  selection_hand_.setPosition(
+    pos.x - selection_hand_.getGlobalBounds().width,
+    pos.y + (size.y / 2.0) - (selection_hand_.getGlobalBounds().height / 2.0)
+  );
+  game.window().draw(selection_hand_);
 
   return false;
 }
