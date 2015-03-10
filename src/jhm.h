@@ -13,17 +13,37 @@
 #include "engine/component/entity.h"
 #include "engine/component/movable.h"
 #include "engine/component/player.h"
+#include "engine/component/zone.h"
 #include "engine/game/map.h"
 #include "engine/game/loader.h"
+#include "engine/game/world.h"
+#include "game.h"
 #include "log.h"
 
-class JHM {
+class JHM : public Game {
 public:
   JHM();
-  ~JHM();
+  virtual ~JHM();
 
   // Run the game.
   void Run();
+
+  // An entity may call this to take temporary ownership of the game. All other
+  // updating of entities will stop while this entity has ownership; they will
+  // still be drawn to the screen, however. The entity can use this to display
+  // messages or menus etc. The update method for this entity will be called
+  // after everything has been rendered. It can even take control of the view
+  // (as this will no longer be updated either).
+  void TakeOwnership(engine::component::Entity* entity);
+
+  // Release a previously taken ownership.
+  void ReleaseOwnership();
+
+  // Getters.
+  const sf::RenderWindow& window() const;
+  sf::RenderWindow& window();
+  const thor::ActionMap<std::string>& action_map() const;
+  const sf::VideoMode& video_mode() const;
 
 private:
   // Setup the game (create the window, load the assets, etc.).
@@ -44,9 +64,15 @@ private:
   // True if the game is running or not.
   bool running_;
 
+  // The entity that has taken ownership of the game.
+  engine::component::Entity* current_owner_;
+
   // Main game window.
   sf::RenderWindow window_;
   thor::ActionMap<std::string> action_map_;
+
+  // Video mode settings to apply to the window.
+  sf::VideoMode video_mode_;
 };
 
 #endif  // _JHM_H_

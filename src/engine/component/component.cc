@@ -3,6 +3,7 @@
 #include "engine/component/block_movement.h"
 #include "engine/component/directional.h"
 #include "engine/component/drawable.h"
+#include "engine/component/interactable.h"
 #include "engine/component/movable.h"
 #include "engine/component/player.h"
 #include "engine/component/portal.h"
@@ -22,6 +23,10 @@ Component* Component::Get(const std::string& key) {
 
   else if (key == "drawable") {
     return new Drawable();
+  }
+
+  else if (key == "interactable") {
+    return new Interactable();
   }
 
   else if (key == "movable") {

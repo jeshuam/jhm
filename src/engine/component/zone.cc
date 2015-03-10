@@ -3,7 +3,7 @@
 namespace engine {
 namespace component {
 
-Zone::Zone() : area_(), scale_(1.0) {
+Zone::Zone() : area_(), scale_(1.0), debug_(false) {
 
 }
 
@@ -20,9 +20,13 @@ void Zone::SetParameter(const std::string& key, const Json::Value& value) {
   else if (key == "scale") {
     scale(value.asDouble());
   }
+
+  else if (key == "debug") {
+    debug(value.asBool());
+  }
 }
 
-bool Zone::Update(const thor::ActionMap<std::string>& map) {
+bool Zone::Update(Game& game) {
   return true;
 }
 
@@ -33,6 +37,11 @@ Zone* Zone::area(sf::FloatRect area) {
 
 Zone* Zone::scale(double scale_factor) {
   scale_ = scale_factor;
+  return this;
+}
+
+Zone* Zone::debug(bool debug) {
+  debug_ = debug;
   return this;
 }
 
@@ -48,6 +57,10 @@ const sf::FloatRect Zone::area() const {
 
 double Zone::scale() const {
   return scale_;
+}
+
+bool Zone::debug() const {
+  return debug_;
 }
 
 }}  // namepsace engine::component

@@ -11,8 +11,7 @@
           "file": "assets/farm-house-background.png"
         },
 
-        "z_index": 0,
-        "scale": 2
+        "z_index": 0
       }
     },
 
@@ -22,8 +21,7 @@
     // Back wall.
     {
       "zone": {
-        "area": [8, 48, 224, 8],
-        "scale": 2
+        "area": [8, 48, 224, 8]
       },
 
       "block_movement": {}
@@ -32,8 +30,7 @@
     // Side walls.
     {
       "zone": {
-        "area": [1, 1, 8, 168],
-        "scale": 2
+        "area": [1, 1, 8, 168]
       },
 
       "block_movement": {}
@@ -41,8 +38,7 @@
 
     {
       "zone": {
-        "area": [232, 0, 8, 168],
-        "scale": 2
+        "area": [232, 0, 8, 168]
       },
 
       "block_movement": {}
@@ -51,8 +47,7 @@
     // Bottom walls.
     {
       "zone": {
-        "area": [0, 168, 104, 56],
-        "scale": 2
+        "area": [0, 168, 104, 56]
       },
 
       "block_movement": {}
@@ -60,8 +55,7 @@
 
     {
       "zone": {
-        "area": [136, 168, 104, 56],
-        "scale": 2
+        "area": [136, 168, 104, 56]
       },
 
       "block_movement": {}
@@ -71,11 +65,10 @@
     {
       "portal": {
         "destination": "farm",
-        "destination_position": [432, 198],
+        "destination_position": [216.0, 99.0],
         "require_interaction": false,
         "zone": {
-          "area": [104, 206, 32, 18],
-          "scale": 2
+          "area": [104, 206, 32, 18]
         }
       }
     },
@@ -90,12 +83,24 @@
           "size": [32, 40]
         },
 
-        "location": [240, 48],
-        "z_index": 1000,
-        "scale": 2
+        "location": [120.0, 24.0],
+        "z_index": 1000
       },
 
-      "block_movement": {}
+      "block_movement": {},
+
+      "interactable": {
+        "action": "display_message",
+        "cooldown": 300,
+        "facing": ["UP"],
+        "parameters": {
+          "messages": [
+            "Hello, World!",
+            "How are you?",
+            "This is a long message which will take some time to display. Oh how long this message is."
+          ]
+        }
+      }
     },
 
     // Bookshelf.
@@ -107,9 +112,8 @@
           "size": [32, 40]
         },
 
-        "location": [176, 48],
-        "z_index": 1000,
-        "scale": 2
+        "location": [88.0, 24.0],
+        "z_index": 1000
       },
 
       "block_movement": {}
@@ -124,9 +128,8 @@
           "size": [16, 24]
         },
 
-        "location": [304, 96],
-        "z_index": 1000,
-        "scale": 2
+        "location": [152.0, 48.0],
+        "z_index": 1000
       },
 
       "block_movement": {}
@@ -141,9 +144,8 @@
           "size": [16, 24]
         },
 
-        "location": [368, 96],
-        "z_index": 1000,
-        "scale": 2
+        "location": [184.0, 48.0],
+        "z_index": 1000
       },
 
       "block_movement": {}
@@ -158,12 +160,27 @@
           "size": [16, 24]
         },
 
-        "location": [336, 32],
-        "z_index": 1000,
-        "scale": 2
+        "location": [168.0, 16.0],
+        "z_index": 1000
       },
 
       "block_movement": {}
+    },
+
+    // Calendar zone for activation.
+    {
+      "zone": {
+        "area": [168, 32, 16, 24]
+      },
+
+      "interactable": {
+        "action": "show_calendar",
+        "cooldown": 300,
+        "facing": ["UP"],
+        "parameters": {
+
+        }
+      }
     },
 
     // Bed.
@@ -175,9 +192,8 @@
           "size": [32, 53]
         },
 
-        "location": [400, 86],
-        "z_index": 1000,
-        "scale": 2
+        "location": [200.0, 43.0],
+        "z_index": 1000
       },
 
       "block_movement": {}
@@ -192,9 +208,8 @@
           "size": [32, 28]
         },
 
-        "location": [208, 192],
-        "z_index": 1000,
-        "scale": 2
+        "location": [104.0, 96.0],
+        "z_index": 1000
       },
 
       "block_movement": {}
@@ -209,9 +224,8 @@
           "size": [16, 15]
         },
 
-        "location": [272, 210],
-        "z_index": 1000,
-        "scale": 2
+        "location": [136.0, 105.0],
+        "z_index": 1000
       }
     },
 
@@ -224,9 +238,8 @@
           "size": [16, 15]
         },
 
-        "location": [176, 210],
-        "z_index": 1000,
-        "scale": 2
+        "location": [88.0, 105.0],
+        "z_index": 1000
       }
     },
 
@@ -239,9 +252,8 @@
           "size": [32, 24]
         },
 
-        "location": [16, 288],
-        "z_index": 1000,
-        "scale": 2
+        "location": [8.0, 144.0],
+        "z_index": 1000
       },
 
       "block_movement": {}
@@ -256,9 +268,8 @@
           "size": [24, 32]
         },
 
-        "location": [400, 272],
-        "z_index": 1000,
-        "scale": 2
+        "location": [200.0, 136.0],
+        "z_index": 1000
       },
 
       "block_movement": {}

@@ -8,6 +8,7 @@
 
 #include <Thor/Input/ActionMap.hpp>
 
+#include "game.h"
 #include "log.h"
 
 namespace engine {
@@ -28,7 +29,7 @@ public:
 
   // Update all internal components. Will return false if any components return
   // false on update.
-  bool Update(const thor::ActionMap<std::string>& map);
+  bool Update(Game& game);
 
   // Remove a component from this entity.
   template <typename T>
@@ -57,7 +58,12 @@ public:
 
   template <typename T>
   const T& GetComponent() const {
-    return const_cast<Entity*>(this)->GetComponent<T>();
+    try {
+      return *dynamic_cast<T*>(components_.at(T::name_()));
+    } catch (std::out_of_range) {
+      LOG->emerg("Request for component {} where none exists.", T::name_());
+      throw std::logic_error("Invalid component requested.");
+    }
   }
 
   template <typename T>

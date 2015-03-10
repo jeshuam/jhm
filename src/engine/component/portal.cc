@@ -37,11 +37,10 @@ void Portal::SetParameter(const std::string& key, const Json::Value& value) {
   }
 }
 
-bool Portal::Update(const thor::ActionMap<std::string>& map) {
+bool Portal::Update(Game& game) {
   // If they haven't pressed the required key, don't even bother checking for
   // collisions.
-  if (require_interaction() and not map.isActive("interact")) {
-
+  if (require_interaction() and not game.action_map().isActive("interact")) {
     return true;
   }
 

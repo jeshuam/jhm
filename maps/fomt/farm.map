@@ -11,8 +11,7 @@
           "file": "assets/main-farm.png"
         },
 
-        "z_index": 0,
-        "scale": 2
+        "z_index": 0
       }
     },
 
@@ -28,9 +27,8 @@
           "size": [64, 27]
         },
 
-        "location": [410, 48],
-        "z_index": 15000,
-        "scale": 2
+        "location": [205.0, 24.0],
+        "z_index": 15000
       }
     },
 
@@ -43,9 +41,8 @@
           "size": [64, 61]
         },
 
-        "location": [410, 102],
-        "z_index": 5000,
-        "scale": 2
+        "location": [205.0, 51.0],
+        "z_index": 5000
       },
 
       "block_movement": {}
@@ -55,11 +52,10 @@
     {
       "portal": {
         "destination": "farm-house",
-        "destination_position": [222, 352],
+        "destination_position": [111.0, 176.0],
         "require_interaction": true,
         "zone": {
-          "area": [216, 81, 21, 36],
-          "scale": 2
+          "area": [216, 81, 21, 36]
         }
       }
     },
@@ -75,9 +71,8 @@
           "size": [7, 410]
         },
 
-        "location": [128, 110],
-        "z_index": 1002,
-        "scale": 2
+        "location": [64.0, 55.0],
+        "z_index": 1002
       },
 
       "block_movement": {}
@@ -91,9 +86,8 @@
           "size": [-7, 570]
         },
 
-        "location": [2004, 118],
-        "z_index": 1002,
-        "scale": 2
+        "location": [1002.0, 59.0],
+        "z_index": 1002
       },
 
       "block_movement": {}
@@ -107,9 +101,8 @@
           "size": [7, 64]
         },
 
-        "location": [578, -16],
-        "z_index": 1002,
-        "scale": 2
+        "location": [289.0, -8.0],
+        "z_index": 1002
       },
 
       "block_movement": {}
@@ -123,9 +116,8 @@
           "size": [-7, 64]
         },
 
-        "location": [770, -16],
-        "z_index": 1002,
-        "scale": 2
+        "location": [385.0, -8.0],
+        "z_index": 1002
       },
 
       "block_movement": {}
@@ -140,9 +132,8 @@
           "size": [220, 16]
         },
 
-        "location": [140, 80],
-        "z_index": 1002,
-        "scale": 2
+        "location": [70.0, 40.0],
+        "z_index": 1002
       },
 
       "block_movement": {}
@@ -156,9 +147,8 @@
           "size": [627, 16]
         },
 
-        "location": [770, 80],
-        "z_index": 1002,
-        "scale": 2
+        "location": [385.0, 40.0],
+        "z_index": 1002
       },
 
       "block_movement": {}
@@ -175,9 +165,8 @@
           "size": [10, 10]
         },
 
-        "location": [86.0, 706.0],
-        "z_index": 1001,
-        "scale": 2
+        "location": [43.0, 353.0],
+        "z_index": 1001
       },
 
       "block_movement": {}
@@ -191,9 +180,8 @@
           "size": [8, 35]
         },
 
-        "location": [90.0, 716.0],
-        "z_index": 1000,
-        "scale": 2
+        "location": [45.0, 358.0],
+        "z_index": 1000
       },
 
       "block_movement": {}
@@ -207,9 +195,8 @@
           "size": [10, 10]
         },
 
-        "location": [93.0, 768.0],
-        "z_index": 1001,
-        "scale": 2
+        "location": [46.5, 384.0],
+        "z_index": 1001
       },
 
       "block_movement": {}
@@ -223,9 +210,8 @@
           "size": [10, 10]
         },
 
-        "location": [110.0, 768.0],
-        "z_index": 1001,
-        "scale": 2
+        "location": [55.0, 384.0],
+        "z_index": 1001
       },
 
       "block_movement": {}
@@ -239,9 +225,8 @@
           "size": [8, 155]
         },
 
-        "location": [112.0, 785.0],
-        "z_index": 1000,
-        "scale": 2
+        "location": [56.0, 392.5],
+        "z_index": 1000
       },
 
       "block_movement": {}
@@ -255,9 +240,8 @@
           "size": [10, 10]
         },
 
-        "location": [118.0, 1086.0],
-        "z_index": 1001,
-        "scale": 2
+        "location": [59.0, 543.0],
+        "z_index": 1001
       },
 
       "block_movement": {}
@@ -271,9 +255,8 @@
           "size": [10, 10]
         },
 
-        "location": [133.0, 1086.0],
-        "z_index": 1001,
-        "scale": 2
+        "location": [66.5, 543.0],
+        "z_index": 1001
       },
 
       "block_movement": {}
@@ -287,9 +270,8 @@
           "size": [8, 25]
         },
 
-        "location": [138.0, 1096.0],
-        "z_index": 1000,
-        "scale": 2
+        "location": [69.0, 548.0],
+        "z_index": 1000
       },
 
       "block_movement": {}
@@ -303,9 +285,8 @@
           "size": [10, 10]
         },
 
-        "location": [138.0, 1140.0],
-        "z_index": 1001,
-        "scale": 2
+        "location": [69.0, 570.0],
+        "z_index": 1001
       },
 
       "block_movement": {}
@@ -319,9 +300,8 @@
           "size": [10, 10]
         },
 
-        "location": [158.0, 1140.0],
-        "z_index": 1001,
-        "scale": 2
+        "location": [79.0, 570.0],
+        "z_index": 1001
       },
 
       "block_movement": {}
@@ -335,9 +315,8 @@
           "size": [8, 40]
         },
 
-        "location": [162.0, 1150.0],
-        "z_index": 1000,
-        "scale": 2
+        "location": [81.0, 575.0],
+        "z_index": 1000
       },
 
       "block_movement": {}
@@ -351,9 +330,8 @@
           "size": [10, 10]
         },
 
-        "location": [166.0, 1222.0],
-        "z_index": 1001,
-        "scale": 2
+        "location": [83.0, 611.0],
+        "z_index": 1001
       },
 
       "block_movement": {}
@@ -367,9 +345,8 @@
           "size": [10, 10]
         },
 
-        "location": [230.0, 1222.0],
-        "z_index": 1001,
-        "scale": 2
+        "location": [115.0, 611.0],
+        "z_index": 1001
       },
 
       "block_movement": {}
@@ -383,9 +360,8 @@
           "size": [8, 20]
         },
 
-        "location": [236.0, 1232.0],
-        "z_index": 1000,
-        "scale": 2
+        "location": [118.0, 616.0],
+        "z_index": 1000
       },
 
       "block_movement": {}
@@ -399,9 +375,8 @@
           "size": [10, 10]
         },
 
-        "location": [230.0, 1250.0],
-        "z_index": 1001,
-        "scale": 2
+        "location": [115.0, 625.0],
+        "z_index": 1001
       },
 
       "block_movement": {}
@@ -415,9 +390,8 @@
           "size": [125, 8]
         },
 
-        "location": [240.0, 1250.0],
-        "z_index": 1000,
-        "scale": 2
+        "location": [120.0, 625.0],
+        "z_index": 1000
       },
 
       "block_movement": {}
@@ -431,9 +405,8 @@
           "size": [739, 8]
         },
 
-        "location": [572.0, 1250.0],
-        "z_index": 1000,
-        "scale": 2
+        "location": [286.0, 625.0],
+        "z_index": 1000
       },
 
       "block_movement": {}

@@ -24,12 +24,12 @@ public:
 
   }
 
-  virtual bool Update(const thor::ActionMap<std::string>& map) {
+  virtual bool Update(Game& game) {
     return true;
   }
 
   virtual void SetParameter(const std::string& key, const Json::Value& value) {
-  
+
   }
 };
 

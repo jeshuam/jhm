@@ -51,7 +51,7 @@ void Drawable::SetParameter(const std::string& key, const Json::Value& value) {
   }
 }
 
-bool Drawable::Update(const thor::ActionMap<std::string>& map) {
+bool Drawable::Update(Game& game) {
   LOG->trace("Drawable::Update");
   LOG->trace("Done Drawable::Update");
   return true;

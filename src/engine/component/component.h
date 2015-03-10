@@ -5,6 +5,7 @@
 #include <Thor/Input/ActionMap.hpp>
 #include <json/json.h>
 
+#include "game.h"
 #include "log.h"
 
 namespace engine {
@@ -49,7 +50,7 @@ public:
   // returned from the update step, the current loop will be terminated and
   // all update events will happen again. This could be useful if an area
   // transition has occurred.
-  virtual bool Update(const thor::ActionMap<std::string>& map) = 0;
+  virtual bool Update(Game& game) = 0;
 
 protected:
   // A reference to the entity this component is attached to. Ownership will not
