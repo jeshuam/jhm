@@ -35,7 +35,7 @@ ShowCalendar::ShowCalendar(Game& game) {
   std::shared_ptr<sf::Font> font = utility::resource_loader::cache.acquire(
     thor::Resources::fromFile<sf::Font>("maps/fomt/fomt.ttf"));
   background_text_.setFont(*font);
-  background_text_.setCharacterSize(48);
+  background_text_.setCharacterSize(kCharacterSize);
   background_text_.setColor(sf::Color::Black);
   background_text_.setString(BackgroundTitle(World::year(),
                                              World::season().name()));
@@ -45,7 +45,7 @@ ShowCalendar::ShowCalendar(Game& game) {
   float bg_y = background_.getPosition().y;
   background_text_.setPosition(
     bg_x + (bg_w / 2.0) - (background_text_.getGlobalBounds().width / 2.0),
-    bg_y - kBorderThickness
+    bg_y + kBackgroundTextOffsetTop
   );
 
   // The active season always starts as the current season.
@@ -284,14 +284,14 @@ void ShowCalendar::LoadActiveSeason(const sf::Vector2f calendar_size,
         blocks_.back().setOutlineThickness(0);
         weekday_text.setFont(*font);
         weekday_text.setString(Season::DayToStr(Season::IntToDay(col)));
-        weekday_text.setCharacterSize(48);
+        weekday_text.setCharacterSize(kCharacterSize);
         weekday_text.setColor(Season::DayToColor(Season::IntToDay(col)));
         weekday_text.setStyle(sf::Text::Bold);
         weekday_text.setPosition(
           x + kDateBlockBorderThickness + (indiv_date_block_size_.x / 2.0)
-            - (weekday_text.getGlobalBounds().width) + 25,
+            - (weekday_text.getGlobalBounds().width) + kTextOffsetLeft,
           y + kDateBlockBorderThickness + (indiv_date_block_size_.y / 2.0)
-            - (weekday_text.getGlobalBounds().height) - 5
+            - (weekday_text.getGlobalBounds().height) + kTextOffsetTop
         );
 
         block_text_.push_back(weekday_text);
@@ -315,14 +315,14 @@ void ShowCalendar::LoadActiveSeason(const sf::Vector2f calendar_size,
         sf::Text date_text;
         date_text.setFont(*font);
         date_text.setString(std::to_string(current_date));
-        date_text.setCharacterSize(48);
+        date_text.setCharacterSize(kCharacterSize);
         date_text.setColor(Season::DayToColor(Season::IntToDay(col)));
         date_text.setStyle(sf::Text::Bold);
         date_text.setPosition(
           x + kDateBlockBorderThickness + (indiv_date_block_size_.x / 2.0)
-            - (date_text.getGlobalBounds().width) + 25,
+            - (date_text.getGlobalBounds().width) + kTextOffsetLeft,
           y + kDateBlockBorderThickness + (indiv_date_block_size_.y / 2.0)
-            - (date_text.getGlobalBounds().height) - 5
+            - (date_text.getGlobalBounds().height) + kTextOffsetTop
         );
 
         block_text_.push_back(date_text);

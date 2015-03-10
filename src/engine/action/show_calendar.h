@@ -16,7 +16,11 @@ public:
   static const int kBorderThickness = 5;
   static const int kDateBlockBorderThickness = 2;
   static const int kDateBlockPadding = 1; // pixels between date blocks
-  static constexpr double kCalendarSizePercent = 19.0 / 20.0;
+  static constexpr double kCalendarSizePercent = 5.0 / 6.0;
+  static const int kCharacterSize = 32;
+  static const int kTextOffsetLeft = 15;
+  static const int kTextOffsetTop = -4;
+  static const int kBackgroundTextOffsetTop = 0;
 
   ShowCalendar(Game& game);
   virtual ~ShowCalendar();
