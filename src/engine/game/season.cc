@@ -5,6 +5,10 @@
 namespace engine {
 namespace game {
 
+bool Season::operator==(const Season& other) const {
+  return id_ == other.id_;
+}
+
 const std::string& Season::name() const {
   return name_;
 }

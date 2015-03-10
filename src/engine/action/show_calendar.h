@@ -27,14 +27,36 @@ public:
 private:
   // Calendar background.
   sf::RectangleShape background_;
+  sf::Text background_text_;
+
+  // Blocks for each day in the calendar.
   int active_block_, start_block_;
   std::vector<sf::RectangleShape> blocks_;
   std::vector<sf::Text> block_text_;
 
+  // Currently active season on the calendar.
+  const game::Season* active_season_;
+  int active_year_;
+
   // Bouncing selection hand.
   sf::Sprite selection_hand_;
   std::shared_ptr<sf::Texture> selection_hand_texture_;
-  sf::Clock selection_hand_timeout_;
+
+  // Load the currently active season onto the calendar.
+  void LoadActiveSeason(const sf::Vector2f calendar_size,
+                        const sf::Vector2f calendar_start);
+
+  // Given a season, load the next one in the sequence. If this is the last
+  // season, then move to the next year.
+  bool LoadNextSeason();
+
+  // Given a season, load the previous one in the sequence. If this is the first
+  // season, the move to the previous year. If there are no previous years, then
+  // do nothing. Will return true if the season has changed.
+  bool LoadPreviousSeason();
+
+  // Get the background title given the required parameters.
+  std::string BackgroundTitle(int year, const std::string& season_name);
 };
 
 }} // namespace engine::action

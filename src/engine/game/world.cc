@@ -40,6 +40,8 @@ void World::Load(const std::string& world_filename) {
   }
 
   current_season_ = &seasons_[0];
+  current_day_ = 0;
+  current_year_ = 0;
 }
 
 const std::string& World::name() {
@@ -58,6 +60,10 @@ Day World::day() {
   return Season::IntToDay(
     (current_season_->start_day(start_day_, current_year_) + current_day_)
       % Day::N_DAYS);
+}
+
+int World::day_of_season() {
+  return current_day_;
 }
 
 Day World::start_day() {

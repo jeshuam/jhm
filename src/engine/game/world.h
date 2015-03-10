@@ -32,6 +32,7 @@ public:
   static const std::vector<Season>& seasons();
   static const Season& season();
   static Day day();
+  static int day_of_season();
   static Day start_day();
   static int year();
 

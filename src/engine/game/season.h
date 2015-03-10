@@ -32,6 +32,9 @@ public:
   Season() { }
   ~Season() { }
 
+  // Operators (to support std::find).
+  bool operator==(const Season& other) const;
+
   // Getters for information.
   const std::string& name() const;
   int length() const;
